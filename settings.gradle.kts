@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Spiritual Daily Digest"
 include(":app")
+include(":core:resources")
