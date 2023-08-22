@@ -10,6 +10,7 @@ activity-compose = "1.7.2"
 compose-bom = "2023.08.00"
 leak-canary = "2.12"
 google-accompanist = "0.33.0-alpha"
+core-splashscreen = "1.1.0-alpha01"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -29,6 +30,7 @@ ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material = { group = "androidx.compose.material", name = "material"}
 leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref ="leak-canary" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref ="google-accompanist"}
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref ="core-splashscreen"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
