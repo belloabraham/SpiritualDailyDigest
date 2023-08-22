@@ -8,6 +8,9 @@ android {
     namespace = "org.cccsharonparish.spiritualdailydigest"
     compileSdk = 34
 
+    //Required by android 12 splashscreen api
+    compileSdkPreview = "UpsideDownCake"
+
     defaultConfig {
         applicationId = "org.cccsharonparish.spiritualdailydigest"
         minSdk = 24
@@ -62,6 +65,8 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.core.splashscreen)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
