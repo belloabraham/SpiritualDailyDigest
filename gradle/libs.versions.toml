@@ -11,6 +11,13 @@ compose-bom = "2023.08.00"
 leak-canary = "2.12"
 google-accompanist = "0.33.0-alpha"
 core-splashscreen = "1.1.0-alpha01"
+material = "1.9.0"
+timber ="5.0.1"
+androidDesugarJdkLibs = "2.0.3"
+googleTruth = "1.1.4"
+
+kotlin = "1.9.0"
+androidGradlePlugin = "8.1.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -31,6 +38,14 @@ material = { group = "androidx.compose.material", name = "material"}
 leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref ="leak-canary" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref ="google-accompanist"}
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref ="core-splashscreen"}
+com-google-android-material-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+com-google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
+
+
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

@@ -4,5 +4,9 @@ plugins {
 }
 
 android {
-    namespace = "org.cccsharonparish.core.resources"
+    namespace = "org.cccsharonparish.core.common"
+}
+
+dependencies {
+    implementation(libs.timber)
 }

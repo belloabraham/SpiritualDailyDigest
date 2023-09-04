@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("plugins")
     repositories {
         google()
         mavenCentral()
@@ -13,6 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Spiritual Daily Digest"
+rootProject.name = "SpiritualDailyDigest"
 include(":app")
 include(":core:resources")
+include(":core:common")
