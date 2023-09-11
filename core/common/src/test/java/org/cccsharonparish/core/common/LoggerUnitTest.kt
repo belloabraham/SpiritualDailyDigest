@@ -1,7 +1,8 @@
 package org.cccsharonparish.core.common
 
 import com.google.common.truth.Truth.assertThat
-import org.cccsharonparish.core.common.helpers.utils.Logger
+import org.cccsharonparish.core.common.helpers.logging.Logger
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import timber.log.Timber
@@ -10,18 +11,12 @@ class LoggerUnitTest {
 
     @Before
     fun setUp() {
-        // Initialize Timber for testing
-        Timber.plant(TestTree())
+        Timber.plant(timberTree)
     }
 
-    @Test
-    fun `error with Throwable logs the error`() {
-        val throwable = Throwable("Test error message")
-
-        Logger.error(throwable)
-
-        // Use Google Truth to verify that Timber logged the error
-        assertThat(TestTree.log).contains("Test error message")
+    @After
+    fun cleanUp() {
+        Timber.uproot(timberTree)
     }
 
     @Test
@@ -30,21 +25,48 @@ class LoggerUnitTest {
         val message = "Error occurred: %s"
         val args = "testArg"
 
-        Logger.error(throwable, message, args)
-
-        // Use Google Truth to verify that Timber logged the error with the provided message and args
-        assertThat(TestTree.log).contains("Error occurred: testArg")
+        Logger.logError(throwable, message, args)
+        assertThat(log).contains("Error occurred: testArg")
     }
 
-    // Custom Timber Tree for testing
-    private class TestTree : Timber.Tree() {
-        companion object {
-            var log: String? = null
-        }
 
-        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-            // Capture the log message for testing
-            log = message
+    @Test
+    fun `logWarning with message and args should call Timber's warning method with message and args`() {
+        val message = "Warning message: %s"
+        val args = "Argument"
+
+        Logger.logWarning(message, args)
+        assertThat(log).contains("Warning message: Argument")
+    }
+
+    @Test
+    fun `debug with Throwable, message, and args should call Timber's debug method with message and args`() {
+        val throwable = Throwable("Test error message")
+
+        val message = "Debug message: %s"
+        val args = "Argument"
+
+        Logger.debug(throwable, message, args)
+        assertThat(log).contains("Debug message: Argument")
+    }
+
+    @Test
+    fun `debug with message and args should call Timber's debug method with message and args`() {
+        val message = "Debug message: %s"
+        val args = "Argument"
+
+        Logger.debug(message, args)
+        assertThat(log).contains("Debug message: Argument")
+    }
+
+
+    companion object {
+        var log: String? = null
+        val timberTree = object : Timber.Tree() {
+            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                // Capture the log message for testing
+                log = message
+            }
         }
     }
 }

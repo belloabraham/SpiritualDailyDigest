@@ -19,4 +19,6 @@ android {
 
 dependencies {
     implementation(project(":core:resources"))
+    implementation(project(":core:common"))
+
 }
