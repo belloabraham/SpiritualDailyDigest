@@ -2,24 +2,31 @@ package org.cccsharonparish.core.common.helpers.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentResolver
 import android.content.Context
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
+import androidx.annotation.RawRes
+import androidx.annotation.RequiresApi
+import org.cccsharonparish.core.common.R
+
 
 class NotificationChannelBuilder(
     private val context: Context,
 ) {
 
     fun createANotificationChannel(
-        notificationDescription:String,
-        notificationChannelId:String,
-        color:Int
-    ){
+        notificationDescription: String,
+        notificationChannelId: String,
+        color: Int
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 notificationChannelId, notificationDescription,
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channelSettings(notificationChannel, notificationDescription, color)
+            channelSettings(notificationChannel, notificationDescription, color, R.raw.notification_sound)
             val nManager = context.getSystemService(
                 NotificationManager::class.java
             )!!
@@ -27,16 +34,36 @@ class NotificationChannelBuilder(
         }
     }
 
-    private fun channelSettings(nChannel: NotificationChannel, description: String, color:Int) {
+    private fun channelSettings(
+        notificationChannel: NotificationChannel,
+        description: String,
+        color: Int,
+        @RawRes customSoundRes: Int? = null
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            nChannel.enableLights(true)
-            nChannel.lightColor =  color
-            nChannel.enableVibration(true)
-            nChannel.setShowBadge(true)
-            nChannel.description = description
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = color
+            notificationChannel.enableVibration(true)
+            notificationChannel.setShowBadge(true)
+            notificationChannel.description = description
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                nChannel.setAllowBubbles(true)
+                notificationChannel.setAllowBubbles(true)
             }
+            setCustomSound(customSoundRes, notificationChannel)
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setCustomSound(@RawRes customSoundRes: Int?, notificationChannel: NotificationChannel){
+        val customSoundExist = customSoundRes != null
+        if(customSoundExist){
+            val soundPath =
+                Uri.parse("${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.packageName}/$customSoundRes")
+            val attributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            notificationChannel.setSound(soundPath, attributes)
+        }
+    }
+
 }
