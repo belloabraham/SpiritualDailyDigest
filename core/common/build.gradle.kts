@@ -9,5 +9,5 @@ android {
 
 dependencies {
     implementation(libs.timber)
-    testImplementation ("org.mockito:mockito-android:5.5.0")
+    implementation(project(":core:resources"))
 }
