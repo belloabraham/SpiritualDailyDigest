@@ -1,4 +1,4 @@
-package org.cccsharonparish.spiritualdailydigest.ui.theme
+package org.cccsharonparish.core.resources
 
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors

@@ -1,3 +1,7 @@
+<!DOCTYPE resources [<!ENTITY appname "Spiritual Daily Digest">]>
 <resources>
-    <string name="app_name">Spiritual Daily Digest</string>
+    <string name="app_name" translatable="false">&appname;</string>
+
+    <string name="notification_channel_desc">&appname; Notification Channel</string>
+    <string name="notification_channel_id" translatable="false">&appname;</string>
 </resources>
