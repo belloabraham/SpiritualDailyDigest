@@ -9,7 +9,7 @@ class NotificationChannelBuilder(
     private val context: Context,
 ) {
 
-    fun createNotificationChannels(
+    fun createANotificationChannel(
         notificationDescription:String,
         notificationChannelId:String,
         color:Int
