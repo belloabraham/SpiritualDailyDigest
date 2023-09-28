@@ -7,6 +7,10 @@ import androidx.compose.material.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.cccsharonparish.core.resources.DarkThemeColours
+import org.cccsharonparish.core.resources.LightThemeColours
+import org.cccsharonparish.core.resources.darkBackground
+import org.cccsharonparish.core.resources.white
 
 
 @Composable
