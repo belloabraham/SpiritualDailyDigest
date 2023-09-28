@@ -20,7 +20,7 @@ class App : Application() {
         val notificationChannel = NotificationChannelBuilder(
             context = this
         )
-        notificationChannel.createNotificationChannels(
+        notificationChannel.createANotificationChannel(
             notificationDescription = getString(R.string.notification_channel_desc),
             notificationChannelId = getString(R.string.notification_channel_id),
             LightThemeColours.secondary.toArgb()
