@@ -16,6 +16,7 @@ class FeatureModulePlugin : Plugin<Project> {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
                 apply("org.cccsharonparish.compose")
+                apply("org.cccsharonparish.dagger")
             }
 
             extensions.configure<LibraryExtension>{

@@ -37,7 +37,13 @@ gradlePlugin{
             id = "org.cccsharonparish.feature"
             implementationClass = "org.cccsharonparish.plugins.convention.FeatureModulePlugin"
         }
-        register("composeModulePlugin") {
+
+        register("daggerPlugin") {
+            id = "org.cccsharonparish.dagger"
+            implementationClass = "org.cccsharonparish.plugins.convention.DaggerHiltPlugin"
+        }
+
+        register("composePlugin") {
             id = "org.cccsharonparish.compose"
             implementationClass = "org.cccsharonparish.plugins.convention.ComposePlugin"
         }
