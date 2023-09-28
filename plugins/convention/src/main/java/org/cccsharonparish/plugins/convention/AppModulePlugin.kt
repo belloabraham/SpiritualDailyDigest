@@ -14,6 +14,7 @@ class AppModulePlugin : Plugin<Project> {
                 apply( "com.android.application")
                 apply("org.jetbrains.kotlin.android")
                 apply("org.cccsharonparish.compose")
+                apply("org.cccsharonparish.dagger")
             }
 
             extensions.configure<ApplicationExtension>{

@@ -1,6 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("org.cccsharonparish.application")
+    id("org.cccsharonparish.dagger")
 }
 
 android {
@@ -20,5 +21,7 @@ android {
 dependencies {
     implementation(project(":core:resources"))
     implementation(project(":core:common"))
-
+}
+kapt {
+    correctErrorTypes = true
 }
