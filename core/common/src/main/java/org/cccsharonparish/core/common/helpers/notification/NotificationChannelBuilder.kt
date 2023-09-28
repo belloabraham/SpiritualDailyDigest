@@ -12,14 +12,14 @@ class NotificationChannelBuilder(
     fun createNotificationChannels(
         notificationDescription:String,
         notificationChannelId:String,
-        colorRes:Int
+        color:Int
     ){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 notificationChannelId, notificationDescription,
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channelSettings(notificationChannel, notificationDescription, colorRes)
+            channelSettings(notificationChannel, notificationDescription, color)
             val nManager = context.getSystemService(
                 NotificationManager::class.java
             )!!
@@ -27,10 +27,10 @@ class NotificationChannelBuilder(
         }
     }
 
-    private fun channelSettings(nChannel: NotificationChannel, description: String, colorRes:Int) {
+    private fun channelSettings(nChannel: NotificationChannel, description: String, color:Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nChannel.enableLights(true)
-            nChannel.lightColor = context.getColor(colorRes)
+            nChannel.lightColor =  color
             nChannel.enableVibration(true)
             nChannel.setShowBadge(true)
             nChannel.description = description
@@ -39,6 +39,4 @@ class NotificationChannelBuilder(
             }
         }
     }
-
-
 }
