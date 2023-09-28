@@ -38,6 +38,7 @@ class NotificationBuilder(
     private var contentIntent: PendingIntent? = null
     private var alertOnlyOnce = true
     private var actionIntentIcon = 0
+    private var vibrationPattern = longArrayOf(0, 200, 100, 300, 100, 300, 100, 300)
 
     private fun getViewPendingIntent(intent: Intent, context: Context): PendingIntent? {
         return getActivity(context, 0, intent, getIntentFlag())
@@ -48,6 +49,11 @@ class NotificationBuilder(
      */
     fun setAlertOnlyOnce(value: Boolean): NotificationBuilder {
         alertOnlyOnce = value
+        return this
+    }
+
+    fun setVibrationPattern(pattern:LongArray): NotificationBuilder {
+        vibrationPattern = pattern
         return this
     }
 
@@ -148,7 +154,7 @@ class NotificationBuilder(
     }
 
     inner class Builder(
-        val context: Context,
+        private val context: Context,
         private val notificationStyle: NotificationCompat.Style = NotificationCompat.BigTextStyle()
             .bigText(message).setBigContentTitle(title)
     ) {
@@ -168,6 +174,7 @@ class NotificationBuilder(
                     .setColor(notificationColor)
                     .setPriority(priority)
                     .setAutoCancel(autoCancel)
+                    .setVibrate(vibrationPattern)
 
             getContentIntent()?.let {
                 notificationBuilder.setContentIntent(it)
