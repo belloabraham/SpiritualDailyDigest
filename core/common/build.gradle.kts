@@ -9,9 +9,12 @@ android {
 
 dependencies {
     implementation(libs.timber)
+    implementation (libs.toasty)
+
     implementation(libs.app.update)
     implementation(libs.app.update.ktx)
-    implementation (libs.toasty)
+    implementation(libs.app.review)
+    implementation(libs.app.review.ktx)
     implementation(project(":core:resources"))
 
 }
