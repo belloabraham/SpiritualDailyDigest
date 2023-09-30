@@ -4,4 +4,7 @@
 
     <string name="notification_channel_desc">&appname; Notification Channel</string>
     <string name="notification_channel_id" translatable="false">&appname;</string>
+
+    <string name="app_update_download_complete_msg" >Download complete, restarting app in 10 secs</string>
+
 </resources>
