@@ -5,6 +5,13 @@
     <string name="notification_channel_desc">&appname; Notification Channel</string>
     <string name="notification_channel_id" translatable="false">&appname;</string>
 
-    <string name="app_update_download_complete_msg" >Download complete, restarting app in 10 secs</string>
+    <string name="app_update_download_complete_msg">Download complete, restarting app in 10 secs</string>
+
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="lets_get_started">Let\'s Get Started</string>
+
+    <string name="back_button">Back button</string>
+
 
 </resources>

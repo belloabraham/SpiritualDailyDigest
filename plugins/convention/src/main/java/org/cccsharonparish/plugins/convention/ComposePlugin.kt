@@ -17,7 +17,10 @@ class ComposePlugin : Plugin<Project> {
                 "implementation"(libs["material.ripple"])
                 "implementation"(libs["ui.graphics"])
                 "implementation"(libs["ui.tooling.preview"])
+                "implementation"(libs["material3.windowSizeClass"])
+
                 "implementation"(libs["material"])
+                "implementation"(libs["constraintlayout.compose"])
 
                 "debugImplementation"(libs["ui.tooling"])
                 "debugImplementation"(libs["ui.test.manifest"])
