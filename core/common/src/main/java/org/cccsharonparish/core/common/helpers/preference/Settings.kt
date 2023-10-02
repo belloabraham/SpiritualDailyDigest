@@ -16,14 +16,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class Settings @Inject constructor(private val context: Context) {
+class Settings @Inject constructor(private val applicationContext: Context) : ISettings {
 
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "SpiritualDailyDigest")
     }
-    suspend fun getLong(key: String, defaultValue: Long): Long {
+    override suspend fun getLong(key: String, defaultValue: Long): Long {
         val prefKey = longPreferencesKey(key)
-        val exampleCounterFlow: Flow<Long> = context.dataStore.data
+        val exampleCounterFlow: Flow<Long> = applicationContext.dataStore.data
             .map { preferences ->
                 preferences[prefKey] ?: defaultValue
             }
@@ -31,61 +31,62 @@ class Settings @Inject constructor(private val context: Context) {
             exampleCounterFlow.first()
         }
     }
-    suspend fun setLong(key: String, value: Long) {
+    override suspend fun setLong(key: String, value: Long) {
         val prefKey = longPreferencesKey(key)
         withContext(IO) {
-            context.dataStore.edit { preferences ->
+            applicationContext.dataStore.edit { preferences ->
                 preferences[prefKey] = value
             }
         }
     }
-    suspend fun getInt(key: String, defaultValue: Int): Int {
+    override suspend fun getInt(key: String, defaultValue: Int): Int {
         val prefKey = intPreferencesKey(key)
-        val exampleCounterFlow: Flow<Int> = context.dataStore.data
+        val exampleCounterFlow: Flow<Int> = applicationContext.dataStore.data
             .map { preferences ->
                 preferences[prefKey] ?: defaultValue
             }
         return withContext(IO) { exampleCounterFlow.first() }
     }
 
-    suspend fun setInt(key: String, value: Int) {
+    override suspend fun setInt(key: String, value: Int) {
         val prefKey = intPreferencesKey(key)
         withContext(IO) {
-            context.dataStore.edit { preferences ->
+            applicationContext.dataStore.edit { preferences ->
                 preferences[prefKey] = value
             }
         }
     }
-    suspend fun getString(key: String): String? {
+    override suspend fun getString(key: String): String? {
         val prefKey = stringPreferencesKey(key)
-        val exampleCounterFlow: Flow<String?> = context.dataStore.data
+        val exampleCounterFlow: Flow<String?> = applicationContext.dataStore.data
             .map { preferences ->
                 preferences[prefKey]
             }
         return withContext(IO) { exampleCounterFlow.first() }
     }
-    suspend fun setString(key: String, value: String) {
+    override suspend fun setString(key: String, value: String) {
         val prefKey = stringPreferencesKey(key)
         withContext(IO) {
-            context.dataStore.edit { preferences ->
+            applicationContext.dataStore.edit { preferences ->
                 preferences[prefKey] = value
             }
         }
     }
-    suspend fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+    override suspend fun getBoolean(key: String, defaultValue: Boolean): Boolean {
         val prefKey = booleanPreferencesKey(key)
-        val exampleCounterFlow: Flow<Boolean?> = context.dataStore.data
+        val exampleCounterFlow: Flow<Boolean?> = applicationContext.dataStore.data
             .map { preferences ->
                 preferences[prefKey]
             }
         return withContext(IO) { exampleCounterFlow.first() ?: defaultValue }
     }
-    suspend fun setBoolean(key: String, value: Boolean) {
+    override suspend fun setBoolean(key: String, value: Boolean) {
         val prefKey = booleanPreferencesKey(key)
         withContext(IO) {
-            context.dataStore.edit { preferences ->
+            applicationContext.dataStore.edit { preferences ->
                 preferences[prefKey] = value
             }
         }
     }
+
 }

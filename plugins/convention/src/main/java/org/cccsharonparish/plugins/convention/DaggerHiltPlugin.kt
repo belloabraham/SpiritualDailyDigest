@@ -9,12 +9,14 @@ class DaggerHiltPlugin : Plugin<Project> {
         with(target){
 
             with(pluginManager) {
+                apply("kotlin-kapt")
                 apply("com.google.dagger.hilt.android")
-                apply("org.jetbrains.kotlin.kapt")
             }
 
             dependencies{
                 "implementation"(libs["hilt.android"])
+                "implementation"(libs["hilt.navigation"])
+                "kapt"(libs["hilt.android.compiler"])
                 "kapt"(libs["hilt.compiler"])
 
                 // For Robolectric tests.
