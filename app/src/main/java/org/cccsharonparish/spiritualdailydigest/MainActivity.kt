@@ -6,13 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import dev.bellab.core.constants.RequestCode
 import dev.bellab.feature.onboarding.OnboardingActivity
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.common.google.AppUpdateActivity
@@ -27,17 +27,15 @@ class MainActivity : AppUpdateActivity() {
     @Inject
     lateinit var settings: ISettings
 
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-
         lifecycleScope.launch {
             val userIsYetToExitOnboardingPage =
                 !settings.getBoolean(Key.USER_EXITED_ONBOARDING, false)
-           if (userIsYetToExitOnboardingPage) {
-               startActivity(Intent(this@MainActivity, OnboardingActivity::class.java))
-           }
+            if (userIsYetToExitOnboardingPage) {
+                startActivityForResult(Intent(this@MainActivity, OnboardingActivity::class.java), RequestCode.ONBOARDING)
+            }
         }
 
         setContent {
@@ -50,7 +48,15 @@ class MainActivity : AppUpdateActivity() {
                 ) {
 
                 }
+            }
+        }
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == RequestCode.ONBOARDING){
+            lifecycleScope.launch {
+                settings.setBoolean(Key.USER_EXITED_ONBOARDING, true)
             }
         }
     }
@@ -61,6 +67,5 @@ class MainActivity : AppUpdateActivity() {
 @Composable
 fun GreetingPreview() {
     SpiritualDailyDigestTheme {
-
     }
 }

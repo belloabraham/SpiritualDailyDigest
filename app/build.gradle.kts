@@ -20,6 +20,7 @@ android {
 dependencies {
     implementation(project(":core:resources"))
     implementation(project(":core:common"))
+    implementation(project(":core:constants"))
     implementation(project(":feature:onboarding"))
 }
 kapt {

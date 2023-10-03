@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
 import org.cccsharonparish.core.resources.ui.Size
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -27,8 +28,8 @@ fun OnboardingHeader(
         Column(
             verticalArrangement = Arrangement.spacedBy(Size.MarginPaddingSmall(windowSizeClass))
         ) {
-            Text(text = title, style = MaterialTheme.typography.h4)
-            Text(text = subTitle, style = MaterialTheme.typography.subtitle2)
+            Text(text = title, style = MaterialTheme.typography.h6, fontSize = 24.sp)
+            Text(text = subTitle, style = MaterialTheme.typography.subtitle1, fontSize = 18.sp)
         }
     }
 }

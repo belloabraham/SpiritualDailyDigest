@@ -31,6 +31,14 @@ object Size {
         }
     }
 
+    fun MarginPaddingXlarge(windowSizeClass: WindowSizeClass): Dp {
+        return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
+            96.dp
+        }else{
+            48.dp
+        }
+    }
+
     fun MinimumControl(): Dp {
         return 48.dp
     }
@@ -39,11 +47,4 @@ object Size {
         return 40.dp
     }
 
-    fun OnboardingImage(windowSizeClass: WindowSizeClass): Dp {
-        return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
-            500.dp
-        }else{
-            250.dp
-        }
-    }
 }
