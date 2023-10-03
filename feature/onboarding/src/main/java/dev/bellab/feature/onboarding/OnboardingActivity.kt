@@ -15,8 +15,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,10 +31,12 @@ import org.cccsharonparish.core.common.helpers.preference.ISettings
 import org.cccsharonparish.core.resources.ui.theme.SpiritualDailyDigestTheme
 import javax.inject.Inject
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import dev.bellab.core.constants.RequestCode
 import dev.bellab.core.ui.PageIndicatorView
 import dev.bellab.feature.onboarding.ui.OnboardingUIState
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.resources.R
+import org.cccsharonparish.core.resources.ui.Image
 import org.cccsharonparish.core.resources.ui.Size
 import org.cccsharonparish.core.resources.ui.theme.primary50
 import org.cccsharonparish.core.resources.ui.theme.primary600
@@ -41,7 +47,6 @@ class OnboardingActivity : ComponentActivity() {
     @Inject
     lateinit var settings: ISettings
 
-
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,14 +56,16 @@ class OnboardingActivity : ComponentActivity() {
             override fun handleOnBackPressed() {
             }
         }
-
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         setContent {
             val windowSizeClass = calculateWindowSizeClass(activity = this)
+            val onboardingUIStates by remember {
+                mutableStateOf(getAListOfOnboardingUIStates(windowSizeClass))
+            }
             val scope = rememberCoroutineScope()
             val pagerState = rememberPagerState(pageCount = {
-                4
+                onboardingUIStates.size
             })
             SpiritualDailyDigestTheme {
                 Surface(
@@ -69,28 +76,23 @@ class OnboardingActivity : ComponentActivity() {
                         HorizontalPager(
                             state = pagerState,
                             modifier = Modifier.fillMaxSize(),
-                            beyondBoundsPageCount = pagerState.pageCount-1,
-                            ) { page ->
+                            beyondBoundsPageCount = pagerState.pageCount - 1,
+                        ) { page ->
                             OnboardingPage(
                                 currentPage = page,
                                 nextPage = page.plus(1),
                                 totalPage = pagerState.pageCount,
                                 windowSizeClass = windowSizeClass,
-                                uiState = OnboardingUIState(
-                                    title = "Title",
-                                    subTitle = "Hello",
-                                    description = "Lorem Ipsum",
-                                    imageRes = R.drawable.large_notification_icon,
-                                ),
+                                uiState = onboardingUIStates[page],
                                 onSkip = {
-                                    scope.launch {
-                                        closeOnboardingActivity()
-                                    }
-                                }, onNext = {
+                                    closeOnboardingActivity()
+                                },
+                                onNext = {
                                     scope.launch {
                                         pagerState.animateScrollToPage(page.plus(1))
                                     }
-                                }, onPrev = {
+                                },
+                                onPrev = {
                                     scope.launch {
                                         pagerState.animateScrollToPage(page.minus(1))
                                     }
@@ -116,15 +118,32 @@ class OnboardingActivity : ComponentActivity() {
                             }
                         }
                     }
-
                 }
             }
         }
     }
 
-    private suspend fun closeOnboardingActivity() {
-        // settings.setBoolean(Key.USER_EXITED_ONBOARDING, true)
-        this@OnboardingActivity.finish()
+    private fun closeOnboardingActivity() {
+        setResult(RequestCode.ONBOARDING)
+        finish()
+    }
+
+    private fun getAListOfOnboardingUIStates(windowSizeClass:WindowSizeClass): List<OnboardingUIState> {
+        val listOfOnboardingUIState = mutableListOf<OnboardingUIState>()
+        val descriptions = resources.getStringArray(R.array.onboarding_description)
+        val titles = resources.getStringArray(R.array.onboarding_title)
+        val subTitles = resources.getStringArray(R.array.onboarding_subtitle)
+
+        for (i in descriptions.indices) {
+            val onboardingUIState = OnboardingUIState(
+                title = titles[i],
+                subTitle = subTitles[i],
+                description = descriptions[i],
+                imageRes = Image.OnboardingAppLogo(windowSizeClass)
+            )
+            listOfOnboardingUIState.add(onboardingUIState)
+        }
+        return listOfOnboardingUIState.toList()
     }
 }
 

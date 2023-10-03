@@ -5,11 +5,11 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import org.cccsharonparish.core.resources.R
 
 object Image {
-    fun Onboarding(windowSizeClass: WindowSizeClass): Int {
+    fun OnboardingAppLogo(windowSizeClass: WindowSizeClass): Int {
         return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
-            R.drawable.large_notification_icon
+            R.drawable.logo_500
         }else{
-            R.drawable.large_notification_icon
+            R.drawable.logo_250
         }
     }
 }

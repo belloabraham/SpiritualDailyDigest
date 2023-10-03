@@ -10,5 +10,6 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
+    implementation(project(":core:constants"))
     implementation(project(":core:resources"))
 }
