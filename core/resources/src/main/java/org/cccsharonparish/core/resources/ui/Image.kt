@@ -45,4 +45,12 @@ object Image {
         }
     }
 
+    fun onboardingDailyDigestIcon(windowSizeClass: WindowSizeClass): Int {
+        return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact){
+            R.drawable.daily_digest_250
+        }else{
+            R.drawable.daily_digest_250
+        }
+    }
+
 }
