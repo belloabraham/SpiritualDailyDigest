@@ -135,7 +135,7 @@ class OnboardingActivity : ComponentActivity() {
         val subTitles = resources.getStringArray(R.array.onboarding_subtitle)
         val onboardingImages = intArrayOf(
             Image.onboardingAppLogo(windowSizeClass),
-            Image.onboardingAppLogo(windowSizeClass),
+            Image.onboardingDailyDigestIcon(windowSizeClass),
             Image.onboardingAudioIcon(windowSizeClass),
             Image.onboardingBookmarkIcon(windowSizeClass),
             Image.onboardingNotificationIcon(windowSizeClass),
