@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.sp
 import org.cccsharonparish.core.resources.ui.Size
 
 @Composable
@@ -33,9 +34,9 @@ fun OnboardingImage(
             contentDescription = description,
             contentScale = ContentScale.FillWidth,
            modifier = Modifier
-                .fillMaxWidth(.8f)
+                .fillMaxWidth(.6f)
                 .align(Alignment.CenterHorizontally)
         )
-        Text(text = description, style = MaterialTheme.typography.body1)
+        Text(text = description, style = MaterialTheme.typography.body1, fontSize = 18.sp)
     }
 }

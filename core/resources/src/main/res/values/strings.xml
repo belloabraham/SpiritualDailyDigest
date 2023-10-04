@@ -1,31 +1,11 @@
 <!DOCTYPE resources [<!ENTITY appname "Spiritual Daily Digest">]>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">&appname;</string>
 
-    <string name="notification_channel_desc">&appname; Notification Channel</string>
+    <string name="notification_channel_desc" translatable="false">&appname; Notification Channel</string>
     <string name="notification_channel_id" translatable="false">&appname;</string>
 
-    <string name="app_update_download_complete_msg">Download complete, restarting app in 10 secs</string>
-
-    <string name="skip">Skip</string>
-    <string name="next">Next</string>
-    <string name="lets_get_started">Let\'s Get Started</string>
-
-    <string name="back_button">Back button</string>
-
-    <string-array
-        name="onboarding_title">
-        <item
-            >Welcome to</item>
-        <item
-            >Get Daily Doses</item>
-        <item
-            >Listen</item>
-        <item
-            >Bookmark</item>
-        <item
-            >Stay Inspired</item>
-    </string-array>
+    <string name="app_update_download_complete_msg" tools:ignore="MissingTranslation">Download complete, restarting app in 10 secs</string>
 
     <string-array
         name="onboarding_subtitle">
@@ -39,22 +19,8 @@
             >for later reference</item>
         <item
             >with Notifications</item>
+        <item
+            >Preferred Language</item>
     </string-array>
-
-    <string-array
-        name="onboarding_description">
-        <item
-            >Begin your path to enlightenment with Spiritual Daily Digest. Embrace spirituality in the palm of your hand. </item>
-        <item
-            >Delve into thought-provoking religious content every day to nurture your soul.</item>
-        <item
-            >Enjoy audio versions of our spiritual texts, perfect for a mindful commute or a peaceful evening.</item>
-        <item
-            >Save your favourite content to read later. Easily access your most cherished passages whenever you need them.</item>
-        <item
-            >Receive daily reminders to read new content at your chosen time. Stay inspired and uplifted every day.</item>
-    </string-array>
-
-
 
 </resources>
