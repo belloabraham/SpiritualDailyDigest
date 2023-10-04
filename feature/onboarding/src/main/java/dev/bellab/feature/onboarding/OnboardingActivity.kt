@@ -128,22 +128,30 @@ class OnboardingActivity : ComponentActivity() {
         finish()
     }
 
-    private fun getAListOfOnboardingUIStates(windowSizeClass:WindowSizeClass): List<OnboardingUIState> {
+    private fun getAListOfOnboardingUIStates(windowSizeClass: WindowSizeClass): List<OnboardingUIState> {
         val listOfOnboardingUIState = mutableListOf<OnboardingUIState>()
         val descriptions = resources.getStringArray(R.array.onboarding_description)
         val titles = resources.getStringArray(R.array.onboarding_title)
         val subTitles = resources.getStringArray(R.array.onboarding_subtitle)
+        val onboardingImages = intArrayOf(
+            Image.onboardingAppLogo(windowSizeClass),
+            Image.onboardingAppLogo(windowSizeClass),
+            Image.onboardingAudioIcon(windowSizeClass),
+            Image.onboardingBookmarkIcon(windowSizeClass),
+            Image.onboardingNotificationIcon(windowSizeClass),
+            Image.onboardingMultiLingualIcon(windowSizeClass)
+        )
 
         for (i in descriptions.indices) {
             val onboardingUIState = OnboardingUIState(
                 title = titles[i],
                 subTitle = subTitles[i],
                 description = descriptions[i],
-                imageRes = Image.OnboardingAppLogo(windowSizeClass)
+                imageRes = onboardingImages[i]
             )
             listOfOnboardingUIState.add(onboardingUIState)
         }
-        return listOfOnboardingUIState.toList()
+        return listOfOnboardingUIState
     }
 }
 
@@ -152,6 +160,5 @@ class OnboardingActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     SpiritualDailyDigestTheme {
-
     }
 }
