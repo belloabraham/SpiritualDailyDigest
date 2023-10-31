@@ -1,4 +1,4 @@
-package dev.bellab.feature.onboarding.ui
+package org.cccsharonparish.feature.onboarding.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import org.cccsharonparish.core.resources.ui.Size
 
@@ -21,13 +22,14 @@ import org.cccsharonparish.core.resources.ui.Size
 fun OnboardingImage(
     description: String,
     @DrawableRes imageResId: Int,
-    windowSizeClass: WindowSizeClass
+    verticalPadding: Dp,
+    verticalItemSpace: Dp
 ) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(vertical = Size.MarginPaddingMedium(windowSizeClass)),
-        verticalArrangement = Arrangement.spacedBy(Size.MarginPaddingXlarge(windowSizeClass))
+            .padding(vertical = verticalPadding ),
+        verticalArrangement = Arrangement.spacedBy(verticalItemSpace)
     ) {
         Image(
             painter =  painterResource(id = imageResId),

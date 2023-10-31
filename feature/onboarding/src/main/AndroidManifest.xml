@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".OnboardingActivity"
+            android:name="org.cccsharonparish.feature.onboarding.OnboardingActivity"
             android:screenOrientation="portrait"
             android:exported="false"/>
     </application>

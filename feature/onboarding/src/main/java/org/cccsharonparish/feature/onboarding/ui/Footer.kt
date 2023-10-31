@@ -1,4 +1,4 @@
-package dev.bellab.feature.onboarding.ui
+package org.cccsharonparish.feature.onboarding.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import org.cccsharonparish.core.resources.R
 import org.cccsharonparish.core.resources.ui.Size
 
@@ -25,7 +26,7 @@ fun OnboardingFooter(
     currentPage:Int,
     nextPage:Int,
     totalPage:Int,
-    windowSizeClass: WindowSizeClass,
+    horizontalItemSpace: Dp,
     onSkip: () -> Unit, onNext: () -> Unit, onPrev: () -> Unit
 ) {
     Row(
@@ -50,7 +51,7 @@ fun OnboardingFooter(
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(Size.MarginPaddingMedium(windowSizeClass))
+            horizontalArrangement = Arrangement.spacedBy( horizontalItemSpace)
         ) {
 
             if (currentPage > 0){

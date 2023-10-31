@@ -1,4 +1,4 @@
-package dev.bellab.feature.onboarding
+package org.cccsharonparish.feature.onboarding
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

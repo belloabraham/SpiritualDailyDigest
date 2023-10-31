@@ -1,4 +1,4 @@
-package dev.bellab.feature.onboarding
+package org.cccsharonparish.feature.onboarding
 
 import org.junit.Test
 

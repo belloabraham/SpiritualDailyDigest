@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.bellab.feature.onboarding"
+    namespace = "org.cccsharonparish.feature.onboarding"
 }
 
 dependencies {
