@@ -1,4 +1,4 @@
-package dev.bellab.feature.onboarding.ui
+package org.cccsharonparish.feature.onboarding.ui
 
 import androidx.annotation.DrawableRes
 

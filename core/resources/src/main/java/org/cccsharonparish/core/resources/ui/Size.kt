@@ -7,7 +7,8 @@ import androidx.compose.ui.unit.dp
 
 object Size {
 
-    fun MarginPaddingMedium(windowSizeClass: WindowSizeClass): Dp {
+
+    fun medium(windowSizeClass: WindowSizeClass): Dp {
       return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
           32.dp
       }else{
@@ -15,7 +16,7 @@ object Size {
       }
     }
 
-    fun MarginPaddingSmall(windowSizeClass: WindowSizeClass): Dp {
+    fun small(windowSizeClass: WindowSizeClass): Dp {
         return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
             16.dp
         }else{
@@ -23,7 +24,7 @@ object Size {
         }
     }
 
-    fun MarginPaddingLarge(windowSizeClass: WindowSizeClass): Dp {
+    fun large(windowSizeClass: WindowSizeClass): Dp {
         return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
             48.dp
         }else{
@@ -31,7 +32,7 @@ object Size {
         }
     }
 
-    fun MarginPaddingXlarge(windowSizeClass: WindowSizeClass): Dp {
+    fun xLarge(windowSizeClass: WindowSizeClass): Dp {
         return if(windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded){
             96.dp
         }else{
@@ -39,12 +40,5 @@ object Size {
         }
     }
 
-    fun MinimumControl(): Dp {
-        return 48.dp
-    }
-
-    fun ButtonHeigth(): Dp {
-        return 40.dp
-    }
 
 }

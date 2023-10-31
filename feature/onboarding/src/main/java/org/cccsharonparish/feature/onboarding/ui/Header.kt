@@ -1,4 +1,4 @@
-package dev.bellab.feature.onboarding.ui
+package org.cccsharonparish.feature.onboarding.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import org.cccsharonparish.core.resources.ui.Size
 
@@ -18,7 +19,7 @@ import org.cccsharonparish.core.resources.ui.Size
 fun OnboardingHeader(
     title: String,
     subTitle: String,
-    windowSizeClass: WindowSizeClass
+    verticalItemSpace: Dp
 ) {
     Row(
         Modifier
@@ -26,7 +27,7 @@ fun OnboardingHeader(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(Size.MarginPaddingSmall(windowSizeClass))
+            verticalArrangement = Arrangement.spacedBy(verticalItemSpace)
         ) {
             Text(text = title, style = MaterialTheme.typography.h6, fontSize = 24.sp)
             Text(text = subTitle, style = MaterialTheme.typography.subtitle1, fontSize = 18.sp)
