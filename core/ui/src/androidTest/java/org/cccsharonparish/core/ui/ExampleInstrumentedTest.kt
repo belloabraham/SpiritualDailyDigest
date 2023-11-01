@@ -1,4 +1,4 @@
-package dev.bellab.core.constants
+package org.cccsharonparish.core.ui
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("dev.bellab.core.constants.test", appContext.packageName)
+        assertEquals("dev.bellab.core.ui.test", appContext.packageName)
     }
 }

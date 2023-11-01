@@ -1,4 +1,4 @@
-package dev.bellab.core.ui
+package org.cccsharonparish.core.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState

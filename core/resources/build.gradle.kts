@@ -9,5 +9,5 @@ android {
 }
 dependencies{
     implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.material3.windowSizeClass)
+//    implementation(libs.material3.windowSizeClass)
 }

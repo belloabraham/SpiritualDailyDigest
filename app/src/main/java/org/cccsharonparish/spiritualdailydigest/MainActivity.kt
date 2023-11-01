@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.bellab.core.constants.RequestCode
+import org.cccsharonparish.core.constants.RequestCode
 import org.cccsharonparish.feature.onboarding.OnboardingActivity
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.common.google.AppUpdateActivity

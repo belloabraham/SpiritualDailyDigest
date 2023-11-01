@@ -34,14 +34,14 @@ import org.cccsharonparish.core.common.helpers.preference.ISettings
 import org.cccsharonparish.core.resources.ui.theme.SpiritualDailyDigestTheme
 import javax.inject.Inject
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import dev.bellab.core.constants.RequestCode
-import dev.bellab.core.ui.PageIndicatorView
 import org.cccsharonparish.feature.onboarding.ui.OnboardingFooter
 import org.cccsharonparish.feature.onboarding.ui.OnboardingHeader
 import org.cccsharonparish.feature.onboarding.ui.OnboardingImage
 import org.cccsharonparish.feature.onboarding.ui.OnboardingUIState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.cccsharonparish.core.ui.PageIndicatorView
+import org.cccsharonparish.core.constants.RequestCode
 import org.cccsharonparish.core.resources.R
 import org.cccsharonparish.core.resources.ui.OnboardingImage
 import org.cccsharonparish.core.resources.ui.Size

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.bellab.core.constants"
+    namespace = "org.cccsharonparish.core.constants"
 }
 
 dependencies {
