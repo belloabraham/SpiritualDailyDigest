@@ -40,7 +40,6 @@ class AppModulePlugin : Plugin<Project> {
 
             dependencies{
                 "implementation"(libs["core.splashscreen"])
-//                "implementation"(libs["accompanist.systemuicontroller"])
                 "debugImplementation"(libs["leakcanary.android"])
             }
 
