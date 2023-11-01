@@ -33,6 +33,10 @@ gradlePlugin{
             id = "org.cccsharonparish.core"
             implementationClass = "org.cccsharonparish.plugins.convention.CoreModulePlugin"
         }
+        register("workPlugin") {
+            id = "org.cccsharonparish.work"
+            implementationClass = "org.cccsharonparish.plugins.convention.WorkPlugin"
+        }
         register("featureModulesPlugin") {
             id = "org.cccsharonparish.feature"
             implementationClass = "org.cccsharonparish.plugins.convention.FeatureModulePlugin"

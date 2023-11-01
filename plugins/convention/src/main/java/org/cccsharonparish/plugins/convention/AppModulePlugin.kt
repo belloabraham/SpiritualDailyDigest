@@ -15,6 +15,7 @@ class AppModulePlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.android")
                 apply("org.cccsharonparish.compose")
                 apply("org.cccsharonparish.dagger")
+                apply("org.cccsharonparish.work")
             }
 
             extensions.configure<ApplicationExtension>{
@@ -39,7 +40,6 @@ class AppModulePlugin : Plugin<Project> {
 
             dependencies{
                 "implementation"(libs["core.splashscreen"])
-                "implementation"(libs["accompanist.systemuicontroller"])
                 "debugImplementation"(libs["leakcanary.android"])
             }
 
