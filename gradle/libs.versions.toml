@@ -76,7 +76,6 @@ app-update = { group = "com.google.android.play", name = "app-update", version.r
 app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "app-update" }
 app-review = { group = "com.google.android.play", name = "review", version.ref = "app-review" }
 app-review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "app-review" }
-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

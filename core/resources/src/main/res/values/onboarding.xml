@@ -4,7 +4,7 @@
     <string name="skip" tools:ignore="MissingTranslation">Skip</string>
     <string name="next" tools:ignore="MissingTranslation">Next</string>
     <string name="lets_get_started" tools:ignore="MissingTranslation">Let\'s Get Started</string>
-    <string name="back_button" tools:ignore="MissingTranslation">Back button</string>
+    <string name="back_button" tools:ignore="MissingTranslation">Back</string>
 
     <string-array
         name="onboarding_title">

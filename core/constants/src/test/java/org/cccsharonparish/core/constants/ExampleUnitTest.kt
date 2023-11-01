@@ -1,4 +1,4 @@
-package dev.bellab.core.ui
+package org.cccsharonparish.core.constants
 
 import org.junit.Test
 

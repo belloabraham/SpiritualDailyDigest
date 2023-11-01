@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.bellab.core.ui"
+    namespace = "org.cccsharonparish.core.ui"
 }
 
 dependencies {
