@@ -6,6 +6,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -19,3 +20,7 @@ rootProject.name = "SpiritualDailyDigest"
 include(":app")
 include(":core:resources")
 include(":core:common")
+include(":core:model")
+include(":core:ui")
+include(":core:constants")
+include(":feature:onboarding")

@@ -28,6 +28,7 @@ class FeatureModulePlugin : Plugin<Project> {
             }
 
             dependencies{
+                "implementation"(libs["core.splashscreen"])
             }
         }
 

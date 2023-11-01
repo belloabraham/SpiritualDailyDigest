@@ -11,10 +11,14 @@ dependencies {
     implementation(libs.timber)
     implementation (libs.toasty)
 
+    implementation (libs.hilt.android)
+
     implementation(libs.app.update)
     implementation(libs.app.update.ktx)
     implementation(libs.app.review)
     implementation(libs.app.review.ktx)
+
+    implementation(libs.datastore.preferences)
     implementation(project(":core:resources"))
 
 }

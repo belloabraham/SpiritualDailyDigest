@@ -1,4 +1,4 @@
-package org.cccsharonparish.core.resources
+package org.cccsharonparish.core.resources.ui.theme
 
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -37,6 +37,7 @@ val tertiary600 = Color(0xffec6009)
 val tertiary700 = Color(0xffc34709)
 val tertiary800 = Color(0xff9d3810)
 val tertiary900 = Color(0xff7e3010)
+
 
 val tertiaryDark50 = Color(0xfffdf7ed)
 val tertiaryDark100 = Color(0xfffbefda)

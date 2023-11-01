@@ -15,13 +15,18 @@ material = "1.9.0"
 timber = "5.0.1"
 androidDesugarJdkLibs = "2.0.3"
 googleTruth = "1.1.4"
+material3WindowSizeClass = "1.1.2"
 
 kotlin = "1.9.0"
 androidGradlePlugin = "8.1.1"
 dagger-hilt = "2.48"
+work-version = "2.8.1"
+hilt-integration = "1.0.0"
 app-update = "2.1.0"
 toasty = "1.5.2"
 app-review = "2.0.1"
+datastore = "1.0.0"
+constraintlayout = "1.0.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -35,10 +40,15 @@ material-ripple = { group = "androidx.compose.material", name = "material-ripple
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material = { group = "androidx.compose.material", name = "material" }
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3WindowSizeClass" }
+
+
 leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leak-canary" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "google-accompanist" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
@@ -52,8 +62,15 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", ver
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger-hilt" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger-hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger-hilt" }
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hilt-integration" }
+hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-integration" }
+
+hilt-worker = { group = "androidx.hilt", name = "hilt-work", version.ref = "hilt-integration" }
+work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work-version" }
+work-testing = { group = "androidx.work", name = "work-testing", version.ref = "work-version" }
+
 
 app-update = { group = "com.google.android.play", name = "app-update", version.ref = "app-update" }
 app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "app-update" }
