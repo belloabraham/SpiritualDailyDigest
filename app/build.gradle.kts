@@ -1,6 +1,9 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("org.cccsharonparish.application")
+    //Firebase
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -22,6 +25,10 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:constants"))
     implementation(project(":feature:onboarding"))
+
+    implementation (platform(libs.firebase.bom))
+    implementation (libs.firebase.analytics)
+    implementation (libs.firebase.crashlytics)
 }
 kapt {
     correctErrorTypes = true
