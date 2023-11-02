@@ -19,6 +19,10 @@ dependencies {
     implementation(libs.app.review.ktx)
 
     implementation(libs.datastore.preferences)
+
+    implementation (platform(libs.firebase.bom))
+    implementation (libs.firebase.crashlytics)
+
     implementation(project(":core:resources"))
 
 }
