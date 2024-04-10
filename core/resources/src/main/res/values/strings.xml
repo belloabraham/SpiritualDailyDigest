@@ -1,26 +1,15 @@
-<!DOCTYPE resources [<!ENTITY appname "Spiritual Daily Digest">]>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [<!ENTITY appname "CCC Hymns with Bible References">]>
+<!--
+  ~
+  ~ Created by Bello Abraham on 9/2023
+  ~
+  -->
+
+<resources>
     <string name="app_name" translatable="false">&appname;</string>
-
-    <string name="notification_channel_desc" translatable="false">&appname; Notification Channel</string>
+    <string name="notification_channel_desc">&appname; Notification Channel</string>
     <string name="notification_channel_id" translatable="false">&appname;</string>
-
-    <string name="app_update_download_complete_msg" tools:ignore="MissingTranslation">Download complete, restarting app in 10 secs</string>
-
-    <string-array
-        name="onboarding_subtitle">
-        <item
-            >&appname;</item>
-        <item
-            >of Spiritual Enlightenment</item>
-        <item
-            >Anytime, Anywhere</item>
-        <item
-            >for later reference</item>
-        <item
-            >with Notifications</item>
-        <item
-            >Preferred Language</item>
-    </string-array>
+    <string name="app_update_download_complete_msg" >Download complete, restarting app in 10 secs</string>
 
 </resources>

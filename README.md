@@ -1,47 +1,14 @@
-# Spiritual Daily Digest
+This is a Kotlin Multiplatform project targeting Android, iOS.
 
-## Author
+* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
+  It contains several subfolders:
+  - `commonMain` is for code that’s common for all targets.
+  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
+    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
+    `iosMain` would be the right folder for such calls.
 
-[Bello Abraham](https://www.linkedin.com/in/belloabraham) (Single handedly built by me)
+* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
+  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
-<!-- ## Live Demo
 
-[Spiritual Daily Digest on Google Play Store](https://play.google.com/store/apps/details?id=com.bookshelfhub.bookshelfhub) -->
-
-## Technologies Used
-
-- Kotlin
-- Android SDK
-- Retrofit
-- UI with Jetpack Compose
-- Android Jetpack Libraries
-- Dagger Hilt
-- Others
-
-## Description
-
-Spiritual Daily Digest is a daily devotional Android application designed to inspire and uplift users with spiritual content. Written in Kotlin, this app provides a user-friendly interface to access daily devotional readings, prayers, and inspirational quotes.
-
-## Features
-
-- Daily devotional readings
-- User-friendly interface for a seamless reading experience
-- Bookmarking feature to save favorite devotions
-- Daily Notifications to remind users of daily readings
-- Multi Lingual
-
-## Onboarding Screenshot
-
-- ![Screenshot-1](./screenshot/1.png "Onboarding")
-  <br>
-- ![Screenshot-1](./screenshot/2.png "Onboarding")
-  <br>
-- ![Screenshot-1](./screenshot/3.png "Onboarding")
-  <br>
-- ![Screenshot-1](./screenshot/4.png "Onboarding")
-  <br>
-- ![Screenshot-1](./screenshot/5.png "Onboarding")
-  <br>
-- ![Screenshot-1](./screenshot/6.png "Onboarding")
-  <br>
-- ![Screenshot-1](./screenshot/7.png "Onboarding")
+Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…

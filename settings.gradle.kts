@@ -1,26 +1,31 @@
+rootProject.name = "SpiritualDailyDigest"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
-    includeBuild("plugins")
     repositories {
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
         maven ( url = "https://jitpack.io" )
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
-rootProject.name = "SpiritualDailyDigest"
-include(":app")
-include(":core:resources")
-include(":core:common")
+include(":composeApp")
+include(":core:auth")
+include(":core:data")
 include(":core:model")
+include(":core:common")
+include(":core:resources")
+include(":core:network")
+include(":core:domain")
 include(":core:ui")
-include(":core:constants")
 include(":feature:onboarding")

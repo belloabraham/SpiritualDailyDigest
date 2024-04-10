@@ -1,0 +1,4 @@
+<!DOCTYPE resources [<!ENTITY appname "Spiritual Daily Digest">]>
+<resources>
+    <string name="app_name" translatable="false">&appname;</string>
+</resources>
