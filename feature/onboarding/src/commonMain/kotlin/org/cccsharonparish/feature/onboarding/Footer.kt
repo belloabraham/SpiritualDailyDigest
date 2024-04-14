@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -43,7 +44,8 @@ fun OnboardingFooter(
             ) {
                 Text(
                     text = uiState.skip,
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
         }
@@ -61,6 +63,7 @@ fun OnboardingFooter(
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowLeft,
                         contentDescription = uiState.back,
+                        tint = MaterialTheme.colorScheme.secondary
                     )
                 }
             }
@@ -68,7 +71,10 @@ fun OnboardingFooter(
                 Button(
                     onClick = {
                         onSkip()
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                 ) {
                     Text(
                         text = uiState.getStarted,
@@ -79,6 +85,9 @@ fun OnboardingFooter(
 
             if(nextPage < totalPage){
                 Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                    ),
                     onClick = {
                         onNext()
                     }

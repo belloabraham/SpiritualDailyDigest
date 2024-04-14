@@ -1,10 +1,11 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.co.touchlab.skie)
+    alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.google.services)
 }
 
 kotlin {
@@ -47,6 +48,18 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
 
+
+            implementation(dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.firestore)
+            implementation(libs.firebase.analytics)
+            implementation(libs.firebase.crashlytics)
+            implementation(libs.firebase.auth)
+            implementation(libs.firebase.appcheck.playintegrity)
+            implementation(libs.firebase.storage)
+            implementation(libs.play.services.auth)
+            implementation(libs.firebase.messaging)
+            implementation(libs.firebase.config)
+
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -77,14 +90,25 @@ kotlin {
 
 
             implementation(libs.material3.windowsizeclass.multiplatform)
-            implementation(libs.androidx.datastore.preferences.core)
 
             implementation (libs.co.touchlab.skie.annotations)
+
+            implementation(libs.realm.kotlin.library)
+
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.gitlive.firebase.common)
+            implementation(libs.gitlive.firebase.firestore)
+            implementation(libs.gitlive.firebase.auth)
+            implementation(libs.gitlive.firebase.crashlytics)
+            implementation(libs.gitlive.firebase.storage)
 
             implementation (projects.core.resources)
             implementation (projects.core.common)
             implementation (projects.core.data)
             implementation (projects.feature.onboarding)
+            implementation (projects.feature.home)
+            implementation (projects.feature.permission)
+            
         }
     }
 }

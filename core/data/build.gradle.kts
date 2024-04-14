@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.realm.kotlin.plugin)
 }
 
 kotlin {
@@ -9,7 +10,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "1.8"
             }
         }
     }
@@ -29,11 +30,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.androidx.datastore.preferences.core)
-        }
-        androidMain.dependencies {
-            implementation(libs.androidx.datastore)
-            api(libs.androidx.startup)
+            implementation(libs.realm.kotlin.library)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -43,14 +40,13 @@ kotlin {
 
 android {
     namespace = "org.cccsharonparish.core.data"
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }

@@ -32,53 +32,47 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
+interface IOnboardingScreen:Screen{
+    var nextScreen:Screen?
+}
 
-class OnboardingScreen(
-    private val uiState: List<OnboardingPageUIState>,
-    private val footerUiState: OnboardingPageFooterUIState
-) : Screen {
+expect fun getOnboardingScreen(uiState: List<OnboardingPageUIState>,
+                               footerUiState: OnboardingPageFooterUIState): IOnboardingScreen
 
-    @OptIn(
-        ExperimentalMaterial3WindowSizeClassApi::class,
-        ExperimentalFoundationApi::class
-    )
-    @Composable
-    override fun Content() {
-
-        val windowSizeClass = calculateWindowSizeClass()
-        val onboardingUIStates by remember {
-            derivedStateOf {
-               uiState
-            }
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalFoundationApi::class)
+@Composable
+fun OnBoardingPage(
+    uiState: List<OnboardingPageUIState>,
+    footerUiState: OnboardingPageFooterUIState,
+    onSkip: () -> Unit
+) {
+    val windowSizeClass = calculateWindowSizeClass()
+    val onboardingUIStates by remember {
+        derivedStateOf {
+            uiState
         }
-
-        val scope = rememberCoroutineScope()
-        val pagerState = rememberPagerState(pageCount = {
-            onboardingUIStates.size
-        })
-
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            OnBoardingPager(
-                onboardingPageUIStates = onboardingUIStates,
-                footerUIStates = footerUiState,
-                pagerState = pagerState,
-                coroutineScope = scope,
-                smallSize = Size.small(windowSizeClass),
-                mediumSize = Size.medium(windowSizeClass),
-                xLargeSize = Size.xLarge(windowSizeClass)
-            ) {
-                closeOnboardingActivity()
-            }
-        }
-
     }
 
-    private fun closeOnboardingActivity() {
-//      TODO  setResult(RequestCode.ONBOARDING)
-//        finish()
+    val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState(pageCount = {
+        onboardingUIStates.size
+    })
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        OnBoardingPager(
+            onboardingPageUIStates = onboardingUIStates,
+            footerUIStates = footerUiState,
+            pagerState = pagerState,
+            coroutineScope = scope,
+            smallSize = Size.small(windowSizeClass),
+            mediumSize = Size.medium(windowSizeClass),
+            xLargeSize = Size.xLarge(windowSizeClass)
+        ) {
+            onSkip()
+        }
     }
 }
 

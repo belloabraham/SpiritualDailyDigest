@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.androidLibrary)
 }
 
@@ -44,7 +45,10 @@ kotlin {
             implementation (libs.co.touchlab.kermit)
             implementation (libs.androidx.datastore.preferences.core)
             implementation(libs.material3)
+
             implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.serialization.json)
+
 
             implementation (projects.core.resources)
             implementation(projects.core.data)

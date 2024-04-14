@@ -1,12 +1,19 @@
 package di
 
+import org.cccsharonparish.core.data.realm.LocalDb
+import org.cccsharonparish.core.data.repo.IPreferenceRepo
+import org.cccsharonparish.core.data.repo.PreferenceRepo
 import org.koin.dsl.module
-import org.cccsharonparish.core.data.preference.DataStore
-import org.cccsharonparish.core.data.preference.IDatastore
-import org.cccsharonparish.core.data.preference.dataStorePreferences
+import org.cccsharonparish.feature.home.HomeScreenModel
 
 val appModule = module {
-    single<IDatastore> {
-        DataStore(dataStorePreferences())
+    single(createdAtStart = true) {
+        LocalDb().instance
+    }
+    single<IPreferenceRepo>{
+        PreferenceRepo(get())
+    }
+    factory {
+        HomeScreenModel()
     }
 }

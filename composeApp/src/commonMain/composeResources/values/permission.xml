@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~
+  ~ Created by Bello Abraham on 10/2023
+  ~
+  -->
+
+<resources>
+    <string name="ok">Ok</string>
+    <string name="notification_perm_title">Notification</string>
+    <string name="notification_perm_rationale">🎶Halleluyah! We're delighted to have you as part of our hymnal community.🎶
+        🔔Want to stay in tune with all the latest updates, new hymns, and important notifications? Simply grant notification permission to enhance your hymnal experience. Here's why:\n#Receive timely updates about new hymns, special events, and community announcements right when they happen.\n#Stay informed about important support notifications and updates that could enhance your overall app experience and address any issues promptly.
+    </string>
+</resources>
