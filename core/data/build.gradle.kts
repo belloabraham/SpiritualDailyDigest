@@ -31,6 +31,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.realm.kotlin.library)
+            implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -105,10 +105,7 @@ kotlin {
             implementation (projects.core.resources)
             implementation (projects.core.common)
             implementation (projects.core.data)
-            implementation (projects.feature.onboarding)
-            implementation (projects.feature.home)
-            implementation (projects.feature.permission)
-            
+            implementation (projects.core.ui)
         }
     }
 }

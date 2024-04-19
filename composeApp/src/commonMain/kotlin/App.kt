@@ -1,37 +1,32 @@
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.Navigator
 import di.appModule
+import di.screenModelModule
 import org.cccsharonparish.core.data.repo.IPreferenceRepo
-import org.cccsharonparish.feature.home.HomeScreen
-import org.cccsharonparish.feature.onboarding.IOnboardingScreen
-import org.cccsharonparish.feature.onboarding.getOnboardingScreen
-import org.cccsharonparish.feature.permission.getPermissionScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import screen.FeatureScreen
-import screen.onboarding.getAListOfOnboardingPageUIStates
-import screen.onboarding.getOnboardingPageFooterUIState
-import screen.permission.GetPermissionUIState
+import screen.home.HomeScreen
+import screen.onboarding.getOnboardingScreen
+import screen.permission.getPermissionUIState
+import screen.permission.getPermissionScreen
 import screen.registerFeatureScreens
 import theme.AppTheme
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 @Preview
 fun App() {
     KoinApplication(application = {
-        modules(appModule)
+        modules(appModule + screenModelModule)
     }) {
 
         registerFeatureScreens(
-            onboardingScreen = GetOnboardingScreen(),
+            onboardingScreen = getOnboardingScreen(),
             homeScreen = HomeScreen(),
-            permissionScreen = getPermissionScreen(permissionUIState = GetPermissionUIState())
+            permissionScreen = getPermissionScreen(permissionUIState = getPermissionUIState())
         )
 
         AppTheme(isSystemInDarkTheme()) {
@@ -50,16 +45,4 @@ fun App() {
 
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@Composable
-fun GetOnboardingScreen(): IOnboardingScreen {
-    val windowSizeClass = calculateWindowSizeClass()
-    val onboardingPageUIStates = getAListOfOnboardingPageUIStates(windowSizeClass)
-    val onboardingPageFooterUIState = getOnboardingPageFooterUIState()
-    return getOnboardingScreen(
-        uiState = onboardingPageUIStates,
-        footerUiState = onboardingPageFooterUIState,
-    )
 }

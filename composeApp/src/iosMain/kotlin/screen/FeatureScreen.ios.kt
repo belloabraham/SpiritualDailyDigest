@@ -1,9 +1,9 @@
 package screen
 
 import cafe.adriel.voyager.core.registry.ScreenRegistry
-import org.cccsharonparish.feature.home.HomeScreen
-import org.cccsharonparish.feature.onboarding.IOnboardingScreen
-import org.cccsharonparish.feature.permission.IPermissionScreen
+import screen.home.HomeScreen
+import screen.onboarding.IOnboardingScreen
+import screen.permission.IPermissionScreen
 
 actual fun registerFeatureScreens(
     onboardingScreen: IOnboardingScreen,

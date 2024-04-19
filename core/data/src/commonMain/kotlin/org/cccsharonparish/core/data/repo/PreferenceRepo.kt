@@ -5,8 +5,13 @@ import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
-class PreferenceRepo(private val localDb: Realm) : IPreferenceRepo {
+class PreferenceRepo(private val localDb: Realm,  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : IPreferenceRepo {
 
     private fun getPreference(mutableRealm: MutableRealm):  Preference? {
         return try {
@@ -26,11 +31,13 @@ class PreferenceRepo(private val localDb: Realm) : IPreferenceRepo {
 
 
     override suspend fun setUserExitedOnboardingScreen(value: Boolean) {
-        localDb.write {
-            val preference = getPreference(this) ?: Preference()
-            copyToRealm(preference.apply {
-                userExitedOnboarding = value
-            }, UpdatePolicy.ALL)
+        withContext(dispatcher) {
+            localDb.write {
+                val preference = getPreference(this) ?: Preference()
+                copyToRealm(preference.apply {
+                    userExitedOnboarding = value
+                }, UpdatePolicy.ALL)
+            }
         }
     }
 

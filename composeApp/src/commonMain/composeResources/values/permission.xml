@@ -7,7 +7,5 @@
 <resources>
     <string name="ok">Ok</string>
     <string name="notification_perm_title">Notification</string>
-    <string name="notification_perm_rationale">🎶Halleluyah! We're delighted to have you as part of our hymnal community.🎶
-        🔔Want to stay in tune with all the latest updates, new hymns, and important notifications? Simply grant notification permission to enhance your hymnal experience. Here's why:\n#Receive timely updates about new hymns, special events, and community announcements right when they happen.\n#Stay informed about important support notifications and updates that could enhance your overall app experience and address any issues promptly.
-    </string>
+    <string name="notification_perm_rationale">To ensure you never miss a moment of inspiration, we'd love to send you daily notifications with our handpicked devotional content.\n Here's why granting notification access is beneficial:\n#Receive a daily dose of encouragement, wisdom, and reflection to uplift your day.\n #Get reminders to engage with your daily devotional, making it a seamless part of your routine.\n#Tailored notifications based on your preferences, ensuring relevance and resonance.</string>
 </resources>

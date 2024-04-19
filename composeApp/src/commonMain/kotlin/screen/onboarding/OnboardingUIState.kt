@@ -1,42 +1,32 @@
 package screen.onboarding
 
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import cafe.adriel.voyager.core.lifecycle.JavaSerializable
+import org.jetbrains.compose.resources.DrawableResource
 import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.app_name
-import spiritualdailydigest.composeapp.generated.resources.back_button
-import spiritualdailydigest.composeapp.generated.resources.lets_get_started
-import spiritualdailydigest.composeapp.generated.resources.next
 import spiritualdailydigest.composeapp.generated.resources.onboarding_description
 import spiritualdailydigest.composeapp.generated.resources.onboarding_subtitle
 import spiritualdailydigest.composeapp.generated.resources.onboarding_title
-import spiritualdailydigest.composeapp.generated.resources.skip
-import org.cccsharonparish.feature.onboarding.OnboardingPageFooterUIState
-import org.cccsharonparish.feature.onboarding.OnboardingPageUIState
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 
-@Composable
-@OptIn(ExperimentalResourceApi::class)
-fun getOnboardingPageFooterUIState(): OnboardingPageFooterUIState {
-    val back = stringResource(Res.string.back_button)
-    val next = stringResource(Res.string.next)
-    val skip = stringResource(Res.string.skip)
-    val getStarted = stringResource(Res.string.lets_get_started)
-    return OnboardingPageFooterUIState(
-        next = next,
-        back = back,
-        getStarted = getStarted,
-        skip = skip
-    )
-}
+data class OnboardingPageUIState @OptIn(ExperimentalResourceApi::class) constructor(
+    val title:String,
+    val subTitle:String,
+    val description:String,
+    val imageRes: DrawableResource,
+): JavaSerializable
 
 @Composable
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 fun getAListOfOnboardingPageUIStates(
-    windowSizeClass: WindowSizeClass
 ): List<OnboardingPageUIState> {
+    val windowSizeClass = calculateWindowSizeClass()
     val listOfOnboardingPageUIState = mutableListOf<OnboardingPageUIState>()
     val onboardingImages = arrayOf(
         OnboardingImage.appLogo(windowSizeClass),
