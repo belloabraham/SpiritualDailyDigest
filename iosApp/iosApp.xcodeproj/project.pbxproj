@@ -19,7 +19,7 @@
 		3F3BB60A2BC86A2700ECF72D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3BB6092BC86A2700ECF72D /* FirebaseMessaging */; };
 		3F3BB60C2BC86A2700ECF72D /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3BB60B2BC86A2700ECF72D /* FirebaseRemoteConfig */; };
 		3F3BB60E2BC86A2700ECF72D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3BB60D2BC86A2700ECF72D /* FirebaseStorage */; };
-		3F3BB61C2BC8750000ECF72D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F3BB61B2BC8750000ECF72D /* GoogleService-Info.plist */; };
+		3F91D3A42BD3004C00111190 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F91D3A32BD3004C00111190 /* GoogleService-Info.plist */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +27,7 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		3F3BB61B2BC8750000ECF72D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3F91D3A32BD3004C00111190 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iosApp.app; path = SpiritualDailyDigest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				3F3BB61B2BC8750000ECF72D /* GoogleService-Info.plist */,
+				3F91D3A32BD3004C00111190 /* GoogleService-Info.plist */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -183,7 +183,7 @@
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
-				3F3BB61C2BC8750000ECF72D /* GoogleService-Info.plist in Resources */,
+				3F91D3A42BD3004C00111190 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
