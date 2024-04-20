@@ -45,7 +45,7 @@ kotlin {
         commonMain.dependencies {
             //put your multiplatform dependencies here
             implementation (libs.co.touchlab.kermit)
-           // implementation(compose.material3)
+            implementation(compose.material3)
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
@@ -53,7 +53,6 @@ kotlin {
 
             implementation (projects.core.resources)
             implementation(projects.core.data)
-
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -16,9 +16,9 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import org.cccsharonparish.core.resources.LightColorScheme
 import org.cccsharonparish.core.resources.R
 import org.cccsharonparish.core.common.helpers.utils.IconUtil
+import org.cccsharonparish.core.resources.LightColorScheme
 
 
 class NotificationBuilder(

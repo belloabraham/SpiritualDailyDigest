@@ -6,8 +6,10 @@
 
 package org.cccsharonparish.core.resources
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 
@@ -199,3 +201,13 @@ val DarkColorScheme = darkColorScheme(
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
 )
+
+@Composable
+fun ratingColorScheme(): Color {
+    return if(isSystemInDarkTheme()) Color(0xffeac406) else Color(0xFFFFC000)
+}
+
+@Composable
+fun iconColor(): Color {
+    return if(isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+}
