@@ -3,39 +3,36 @@ agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.8.2"
+androidx-activityCompose = "1.9.0"
 androidx-appcompat = "1.6.1"
 androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.12.0"
+androidx-core-ktx = "1.13.0"
 androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
-compose = "1.6.5"
-compose-plugin = "1.6.10-dev1561"
-datastorePreferencesCore = "1.1.0-rc01"
+compose = "1.6.6"
+compose-plugin = "1.6.2"
+composeWebviewMultiplatform = "1.9.2"
 junit = "4.13.2"
 kotlin = "1.9.23"
 kotlinxDatetime = "0.6.0-RC.2"
-libraryBase = "1.11.0"
 material3WindowSize = "0.3.1"
 skie="0.6.2"
 kermit="2.0.3"
 core-splashscreen =  "1.1.0-rc01"
-material3="1.6.1"
 voyagerVersion = "1.0.0"
 ktor = "2.3.9"
 coroutines = "1.8.0"
 app-update = "2.1.0"
 app-review = "2.0.1"
 toasty ="1.5.2"
-datastore="1.0.0"
 androidx-startup = "1.1.1"
 koinBom = "3.5.1"
 kotlinx-serialization="1.6.3"
 crashlytics="2.9.9"
 google-services="4.4.1"
-firebaseBom = "32.8.0"
-playServicesAuth = "21.0.0"
+firebaseBom = "32.8.1"
+playServicesAuth = "21.1.0"
 gitlive-firebase="1.12.0"
 realm="1.11.0"
 
@@ -43,8 +40,7 @@ realm="1.11.0"
 [libraries]
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
-androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastorePreferencesCore" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences",  version.ref = "datastore" }
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -78,9 +74,7 @@ gitlive-firebase-storage = { module = "dev.gitlive:firebase-storage", version.re
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref ="core-splashscreen"}
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 realm-kotlin-library = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "material3" }
 material3-windowsizeclass-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "material3WindowSize" }
-
 
 
 koin-android = { module = "io.insert-koin:koin-android" }

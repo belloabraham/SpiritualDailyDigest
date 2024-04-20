@@ -29,7 +29,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.material3)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(libs.material3.windowsizeclass.multiplatform)
         }

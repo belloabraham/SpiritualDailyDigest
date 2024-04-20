@@ -1,7 +1,6 @@
 package screen.permission
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -27,11 +26,10 @@ import org.cccsharonparish.core.resources.Size
 
 class PermissionScreen(
     private val permissionUIState: PermissionUIState,
-) : IPermissionScreen{
+    private val permission:String
+) : Screen{
 
-    override var permission: String? = null
-    override var nextScreen: Screen? = null
-    override var minSDKVersion: Int? = null
+    var nextScreen: Screen? = null
 
     @SuppressLint("NewApi")
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -61,17 +59,10 @@ class PermissionScreen(
                 Text(text = permissionUIState.rationale, style = MaterialTheme.typography.bodyLarge)
             }
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
-                if (Build.VERSION.SDK_INT >= minSDKVersion!!){
                     permissionDialog.launch(permission)
-                }
             }) {
                 Text(text = permissionUIState.proceedText )
             }
         }
     }
-}
-
-
-actual fun getPermissionScreen(permissionUIState: PermissionUIState): IPermissionScreen {
-   return PermissionScreen(permissionUIState)
 }

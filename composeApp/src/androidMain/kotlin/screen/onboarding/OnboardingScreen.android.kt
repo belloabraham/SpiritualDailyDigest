@@ -1,25 +1,44 @@
 package screen.onboarding
 
+import android.os.Build
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import org.cccsharonparish.core.common.helpers.notification.Notification
+import org.cccsharonparish.spiritualdailydigest.applicationContext
+import screen.home.HomeScreen
+import screen.permission.PermissionScreen
+import screen.permission.getPermissionUIState
 
-
-actual fun getOnboardingScreen(
-): IOnboardingScreen {
+actual fun getOnboardingScreen(): Screen{
     return OnboardingScreen()
 }
 
 
 class OnboardingScreen(
-) : IOnboardingScreen {
-    override var nextScreen: Screen? = null
+) : Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        OnBoardingPage{
-               navigator?.replace(nextScreen!!)
+        val permissionUIState = getPermissionUIState()
+        val homeScreen = HomeScreen()
+        OnBoardingPage {
+            val deviceRequiresNotificationPermission =
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+            val nextScreen =
+                if (deviceRequiresNotificationPermission && !Notification.isPermissionGranted(
+                        applicationContext
+                    )
+                ) {
+                    val permissionScreen =
+                        PermissionScreen(permissionUIState, Notification.PERMISSION)
+                    permissionScreen.nextScreen = homeScreen
+                    permissionScreen
+                } else {
+                    homeScreen
+                }
+            navigator?.replace(nextScreen)
         }
     }
 

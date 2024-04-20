@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsCompose)
+
 }
 
 kotlin {
@@ -43,8 +45,7 @@ kotlin {
         commonMain.dependencies {
             //put your multiplatform dependencies here
             implementation (libs.co.touchlab.kermit)
-            implementation (libs.androidx.datastore.preferences.core)
-            implementation(libs.material3)
+           // implementation(compose.material3)
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)

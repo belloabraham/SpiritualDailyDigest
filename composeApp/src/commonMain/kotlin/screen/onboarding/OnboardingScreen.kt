@@ -32,11 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-interface IOnboardingScreen:Screen{
-    var nextScreen:Screen?
-}
-
-expect fun getOnboardingScreen(): IOnboardingScreen
+expect fun getOnboardingScreen(): Screen
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalFoundationApi::class)
 @Composable

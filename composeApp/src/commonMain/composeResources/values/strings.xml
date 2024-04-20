@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Spiritual Daily Digest</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="lets_get_started">Let's Get Started</string>
+    <string name="back_button">Back</string>
+
+    <string name="onboarding_title_1">Welcome to</string>
+    <string name="onboarding_title_2">Get Daily Doses</string>
+    <string name="onboarding_title_3">Listen</string>
+    <string name="onboarding_title_4">Bookmark</string>
+    <string name="onboarding_title_5">Stay Inspired</string>
+    <string name="onboarding_title_6">Explore in Your</string>
+
+    <string name="onboarding_description_1">Begin your path to enlightenment with the Spiritual Daily Digest. Embrace spirituality in the palm of your hand. </string>
+    <string name="onboarding_description_2">Delve into thought-provoking religious content every day to nurture your soul.</string>
+    <string name="onboarding_description_3">Enjoy audio versions of our spiritual texts, perfect for a mindful commute or a peaceful evening.</string>
+    <string name="onboarding_description_4">Save your favourite content to read later. Easily access your most cherished passages whenever you need them.</string>
+    <string name="onboarding_description_5">Receive daily reminders to read new content at your chosen time. Stay inspired and uplifted every day.</string>
+    <string name="onboarding_description_6">Unlock daily Christian spiritual insights in the language that speaks to your heart. Whether it\'s English, French, or Yoruba, we\'ve got you covered.</string>
+
+    <string name="onboarding_subtitle_1">of Spiritual Enlightenment</string>
+    <string name="onboarding_subtitle_2">Anytime, Anywhere</string>
+    <string name="onboarding_subtitle_3">for later reference</string>
+    <string name="onboarding_subtitle_4">with Notifications</string>
+    <string name="onboarding_subtitle_5">Preferred Language</string>
+
+
+    <string name="ok">Ok</string>
+    <string name="notification_perm_title">Notification</string>
+    <string name="notification_perm_rationale">To ensure you never miss a moment of inspiration, we'd love to send you daily notifications with our handpicked devotional content.\n Here's why granting notification access is beneficial:\n#Receive a daily dose of encouragement, wisdom, and reflection to uplift your day.\n #Get reminders to engage with your daily devotional, making it a seamless part of your routine.\n#Tailored notifications based on your preferences, ensuring relevance and resonance.</string>
+
+</resources>
