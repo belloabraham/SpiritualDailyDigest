@@ -21,16 +21,20 @@ class NotificationChannelBuilder(
 ) {
 
     fun createANotificationChannels(
-        notificationDescription:String,
-        notificationChannelId:String,
-        color:Int
-    ){
+        notificationDescription: String,
+        notificationChannelId: String,
+        color: Int,
+        @RawRes customSoundRes: Int?
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 notificationChannelId, notificationDescription,
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channelSettings(notificationChannel, notificationDescription, color)
+            channelSettings(
+                notificationChannel, notificationDescription, color,
+                customSoundRes = customSoundRes
+            )
             val nManager = context.getSystemService(
                 NotificationManager::class.java
             )!!
@@ -58,9 +62,12 @@ class NotificationChannelBuilder(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setCustomSound(@RawRes customSoundRes: Int?, notificationChannel: NotificationChannel){
+    private fun setCustomSound(
+        @RawRes customSoundRes: Int?,
+        notificationChannel: NotificationChannel
+    ) {
         val customSoundExist = customSoundRes != null
-        if(customSoundExist){
+        if (customSoundExist) {
             val soundPath =
                 Uri.parse("${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.packageName}/$customSoundRes")
             val attributes = AudioAttributes.Builder()

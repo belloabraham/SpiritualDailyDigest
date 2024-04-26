@@ -3,7 +3,7 @@ package screen.onboarding
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import screen.home.HomeScreen
+import screen.notification.OnboardingNotificationTimeScreen
 
 actual fun getOnboardingScreen(
 ) :Screen{
@@ -16,7 +16,7 @@ class OnboardingScreen(
     override fun Content() {
         val navigator = LocalNavigator.current
         OnBoardingPage() {
-            navigator?.replace(HomeScreen())
+            navigator?.replace(OnboardingNotificationTimeScreen())
         }
     }
 

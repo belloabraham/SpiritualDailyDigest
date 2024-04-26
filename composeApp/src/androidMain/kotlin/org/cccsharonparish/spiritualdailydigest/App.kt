@@ -26,7 +26,8 @@ class App : Application() {
         notificationChannel.createANotificationChannels(
             notificationDescription = getString(R.string.notification_channel_desc),
             notificationChannelId = getString(R.string.notification_channel_id),
-            LightColorScheme.primary.toArgb()
+            LightColorScheme.primary.toArgb(),
+            customSoundRes = R.raw.notification_sound
         )
     }
 }

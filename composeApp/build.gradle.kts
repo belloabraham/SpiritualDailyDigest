@@ -89,6 +89,8 @@ kotlin {
             implementation(libs.voyager.koin)
 
 
+            implementation(libs.landscapist.coil3)
+
             implementation(libs.material3.windowsizeclass.multiplatform)
             implementation(libs.compose.webview.multiplatform)
 

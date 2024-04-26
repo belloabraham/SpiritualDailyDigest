@@ -7,6 +7,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import org.cccsharonparish.core.common.helpers.notification.Notification
 import org.cccsharonparish.spiritualdailydigest.applicationContext
 import screen.home.HomeScreen
+import screen.notification.OnboardingNotificationTimeScreen
 import screen.permission.PermissionScreen
 import screen.permission.getPermissionUIState
 
@@ -22,7 +23,7 @@ class OnboardingScreen(
     override fun Content() {
         val navigator = LocalNavigator.current
         val permissionUIState = getPermissionUIState()
-        val homeScreen = HomeScreen()
+        val onboardingNotificationTimeScreen = OnboardingNotificationTimeScreen()
         OnBoardingPage {
             val deviceRequiresNotificationPermission =
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
@@ -33,10 +34,10 @@ class OnboardingScreen(
                 ) {
                     val permissionScreen =
                         PermissionScreen(permissionUIState, Notification.PERMISSION)
-                    permissionScreen.nextScreen = homeScreen
+                    permissionScreen.nextScreen = onboardingNotificationTimeScreen
                     permissionScreen
                 } else {
-                    homeScreen
+                    onboardingNotificationTimeScreen
                 }
             navigator?.replace(nextScreen)
         }

@@ -1,6 +1,7 @@
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import di.appModule
 import di.screenModelModule
 import org.cccsharonparish.core.data.repo.IPreferenceRepo
@@ -8,6 +9,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import screen.home.HomeScreen
+import screen.notification.NotificationTimeScreen
 import screen.onboarding.getOnboardingScreen
 import theme.AppTheme
 
@@ -23,11 +25,15 @@ fun App() {
             val userExitedOnboardingScreen = koinInject<IPreferenceRepo>().getUserExitedOnboardingScreen()
             
             if (userExitedOnboardingScreen) {
-                Navigator(HomeScreen())
+                Navigator(HomeScreen("")) { navigator ->
+                    SlideTransition(navigator)
+                }
             }
 
             if (!userExitedOnboardingScreen) {
-                Navigator(getOnboardingScreen())
+                Navigator(getOnboardingScreen()) { navigator ->
+                    SlideTransition(navigator)
+                }
             }
 
         }

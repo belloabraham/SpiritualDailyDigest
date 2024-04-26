@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -43,6 +44,7 @@ class PermissionScreen(
                 navigator?.replace(nextScreen!!)
             }
         )
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier.fillMaxSize().padding(Size.medium(windowSizeClass)),
             verticalArrangement = Arrangement.SpaceBetween,
@@ -52,7 +54,7 @@ class PermissionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(scrollState)
             ) {
                 Text(text = permissionUIState.title, style = MaterialTheme.typography.headlineLarge)
                 Spacer(modifier = Modifier.height(Size.medium(windowSizeClass)))
