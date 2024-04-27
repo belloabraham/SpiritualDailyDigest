@@ -4,13 +4,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -18,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -73,6 +77,7 @@ import screen.options.MoreOptionsScreen
 import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.chevron_left_24px
 import spiritualdailydigest.composeapp.generated.resources.chevron_right_24px
+import spiritualdailydigest.composeapp.generated.resources.expand_all_24px
 import spiritualdailydigest.composeapp.generated.resources.favorite_fill_24px
 import spiritualdailydigest.composeapp.generated.resources.more_vert_24px
 import spiritualdailydigest.composeapp.generated.resources.play_circle_24px
@@ -92,15 +97,16 @@ class HomeScreen(private val id: String) : Screen {
         val navigator = LocalNavigator.current
         val mediumSize = Size.medium(windowSizeClass)
         val smallSize = Size.small(windowSizeClass)
+        val largeSize = Size.large(windowSizeClass)
         var openModalBottomSheet by rememberSaveable { mutableStateOf(false) }
         val bottomSheetState = rememberModalBottomSheetState()
         val languages = getLanguages()
         val navigationItems = getNavigationItems()
         var selectedIndex by remember { mutableIntStateOf(0) }
         val scope = rememberCoroutineScope()
-        val scrollState = rememberScrollState()
         val scrollBehavior =
             TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+        var sliderPosition by remember { mutableFloatStateOf(0f) }
 
         LaunchedEffect(Unit) {
             screenModel.setUserExitedOnboardingScreen(true)
@@ -130,7 +136,9 @@ class HomeScreen(private val id: String) : Screen {
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
         ) {
             Column(Modifier.padding(it).padding(bottom = mediumSize)) {
-                Column(Modifier.weight(1f).verticalScroll(scrollState)) {
+                Column(
+                    Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(bottom = mediumSize)
+                ) {
 
                     CoilImage(
                         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(4.dp)),
@@ -144,7 +152,12 @@ class HomeScreen(private val id: String) : Screen {
                                     0.1f
                                 )
                             })
-                        )
+                        ),
+                        loading = {
+                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(Modifier.size(largeSize))
+                            }
+                        }
                     )
 
                     Spacer(Modifier.height(mediumSize))
@@ -163,11 +176,14 @@ class HomeScreen(private val id: String) : Screen {
 
                     Column(Modifier.padding(horizontal = mediumSize)) {
 
-                        Text("Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?", fontStyle = FontStyle.Italic)
+                        Text(
+                            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?",
+                            fontStyle = FontStyle.Italic
+                        )
                         Text(
                             "Psalm 118:1-8",
                             modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.End,  fontStyle = FontStyle.Italic,
+                            textAlign = TextAlign.End, fontStyle = FontStyle.Italic,
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -206,7 +222,7 @@ class HomeScreen(private val id: String) : Screen {
                         openModalBottomSheet = true
                     }) {
                         Icon(
-                            painter = painterResource(Res.drawable.more_vert_24px),
+                            painter = painterResource(Res.drawable.expand_all_24px),
                             contentDescription = "More options",
                             tint = iconColor()
                         )
@@ -232,16 +248,14 @@ class HomeScreen(private val id: String) : Screen {
                 }
             }
 
-            var sliderPosition by remember { mutableFloatStateOf(0f) }
 
             if (openModalBottomSheet) {
                 ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
                     openModalBottomSheet = false
                 }) {
-                    val horizontalScrollState = rememberScrollState()
                     Column(Modifier.fillMaxWidth().padding(bottom = 40.dp)) {
                         Row(
-                            modifier = Modifier.horizontalScroll(horizontalScrollState)
+                            modifier = Modifier.horizontalScroll(rememberScrollState())
                                 .padding(horizontal = mediumSize)
                         ) {
                             SingleChoiceSegmentedButtonRow {
@@ -262,10 +276,13 @@ class HomeScreen(private val id: String) : Screen {
 
                         Spacer(Modifier.height(mediumSize))
 
-                        Row(Modifier.padding(horizontal = mediumSize), verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            Modifier.padding(horizontal = mediumSize),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Icon(
                                 painter = painterResource(Res.drawable.text_decrease_24px),
-                                contentDescription = "Share"
+                                contentDescription = "Text decrease"
                             )
                             Spacer(Modifier.width(8.dp))
                             Slider(
@@ -276,7 +293,7 @@ class HomeScreen(private val id: String) : Screen {
                             Spacer(Modifier.width(8.dp))
                             Icon(
                                 painter = painterResource(Res.drawable.text_increase_24px),
-                                contentDescription = "Share"
+                                contentDescription = "Text increase"
                             )
                         }
 

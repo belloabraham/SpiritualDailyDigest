@@ -44,7 +44,6 @@ class PermissionScreen(
                 navigator?.replace(nextScreen!!)
             }
         )
-        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier.fillMaxSize().padding(Size.medium(windowSizeClass)),
             verticalArrangement = Arrangement.SpaceBetween,
@@ -54,7 +53,7 @@ class PermissionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .verticalScroll(scrollState)
+                    .verticalScroll(rememberScrollState())
             ) {
                 Text(text = permissionUIState.title, style = MaterialTheme.typography.headlineLarge)
                 Spacer(modifier = Modifier.height(Size.medium(windowSizeClass)))
