@@ -33,6 +33,7 @@ import getAppVersion
 import getNavigationIcon
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.iconColor
+import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -45,6 +46,7 @@ import spiritualdailydigest.composeapp.generated.resources.app_icon_fill
 import spiritualdailydigest.composeapp.generated.resources.app_name
 import spiritualdailydigest.composeapp.generated.resources.contact_us
 import spiritualdailydigest.composeapp.generated.resources.developer
+import spiritualdailydigest.composeapp.generated.resources.favourites
 import spiritualdailydigest.composeapp.generated.resources.follow_us_on
 import spiritualdailydigest.composeapp.generated.resources.ic_launcher
 import spiritualdailydigest.composeapp.generated.resources.linkedin
@@ -55,8 +57,8 @@ import spiritualdailydigest.composeapp.generated.resources.website
 
 class AboutScreen:Screen {
     @OptIn(
-        ExperimentalMaterial3Api::class, ExperimentalResourceApi::class,
-        ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalLayoutApi::class
+        ExperimentalResourceApi::class,
+        ExperimentalMaterial3WindowSizeClassApi::class
     )
     @Composable
     override fun Content() {
@@ -69,22 +71,9 @@ class AboutScreen:Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navigator?.pop()
-                        }) {
-                            Icon(
-                                painterResource(getNavigationIcon()),
-                                contentDescription = "Back",
-                                tint = iconColor()
-                            )
-                        }
-                    },
-                    title = {
-                        Text(stringResource(Res.string.about))
-                    }
-                )
+                Header(Res.string.about, getNavigationIcon()){
+                    navigator?.pop()
+                }
             },
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background).navigationBarsPadding()
@@ -116,7 +105,6 @@ class AboutScreen:Screen {
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-
                         Column(Modifier.padding(horizontal = sizeMedium)) {
                             Text(stringResource(Res.string.about_description))
 

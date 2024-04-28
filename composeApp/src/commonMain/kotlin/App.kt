@@ -20,20 +20,15 @@ fun App() {
         modules(appModule + screenModelModule)
     }) {
 
-
         AppTheme(isSystemInDarkTheme()) {
-            val userExitedOnboardingScreen = koinInject<IPreferenceRepo>().getUserExitedOnboardingScreen()
-            
-            if (userExitedOnboardingScreen) {
-                Navigator(HomeScreen("")) { navigator ->
-                    SlideTransition(navigator)
-                }
-            }
+            val userExitedOnboardingScreen =
+                koinInject<IPreferenceRepo>().getUserExitedOnboardingScreen()
 
-            if (!userExitedOnboardingScreen) {
-                Navigator(getOnboardingScreen()) { navigator ->
-                    SlideTransition(navigator)
-                }
+            val nextScreen =
+                if (userExitedOnboardingScreen) HomeScreen("") else getOnboardingScreen()
+
+            Navigator(nextScreen) { navigator ->
+                SlideTransition(navigator)
             }
 
         }

@@ -19,14 +19,16 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import getNavigationIcon
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.iconColor
+import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.about
 import spiritualdailydigest.composeapp.generated.resources.favourites
+import spiritualdailydigest.composeapp.generated.resources.notification_time_title
 
-class FavouritesScreen :Screen {
+class FavouritesScreen:Screen {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class,
         ExperimentalResourceApi::class
@@ -39,22 +41,9 @@ class FavouritesScreen :Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navigator?.pop()
-                        }) {
-                            Icon(
-                                painterResource(getNavigationIcon()),
-                                contentDescription = "Back",
-                                tint = iconColor()
-                            )
-                        }
-                    },
-                    title = {
-                        Text(stringResource(Res.string.favourites))
-                    }
-                )
+                Header(Res.string.favourites, getNavigationIcon()){
+                    navigator?.pop()
+                }
             },
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background).navigationBarsPadding()

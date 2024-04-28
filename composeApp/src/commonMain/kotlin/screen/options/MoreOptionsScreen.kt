@@ -31,6 +31,7 @@ import getNavigationIcon
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.iconColor
 import org.cccsharonparish.core.resources.ratingColorScheme
+import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -64,9 +65,7 @@ import spiritualdailydigest.composeapp.generated.resources.your_feedback
 class MoreOptionsScreen:Screen {
 
     @OptIn(
-        ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class,
-        ExperimentalMaterial3Api::class
-    )
+        ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val windowSizeClass = calculateWindowSizeClass()
@@ -75,20 +74,9 @@ class MoreOptionsScreen:Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navigator?.pop()
-                        }) {
-                            Icon(
-                                painterResource(getNavigationIcon()),
-                                contentDescription = "Back",
-                                tint = iconColor()
-                            )
-                        }
-                    },
-                    title = {}
-                )
+                Header(navigationIcon = getNavigationIcon()){
+                    navigator?.pop()
+                }
             },
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)

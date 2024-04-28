@@ -70,6 +70,7 @@ import com.skydoves.landscapist.coil3.CoilImage
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.iconColor
+import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import screen.favourites.FavouritesScreen

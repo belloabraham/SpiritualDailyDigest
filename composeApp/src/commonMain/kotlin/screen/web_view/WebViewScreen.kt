@@ -3,6 +3,7 @@ package screen.web_view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -24,11 +25,12 @@ import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
 import getNavigationIcon
 import org.cccsharonparish.core.resources.iconColor
+import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 class WebViewScreen(private val uiState: WebViewUIState) : Screen {
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -36,28 +38,15 @@ class WebViewScreen(private val uiState: WebViewUIState) : Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navigator?.pop()
-                        }) {
-                            Icon(
-                                painterResource(getNavigationIcon()),
-                                contentDescription = null,
-                                tint = iconColor()
-                            )
-                        }
-                    },
-                    title = {
-                        Text(uiState.title)
-                    }
-                )
+                Header(uiState.title, getNavigationIcon()) {
+                    navigator?.pop()
+                }
             },
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 .navigationBarsPadding().statusBarsPadding()
         ) {
 
-            Box(Modifier.fillMaxHeight().fillMaxWidth().padding(it)) {
+            Box(Modifier.fillMaxSize().padding(it)) {
                 WebView(state)
                 if (state.isLoading) {
                     CircularProgressIndicator(Modifier.align(Alignment.Center))

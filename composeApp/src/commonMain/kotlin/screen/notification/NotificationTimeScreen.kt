@@ -31,6 +31,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import getNavigationIcon
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.iconColor
+import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -55,22 +56,9 @@ open class NotificationTimeScreen : Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navigator?.pop()
-                        }) {
-                            Icon(
-                                painterResource(getNavigationIcon()),
-                                contentDescription = "Back",
-                                tint = iconColor()
-                            )
-                        }
-                    },
-                    title = {
-                        Text(stringResource(Res.string.notification_time_title))
-                    }
-                )
+                Header(Res.string.notification_time_title, getNavigationIcon()){
+                    navigator?.pop()
+                }
             },
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)

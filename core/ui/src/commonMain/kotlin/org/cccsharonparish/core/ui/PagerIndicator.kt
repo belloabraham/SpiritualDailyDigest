@@ -74,34 +74,3 @@ fun PageIndicatorView(
         )
     }
 }
-
-@Composable
-fun PageIndicator(
-    numberOfPages: Int,
-    modifier: Modifier = Modifier,
-    selectedPage: Int = 0,
-    selectedColor: Color = Color(0xFF3E6383),
-    defaultColor: Color = Color.LightGray,
-    defaultRadius: Dp = 10.dp,
-    selectedLength: Dp = 20.dp,
-    space: Dp = 4.dp,
-    animationDurationInMillis: Int = 300,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(space),
-        modifier = modifier,
-    ) {
-        for (i in 0 until numberOfPages) {
-            val isSelected = i == selectedPage
-            PageIndicatorView(
-                isSelected = isSelected,
-                selectedColor = selectedColor,
-                defaultColor = defaultColor,
-                defaultRadius = defaultRadius,
-                selectedLength = selectedLength,
-                animationDurationInMillis = animationDurationInMillis,
-            )
-        }
-    }
-}
