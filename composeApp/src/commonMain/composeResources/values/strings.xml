@@ -14,7 +14,7 @@
     <string name="onboarding_title_5">Stay Inspired</string>
     <string name="onboarding_title_6">Explore in Your</string>
 
-    <string name="onboarding_description_1">Begin your path to enlightenment with the Spiritual Daily Digest. Embrace spirituality in the palm of your hand. </string>
+    <string name="onboarding_description_1">Begin your path to enlightenment with the Spiritual Daily Digest. Embrace spirituality in the palm of your hand.</string>
     <string name="onboarding_description_2">Delve into thought-provoking religious content every day to nurture your soul.</string>
     <string name="onboarding_description_3">Enjoy audio versions of our spiritual texts, perfect for a mindful commute or a peaceful evening.</string>
     <string name="onboarding_description_4">Save your favourite content to read later. Easily access your most cherished passages whenever you need them.</string>
@@ -57,7 +57,9 @@
     <string name="twitter_url" translatable="false">https://twitter.com</string>
     <string name="facebook_url" translatable="false">https://facebook.com</string>
     <string name="volunteer_url" translatable="false">https://facebook.com</string>
-
+    <string name="app_store_url"  translatable="false">https://mydailydigest.me</string>
+    <string name="play_store_url"  translatable="false">https://mydailydigest.me</string>
+    <string name="feedback_url"  translatable="false">https://wa.me/+2349022989829</string>
 
     <string name="need_help">Need help?</string>
     <string name="your_feedback">Your feedback</string>
@@ -72,6 +74,9 @@
 
     <string name="notification_time_title">Set Daily Notification Time</string>
     <string name="notification_time_message">Hey there! 👋 We're thrilled to have you on board with our app. The default daily notification time is 6:00 am. You can set up another time that is convenient for you.</string>
+
+
+    <string name="promotion">Begin your path to enlightenment with the Spiritual Daily Digest. Embrace spirituality in the palm of your hand.</string>
 
 
     <string name="yoruba">Yorùbá</string>

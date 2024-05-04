@@ -1,9 +1,12 @@
 package screen.favourites
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,9 +33,7 @@ import spiritualdailydigest.composeapp.generated.resources.notification_time_tit
 
 class FavouritesScreen:Screen {
 
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class,
-        ExperimentalResourceApi::class
-    )
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val windowSizeClass = calculateWindowSizeClass()
@@ -49,6 +50,9 @@ class FavouritesScreen:Screen {
                 .background(MaterialTheme.colorScheme.background).navigationBarsPadding()
                 .statusBarsPadding()
         ) {
+            Column(Modifier.padding(it)) {
+                HorizontalDivider()
+            }
 
         }
     }

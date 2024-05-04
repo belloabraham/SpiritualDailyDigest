@@ -38,7 +38,7 @@ class WebViewScreen(private val uiState: WebViewUIState) : Screen {
 
         Scaffold(
             topBar = {
-                Header(uiState.title, getNavigationIcon()) {
+                Header(navigationIcon =  getNavigationIcon()) {
                     navigator?.pop()
                 }
             },

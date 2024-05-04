@@ -11,4 +11,25 @@ class HomeScreenModel(private val preferenceRepo: IPreferenceRepo):ScreenModel {
             preferenceRepo.setUserExitedOnboardingScreen(value)
         }
     }
+
+    fun setFontSize(value: Float) {
+        screenModelScope.launch {
+            preferenceRepo.setFontSize(value)
+        }
+    }
+
+    fun getFontSize(): Float {
+        return preferenceRepo.getFontSize()
+    }
+
+
+    fun setLanguageIndex(value: Int) {
+        screenModelScope.launch {
+            preferenceRepo.setLanguageIndex(value)
+        }
+    }
+
+    fun getLanguageIndex(): Int {
+        return preferenceRepo.getLanguageIndex()
+    }
 }

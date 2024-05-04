@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="skip">Sautiller</string>
+    <string name="next">Suivante</string>
+    <string name="lets_get_started">Commençons</string>
+    <string name="back_button">Dos</string>
+
+    <string name="onboarding_title_1">Bienvenue sur</string>
+    <string name="onboarding_title_2">Obtenez des doses quotidiennes</string>
+    <string name="onboarding_title_3">Écoutez</string>
+    <string name="onboarding_title_4">Enregistrer</string>
+    <string name="onboarding_title_5">Restez inspiré</string>
+    <string name="onboarding_title_6">Explorez dans votre</string>
+
+    <string name="onboarding_description_1">Commencez votre chemin vers l’illumination avec le Spiritual Daily Digest. Embrassez la spiritualité dans la paume de votre main.</string>
+    <string name="onboarding_description_2">Plongez chaque jour dans un contenu religieux qui suscite la réflexion pour nourrir votre âme.</string>
+    <string name="onboarding_description_3">Profitez des versions audio de nos textes spirituels, parfaites pour un trajet en pleine conscience ou une soirée paisible.</string>
+    <string name="onboarding_description_4">Enregistrez votre contenu préféré pour le lire plus tard. Accédez facilement à vos passages les plus précieux quand vous en avez besoin.</string>
+    <string name="onboarding_description_5">Recevez des rappels quotidiens pour lire du nouveau contenu à l'heure de votre choix. Restez inspiré et motivé chaque jour.</string>
+    <string name="onboarding_description_6">Débloquez des idées spirituelles chrétiennes quotidiennes dans la langue qui parle à votre cœur. Qu'il s'agisse de l'anglais, du français ou du yoruba, nous avons ce qu'il vous faut.</string>
+
+    <string name="onboarding_subtitle_1">d’illumination spirituelle</string>
+    <string name="onboarding_subtitle_2">à tout moment, n'importe où</string>
+    <string name="onboarding_subtitle_3">pour référence ultérieure</string>
+    <string name="onboarding_subtitle_4">grâce aux notifications</string>
+    <string name="onboarding_subtitle_5">langue préférée</string>
+
+
+    <string name="ok">D'accord</string>
+    <string name="notification_perm_title">Notification</string>
+    <string name="notification_perm_rationale">Pour vous assurer de ne jamais manquer un moment d'inspiration, nous serions ravis de vous envoyer des notifications quotidiennes avec notre contenu de dévotion trié sur le volet.\n Voici pourquoi il est avantageux d'accorder l'accès aux notifications:\n#Recevez une dose quotidienne d'encouragement, de sagesse et de réflexion pour égayer votre journée.\n #Recevez des rappels pour vous engager dans votre dévotion quotidienne, ce qui en fait une partie intégrante de votre routine.\n#Des notifications personnalisées en fonction de vos préférences, garantissant pertinence et résonance.</string>
+
+    <string name="website">Website</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="instagram">Instagram</string>
+    <string name="about">À propos</string>
+    <string name="refund_policy">Refund policy</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="terms_of_use">Conditions d'utilisation</string>
+    <string name="follow_us_on">Suivez-nous sur</string>
+    <string name="contact_us">Contactez-nous</string>
+    <string name="legal">Légale</string>
+    <string name="about_acknowledgement">%1$s est l'œuvre du Seigneur et c'est merveilleux à nos yeux.</string>
+    <string name="version">Version %1$s</string>
+    <string name="about_description">Commencez votre chemin vers l’illumination avec le Spiritual Daily Digest. Embrassez la spiritualité dans la paume de votre main.</string>
+
+    <string name="phone_number" translatable="false">Phone</string>
+    <string name="website_url" translatable="false">https://mydailydigest.me</string>
+    <string name="email_link" translatable="false">mydailydigest.me@gmail.com</string>
+    <string name="privacy_url" translatable="false">https://mydailydigest.me/privacy</string>
+    <string name="instagram_url" translatable="false">https://instagram.com</string>
+    <string name="twitter_url" translatable="false">https://twitter.com</string>
+    <string name="facebook_url" translatable="false">https://facebook.com</string>
+    <string name="volunteer_url" translatable="false">https://facebook.com</string>
+    <string name="app_store_url"  translatable="false">https://mydailydigest.me</string>
+    <string name="play_store_url"  translatable="false">https://mydailydigest.me</string>
+    <string name="feedback_url"  translatable="false">https://wa.me/+2349022989829</string>
+
+    <string name="need_help">Besoin d'aide?</string>
+    <string name="your_feedback">Vos réactions</string>
+    <string name="tell_a_friend">Dire à un ami</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="update">Mise à jour</string>
+    <string name="rate_app">Application de taux</string>
+    <string name="volunteer">Bénévole</string>
+    <string name="update_app">Mettre à jour l'application</string>
+
+    <string name="set_daily_notification_time">Définir l'heure de notification quotidienne</string>
+
+    <string name="notification_time_title">Définir l'heure de notification quotidienne</string>
+    <string name="notification_time_message">Salut! 👋 Nous sommes ravis de vous compter parmi nous avec notre application. L'heure de notification quotidienne par défaut est 6h00. Vous pouvez fixer une autre heure qui vous convient.</string>
+
+
+    <string name="promotion">Commencez votre chemin vers l’illumination avec le Spiritual Daily Digest. Embrassez la spiritualité dans la paume de votre main.</string>
+
+
+    <string name="yoruba">Yorùbá</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+
+    <string name="developer">Développeur</string>
+    <string name="linkedin">LinkedIn</string>
+    <string name="similar_apps">Applications similaires</string>
+
+    <string name="favourite_list">Liste des favoris</string>
+    <string name="more_options">Plus d'options</string>
+    <string name="favourites">Favoris</string>
+
+    <string name="looks_good">Cela semble bon</string>
+
+</resources>

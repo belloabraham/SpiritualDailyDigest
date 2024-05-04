@@ -208,6 +208,11 @@ fun ratingColorScheme(): Color {
 }
 
 @Composable
+fun errorColor(): Color {
+    return if(isSystemInDarkTheme()) errorDark500 else error500
+}
+
+@Composable
 fun iconColor(): Color {
     return if(isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
 }

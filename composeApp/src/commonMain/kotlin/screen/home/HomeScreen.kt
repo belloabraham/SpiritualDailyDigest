@@ -11,16 +11,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -58,19 +54,22 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import bottomSheetPaddingBottom
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.resources.Size
+import org.cccsharonparish.core.resources.errorColor
 import org.cccsharonparish.core.resources.iconColor
-import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import screen.favourites.FavouritesScreen
@@ -80,11 +79,13 @@ import spiritualdailydigest.composeapp.generated.resources.chevron_left_24px
 import spiritualdailydigest.composeapp.generated.resources.chevron_right_24px
 import spiritualdailydigest.composeapp.generated.resources.expand_all_24px
 import spiritualdailydigest.composeapp.generated.resources.favorite_fill_24px
-import spiritualdailydigest.composeapp.generated.resources.more_vert_24px
 import spiritualdailydigest.composeapp.generated.resources.play_circle_24px
 import spiritualdailydigest.composeapp.generated.resources.share_outline
 import spiritualdailydigest.composeapp.generated.resources.text_decrease_24px
 import spiritualdailydigest.composeapp.generated.resources.text_increase_24px
+import org.cccsharonparish.core.ui.AnimatedUIVisibility
+import org.cccsharonparish.core.ui.SwitchIconButton
+import spiritualdailydigest.composeapp.generated.resources.favorite_24px
 
 class HomeScreen(private val id: String) : Screen {
     @OptIn(
@@ -93,7 +94,7 @@ class HomeScreen(private val id: String) : Screen {
     )
     @Composable
     override fun Content() {
-        val screenModel = getScreenModel<HomeScreenModel>()
+        val homeScreenModel = getScreenModel<HomeScreenModel>()
         val windowSizeClass = calculateWindowSizeClass()
         val navigator = LocalNavigator.current
         val mediumSize = Size.medium(windowSizeClass)
@@ -103,31 +104,36 @@ class HomeScreen(private val id: String) : Screen {
         val bottomSheetState = rememberModalBottomSheetState()
         val languages = getLanguages()
         val navigationItems = getNavigationItems()
-        var selectedIndex by remember { mutableIntStateOf(0) }
+        var languageIndex by remember { mutableIntStateOf(homeScreenModel.getLanguageIndex()) }
         val scope = rememberCoroutineScope()
         val scrollBehavior =
             TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        var sliderPosition by remember { mutableFloatStateOf(0f) }
+        var sliderPosition by remember { mutableFloatStateOf(homeScreenModel.getFontSize()) }
+        var showUIControls by remember { mutableStateOf(false) }
+        val density = LocalDensity.current
+        var isFavourite by remember { mutableStateOf(false) }
+        var contentToShare by remember { mutableStateOf("") }
 
         LaunchedEffect(Unit) {
-            screenModel.setUserExitedOnboardingScreen(true)
+            homeScreenModel.setUserExitedOnboardingScreen(true)
+            delay(500)
+            showUIControls = true
         }
 
         Scaffold(
             topBar = {
+
                 TopAppBar(
                     title = {
                         Text("Faith")
                     },
                     actions = {
-                        IconButton(onClick = {
-
-                        }) {
-                            Icon(
-                                painter = painterResource(Res.drawable.share_outline),
-                                contentDescription = "Share"
-                            )
+                        AnimatedUIVisibility(
+                            showUIControls, density
+                        ) {
+                            ShareButton(contentToShare)
                         }
+
                     },
                     scrollBehavior = scrollBehavior,
                 )
@@ -138,7 +144,8 @@ class HomeScreen(private val id: String) : Screen {
         ) {
             Column(Modifier.padding(it).padding(bottom = mediumSize)) {
                 Column(
-                    Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(bottom = mediumSize)
+                    Modifier.weight(1f).verticalScroll(rememberScrollState())
+                        .padding(bottom = mediumSize)
                 ) {
 
                     CoilImage(
@@ -148,6 +155,7 @@ class HomeScreen(private val id: String) : Screen {
                         },
                         imageOptions = ImageOptions(
                             contentScale = ContentScale.FillWidth,
+                            contentDescription = null,
                             colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply {
                                 setToSaturation(
                                     0.1f
@@ -168,7 +176,8 @@ class HomeScreen(private val id: String) : Screen {
                             "May-8-2024",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
-                            style = MaterialTheme.typography.labelSmall
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = (14f + sliderPosition * .1f).sp
                         )
 
                     }
@@ -177,84 +186,98 @@ class HomeScreen(private val id: String) : Screen {
 
                     Column(Modifier.padding(horizontal = mediumSize)) {
 
+                        val contentFontSize =   sliderPosition
+                        val contentLineHeight = contentFontSize * 1.2f
+
                         Text(
-                            "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?",
-                            fontStyle = FontStyle.Italic
+                            text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?",
+                            fontSize = contentFontSize.sp,
+                            lineHeight = contentLineHeight.sp
                         )
+                        Spacer(Modifier.height(smallSize))
+
                         Text(
                             "Psalm 118:1-8",
                             modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.End, fontStyle = FontStyle.Italic,
+                            textAlign = TextAlign.End,
                             style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontSize =  (14f + sliderPosition * .2f).sp
                         )
                         Spacer(Modifier.height(mediumSize))
                         Text(
-                            " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n"
+                            " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n",
+                            fontSize = contentFontSize.sp,
+                            lineHeight = contentLineHeight.sp
                         )
                     }
 
                 }
 
-                HorizontalDivider()
-                Row(
-                    Modifier.fillMaxWidth().padding(horizontal = mediumSize),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                AnimatedUIVisibility(
+                    showUIControls, density
                 ) {
-                    IconButton(onClick = {
+                    HorizontalDivider()
+                    Row(
+                        Modifier.fillMaxWidth().padding(horizontal = mediumSize),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        IconButton(onClick = {
 
-                    }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.chevron_left_24px),
-                            contentDescription = "Previous",
-                            tint = iconColor()
-                        )
-                    }
-                    IconButton(onClick = {
+                        }) {
+                            Icon(
+                                painter = painterResource(Res.drawable.chevron_left_24px),
+                                contentDescription = "Previous",
+                                tint = iconColor()
+                            )
+                        }
+                        SwitchIconButton(
+                            isChecked = isFavourite,
+                            unCheckedIcon = Res.drawable.favorite_24px,
+                            checkedIcon = Res.drawable.favorite_fill_24px,
+                            unCheckedColor = iconColor(),
+                            checkedColor = errorColor()
+                        ) {
+                            isFavourite = !isFavourite
+                        }
+                        IconButton(onClick = {
+                            openModalBottomSheet = true
+                        }) {
+                            Icon(
+                                painter = painterResource(Res.drawable.expand_all_24px),
+                                contentDescription = "More options",
+                                tint = iconColor()
+                            )
+                        }
+                        IconButton(onClick = {
 
-                    }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.favorite_fill_24px),
-                            contentDescription = "Bookmark",
-                            tint = iconColor()
-                        )
-                    }
-                    IconButton(onClick = {
-                        openModalBottomSheet = true
-                    }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.expand_all_24px),
-                            contentDescription = "More options",
-                            tint = iconColor()
-                        )
-                    }
-                    IconButton(onClick = {
+                        }) {
+                            Icon(
+                                painter = painterResource(Res.drawable.play_circle_24px),
+                                contentDescription = "Play",
+                                tint = iconColor()
+                            )
+                        }
+                        IconButton(onClick = {
 
-                    }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.play_circle_24px),
-                            contentDescription = "Share",
-                            tint = iconColor()
-                        )
-                    }
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(
-                            painter = painterResource(Res.drawable.chevron_right_24px),
-                            contentDescription = "Next",
-                            tint = iconColor()
-                        )
+                        }) {
+                            Icon(
+                                painter = painterResource(Res.drawable.chevron_right_24px),
+                                contentDescription = "Next",
+                                tint = iconColor()
+                            )
+                        }
                     }
                 }
-            }
 
+
+            }
 
             if (openModalBottomSheet) {
                 ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
                     openModalBottomSheet = false
                 }) {
-                    Column(Modifier.fillMaxWidth().padding(bottom = 40.dp)) {
+                    Column(Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())) {
                         Row(
                             modifier = Modifier.horizontalScroll(rememberScrollState())
                                 .padding(horizontal = mediumSize)
@@ -263,8 +286,11 @@ class HomeScreen(private val id: String) : Screen {
                                 languages.forEachIndexed { index, label ->
                                     SegmentedButton(
                                         shape = SegmentedButtonDefaults.baseShape,
-                                        onClick = { selectedIndex = index },
-                                        selected = index == selectedIndex
+                                        onClick = {
+                                            languageIndex = index
+                                            homeScreenModel.setLanguageIndex(languageIndex)
+                                        },
+                                        selected = index == languageIndex
                                     ) {
                                         Text(label)
                                     }
@@ -285,13 +311,17 @@ class HomeScreen(private val id: String) : Screen {
                                 painter = painterResource(Res.drawable.text_decrease_24px),
                                 contentDescription = "Text decrease"
                             )
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(smallSize))
                             Slider(
                                 modifier = Modifier.weight(1f),
                                 value = sliderPosition,
+                                valueRange = 20f..100f,
+                                onValueChangeFinished = {
+                                    homeScreenModel.setFontSize(sliderPosition)
+                                },
                                 onValueChange = { progress -> sliderPosition = progress }
                             )
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(smallSize))
                             Icon(
                                 painter = painterResource(Res.drawable.text_increase_24px),
                                 contentDescription = "Text increase"
@@ -334,4 +364,18 @@ class HomeScreen(private val id: String) : Screen {
             }
         }
     }
+}
+
+
+@Composable
+expect fun ShareButton(text: String)
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun ShareIcon() {
+    Icon(
+        painter = painterResource(Res.drawable.share_outline),
+        contentDescription = "Share",
+        tint = iconColor()
+    )
 }

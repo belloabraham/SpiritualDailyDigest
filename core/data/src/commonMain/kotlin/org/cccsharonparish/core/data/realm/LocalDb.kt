@@ -5,10 +5,12 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 
 class LocalDb {
-     val instance: Realm
+    val instance: Realm
 
     init {
-        val config = RealmConfiguration.create(schema = setOf(Preference::class))
+        val config = RealmConfiguration.Builder(
+            schema = setOf(Preference::class)
+        ).schemaVersion(1).build()
         instance = Realm.open(config)
     }
 }

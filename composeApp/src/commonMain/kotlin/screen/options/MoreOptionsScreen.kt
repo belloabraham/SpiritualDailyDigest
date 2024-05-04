@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,7 +29,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import getAppDownloadUrl
 import getNavigationIcon
+import openUrl
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.iconColor
 import org.cccsharonparish.core.resources.ratingColorScheme
@@ -44,6 +48,7 @@ import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.about_us
 import spiritualdailydigest.composeapp.generated.resources.chat_bubble_24px
 import spiritualdailydigest.composeapp.generated.resources.chevron_right_24px
+import spiritualdailydigest.composeapp.generated.resources.feedback_url
 import spiritualdailydigest.composeapp.generated.resources.info_24px
 import spiritualdailydigest.composeapp.generated.resources.lock_24px
 import spiritualdailydigest.composeapp.generated.resources.notification_time_title
@@ -64,8 +69,7 @@ import spiritualdailydigest.composeapp.generated.resources.your_feedback
 
 class MoreOptionsScreen:Screen {
 
-    @OptIn(
-        ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class)
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val windowSizeClass = calculateWindowSizeClass()
@@ -81,14 +85,16 @@ class MoreOptionsScreen:Screen {
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            Column(Modifier.padding(it)) {
+            Column(Modifier.padding(it).verticalScroll(rememberScrollState())) {
 
+
+                val downloadUrl = getAppDownloadUrl()
 
                 Option(
                     Res.drawable.system_update_24px,
                     headline = stringResource(Res.string.update_app)
                 ) {
-
+                    openUrl(downloadUrl)
                 }
 
                 Option(
@@ -98,25 +104,21 @@ class MoreOptionsScreen:Screen {
                     navigator?.push(NotificationTimeScreen())
                 }
 
-                Option(
-                    Res.drawable.share_outline,
-                    headline = stringResource(Res.string.tell_a_friend)
-                ) {
+                TellAFriend()
 
-                }
-
+                val feedbackUrl = stringResource(Res.string.feedback_url)
                 Option(
                     Res.drawable.chat_bubble_24px,
                     headline = stringResource(Res.string.your_feedback)
                 ) {
-
+                    openUrl(feedbackUrl)
                 }
 
                 Option(
                     Res.drawable.volunteer_activism_24px,
                     headline = stringResource(Res.string.volunteer)
                 ) {
-
+                    openUrl(feedbackUrl)
                 }
 
                 Option(
@@ -137,18 +139,17 @@ class MoreOptionsScreen:Screen {
                         }
                     },
                 ) {
-
+                    openUrl(downloadUrl)
                 }
-                val privacy = stringResource(Res.string.privacy_policy)
-                val privacyUrl = stringResource(Res.string.privacy_url)
 
+                val privacyUrl = stringResource(Res.string.privacy_url)
                 Option(
                     Res.drawable.lock_24px,
-                    headline = privacy
+                    headline = stringResource(Res.string.privacy_policy)
                 ) {
                     navigator?.push(
                         WebViewScreen(
-                            WebViewUIState(title = privacy, privacyUrl)
+                            WebViewUIState(privacyUrl)
                         )
                     )
                 }
@@ -170,6 +171,9 @@ val textStyle = TextStyle(
     lineHeight = 20.sp,
     letterSpacing = 0.sp
 )
+
+@Composable
+expect fun TellAFriend()
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
