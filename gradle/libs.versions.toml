@@ -1,44 +1,52 @@
 [versions]
-agp = "8.2.2"
-android-compileSdk = "34"
+agp = "8.9.1"
+android-compileSdk = "36"
 android-minSdk = "24"
-android-targetSdk = "34"
-androidx-activityCompose = "1.9.0"
-androidx-appcompat = "1.6.1"
-androidx-constraintlayout = "2.1.4"
-androidx-core-ktx = "1.13.1"
-androidx-espresso-core = "3.5.1"
+android-targetSdk = "36"
+androidx-activityCompose = "1.10.1"
+androidx-appcompat = "1.7.0"
+androidx-core-ktx = "1.15.0"
+androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
-androidx-test-junit = "1.1.5"
-compose = "1.6.7"
-compose-plugin = "1.6.2"
-composeWebviewMultiplatform = "1.9.2"
+androidx-test-junit = "1.2.1"
+#compose = "1.6.7"
+compose-plugin = "1.6.11"
+composeMultiplatformMediaPlayer = "1.0.16"
+composeWebviewMultiplatform = "1.9.20"
+desugar_jdk_libs = "2.1.5"
 junit = "4.13.2"
-kotlin = "1.9.23"
-kotlinxDatetime = "0.6.0-RC.2"
+kotlin = "2.0.20"
+kotlinxDatetime = "0.6.1"
 landscapistCoil3 = "2.3.3"
 material3WindowSize = "0.3.1"
-skie="0.6.2"
 kermit="2.0.3"
 core-splashscreen =  "1.1.0-rc01"
 voyagerVersion = "1.0.0"
-ktor = "2.3.10"
-coroutines = "1.8.0"
+ktor = "2.3.12"
+coroutines = "1.9.0-RC.2"
 app-update = "2.1.0"
-app-review = "2.0.1"
+app-review = "2.0.2"
 toasty ="1.5.2"
-androidx-startup = "1.1.1"
+androidx-startup = "1.2.0"
 koinBom = "3.5.1"
-kotlinx-serialization="1.6.3"
-crashlytics="3.0.0"
-google-services="4.4.1"
-firebaseBom = "33.0.0"
-playServicesAuth = "21.1.1"
-gitlive-firebase="1.12.0"
-realm="1.11.0"
+kotlinx-serialization = "1.8.0"
+crashlytics = "3.0.2"
+google-services = "4.4.2"
+firebaseBom = "33.6.0"
+playServicesAuth = "21.2.0"
+gitlive-firebase = "2.1.0"
+realm = "3.0.0"
+coroutines-play-services = "1.8.1"
+browser = "1.8.0"
+googleid = "1.1.1"
+konnectivity = "0.1-alpha01"
+messagebarkmp = "1.0.1"
 
 
 [libraries]
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
@@ -51,26 +59,28 @@ androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+#compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+
+compose-multiplatform-media-player = { module = "network.chaintech:compose-multiplatform-media-player", version.ref = "composeMultiplatformMediaPlayer" }
+konnectivity = { module = "com.plusmobileapps:konnectivity", version.ref = "konnectivity" }
+messagebarkmp = { module = "com.stevdza-san:messagebarkmp", version.ref = "messagebarkmp" }
+
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-storage = { module = "com.google.firebase:firebase-storage" }
-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging"}
-firebase-config = { module = "com.google.firebase:firebase-config"}
 firebase-appcheck-playintegrity = { module = "com.google.firebase:firebase-appcheck-playintegrity" }
+#firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+#firebase-storage = { module = "com.google.firebase:firebase-storage" }
+firebase-config = { module = "com.google.firebase:firebase-config"}
 
 gitlive-firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "gitlive-firebase" }
-gitlive-firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "gitlive-firebase" }
 gitlive-firebase-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "gitlive-firebase" }
 gitlive-firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "gitlive-firebase" }
 gitlive-firebase-storage = { module = "dev.gitlive:firebase-storage", version.ref = "gitlive-firebase" }
+gitlive-firebase-config = { module = "dev.gitlive:firebase-config", version.ref = "gitlive-firebase" }
 
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref ="core-splashscreen"}
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
@@ -87,7 +97,6 @@ koin-compose = { module = "io.insert-koin:koin-compose" }
 koin-test = { module = "io.insert-koin:koin-test"}
 
 co-touchlab-kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
-co-touchlab-skie-annotations = { group = "co.touchlab.skie", name = "configuration-annotations", version.ref = "skie" }
 
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyagerVersion" }
@@ -118,7 +127,7 @@ realm-kotlin-plugin = { id = "io.realm.kotlin", version.ref = "realm" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-co-touchlab-skie = { id = "co.touchlab.skie", version.ref = "skie" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

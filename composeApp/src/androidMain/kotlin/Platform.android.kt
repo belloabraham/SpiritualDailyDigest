@@ -24,7 +24,7 @@ actual fun bottomSheetPaddingBottom(): Dp {
 actual fun getAppVersion(): String {
     val packageInfo =
         applicationContext.packageManager.getPackageInfo(applicationContext.packageName, 0)
-    return packageInfo.versionName
+    return packageInfo.versionName ?: ""
 }
 
 actual fun openUrl(url: String): Boolean {
