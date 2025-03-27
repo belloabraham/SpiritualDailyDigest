@@ -135,26 +135,6 @@ class AboutScreen:Screen {
 
                         ListItem(headlineContent = {
                             Text(
-                                stringResource(Res.string.developer),
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.W500
-                            )
-                        })
-
-                        Option(Res.drawable.web_24px, stringResource(Res.string.website)) {
-
-                        }
-
-                        Option(Res.drawable.linkedin, stringResource(Res.string.linkedin)) {
-
-                        }
-
-                        Option(Res.drawable.app_icon_fill, stringResource(Res.string.similar_apps)) {
-
-                        }
-
-                        ListItem(headlineContent = {
-                            Text(
                                 stringResource(Res.string.follow_us_on),
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.W500
