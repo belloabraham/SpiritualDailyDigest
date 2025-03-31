@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
@@ -13,14 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -32,9 +27,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import getAppVersion
 import getNavigationIcon
 import org.cccsharonparish.core.resources.Size
-import org.cccsharonparish.core.resources.iconColor
 import org.cccsharonparish.core.ui.Header
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import screen.options.Option
@@ -42,22 +35,14 @@ import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.about
 import spiritualdailydigest.composeapp.generated.resources.about_acknowledgement
 import spiritualdailydigest.composeapp.generated.resources.about_description
-import spiritualdailydigest.composeapp.generated.resources.app_icon_fill
 import spiritualdailydigest.composeapp.generated.resources.app_name
 import spiritualdailydigest.composeapp.generated.resources.contact_us
-import spiritualdailydigest.composeapp.generated.resources.developer
-import spiritualdailydigest.composeapp.generated.resources.favourites
 import spiritualdailydigest.composeapp.generated.resources.follow_us_on
 import spiritualdailydigest.composeapp.generated.resources.ic_launcher
-import spiritualdailydigest.composeapp.generated.resources.linkedin
-import spiritualdailydigest.composeapp.generated.resources.similar_apps
 import spiritualdailydigest.composeapp.generated.resources.version
-import spiritualdailydigest.composeapp.generated.resources.web_24px
-import spiritualdailydigest.composeapp.generated.resources.website
 
 class AboutScreen:Screen {
     @OptIn(
-        ExperimentalResourceApi::class,
         ExperimentalMaterial3WindowSizeClassApi::class
     )
     @Composable
