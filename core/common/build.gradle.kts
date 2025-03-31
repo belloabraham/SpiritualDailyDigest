@@ -44,8 +44,6 @@ kotlin {
 
         }
         commonMain.dependencies {
-            //put your multiplatform dependencies here
-
             implementation(compose.material3)
             implementation(libs.konnectivity)
 
