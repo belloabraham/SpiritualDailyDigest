@@ -9,7 +9,7 @@ package org.cccsharonparish.core.common.google
 import android.app.Activity
 import android.content.Context
 import com.google.android.play.core.review.ReviewManagerFactory
-import org.cccsharonparish.core.common.logging.Log
+import org.cccsharonparish.core.domain.logging.Log
 
 class AppReview (applicationContext: Context) {
     private val reviewManager = ReviewManagerFactory.create(applicationContext)

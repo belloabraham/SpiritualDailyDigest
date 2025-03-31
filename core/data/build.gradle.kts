@@ -38,8 +38,8 @@ kotlin {
             implementation(libs.gitlive.firebase.config)
             implementation(libs.gitlive.firebase.firestore)
 
-//            implementation(projects.core.model)
-//            implementation(projects.core.domain)
+            implementation(projects.core.model)
+            implementation(projects.core.domain)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

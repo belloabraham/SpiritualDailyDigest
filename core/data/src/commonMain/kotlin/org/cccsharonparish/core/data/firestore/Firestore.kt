@@ -1,8 +1,6 @@
 package org.cccsharonparish.core.data.firestore
 
 import dev.gitlive.firebase.Firebase
-
-mport dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.Direction
 import dev.gitlive.firebase.firestore.DocumentSnapshot
 import dev.gitlive.firebase.firestore.Filter
@@ -11,6 +9,9 @@ import dev.gitlive.firebase.firestore.FirebaseFirestoreException
 import dev.gitlive.firebase.firestore.FirestoreExceptionCode
 import dev.gitlive.firebase.firestore.code
 import dev.gitlive.firebase.firestore.firestore
+import org.cccsharonparish.core.domain.error.FirestoreError
+import org.cccsharonparish.core.domain.error.Result
+import org.cccsharonparish.core.domain.logging.Log
 
 
 class Firestore {

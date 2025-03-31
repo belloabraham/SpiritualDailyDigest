@@ -47,7 +47,6 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.konnectivity)
 
-
             implementation (libs.co.touchlab.kermit)
 
             implementation(libs.kotlinx.datetime)
@@ -56,6 +55,7 @@ kotlin {
 
             implementation (projects.core.resources)
             implementation(projects.core.data)
+            implementation(projects.core.domain)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
