@@ -5,20 +5,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -38,6 +33,7 @@ import org.cccsharonparish.core.resources.ratingColorScheme
 import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import screen.about.AboutScreen
@@ -51,16 +47,13 @@ import spiritualdailydigest.composeapp.generated.resources.chevron_right_24px
 import spiritualdailydigest.composeapp.generated.resources.feedback_url
 import spiritualdailydigest.composeapp.generated.resources.info_24px
 import spiritualdailydigest.composeapp.generated.resources.lock_24px
-import spiritualdailydigest.composeapp.generated.resources.notification_time_title
 import spiritualdailydigest.composeapp.generated.resources.notifications_active_24px
 import spiritualdailydigest.composeapp.generated.resources.privacy_policy
 import spiritualdailydigest.composeapp.generated.resources.privacy_url
 import spiritualdailydigest.composeapp.generated.resources.rate_app
 import spiritualdailydigest.composeapp.generated.resources.set_daily_notification_time
-import spiritualdailydigest.composeapp.generated.resources.share_outline
 import spiritualdailydigest.composeapp.generated.resources.star_24px
 import spiritualdailydigest.composeapp.generated.resources.system_update_24px
-import spiritualdailydigest.composeapp.generated.resources.tell_a_friend
 import spiritualdailydigest.composeapp.generated.resources.thumb_up_24px
 import spiritualdailydigest.composeapp.generated.resources.update_app
 import spiritualdailydigest.composeapp.generated.resources.volunteer
@@ -92,14 +85,14 @@ class MoreOptionsScreen:Screen {
 
                 Option(
                     Res.drawable.system_update_24px,
-                    headline = stringResource(Res.string.update_app)
+                    headline =  Res.string.update_app
                 ) {
                     openUrl(downloadUrl)
                 }
 
                 Option(
                     Res.drawable.notifications_active_24px,
-                    headline = stringResource(Res.string.set_daily_notification_time)
+                    headline =  Res.string.set_daily_notification_time
                 ) {
                     navigator?.push(NotificationTimeScreen())
                 }
@@ -109,14 +102,14 @@ class MoreOptionsScreen:Screen {
                 val feedbackUrl = stringResource(Res.string.feedback_url)
                 Option(
                     Res.drawable.chat_bubble_24px,
-                    headline = stringResource(Res.string.your_feedback)
+                    headline =  Res.string.your_feedback
                 ) {
                     openUrl(feedbackUrl)
                 }
 
                 Option(
                     Res.drawable.volunteer_activism_24px,
-                    headline = stringResource(Res.string.volunteer)
+                    headline =  Res.string.volunteer
                 ) {
                     openUrl(feedbackUrl)
                 }
@@ -145,7 +138,7 @@ class MoreOptionsScreen:Screen {
                 val privacyUrl = stringResource(Res.string.privacy_url)
                 Option(
                     Res.drawable.lock_24px,
-                    headline = stringResource(Res.string.privacy_policy)
+                    headline =  Res.string.privacy_policy
                 ) {
                     navigator?.push(
                         WebViewScreen(
@@ -155,7 +148,7 @@ class MoreOptionsScreen:Screen {
                 }
 
 
-                Option(Res.drawable.info_24px, headline = stringResource(Res.string.about_us)) {
+                Option(Res.drawable.info_24px, headline =Res.string.about_us ) {
                     navigator?.push(AboutScreen())
                 }
             }
@@ -177,11 +170,11 @@ expect fun TellAFriend()
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun Option(leadingIcon: DrawableResource, headline: String, onClick: () -> Unit) {
+fun Option(leadingIcon: DrawableResource, headline: StringResource, onClick: () -> Unit) {
 
     Option(leadingIcon, headlineContent = {
         Text(
-            headline,
+            stringResource(headline),
             style = textStyle,
         )
     }) {

@@ -5,8 +5,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import org.cccsharonparish.core.common.helpers.notification.Notification
-import org.cccsharonparish.spiritualdailydigest.applicationContext
-import screen.home.HomeScreen
+import org.cccsharonparish.core.domain.applicationContext
 import screen.notification.OnboardingNotificationTimeScreen
 import screen.permission.PermissionScreen
 import screen.permission.getPermissionUIState

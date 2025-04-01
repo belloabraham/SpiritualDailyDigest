@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="need_help">Need help?</string>
+    <string name="your_feedback">Your feedback</string>
+    <string name="tell_a_friend">Tell a friend</string>
+    <string name="about_us">About us</string>
+    <string name="update">Update</string>
+    <string name="rate_app">Rate app</string>
+    <string name="volunteer">Volunteer</string>
+    <string name="update_app">Update app</string>
+
+</resources>

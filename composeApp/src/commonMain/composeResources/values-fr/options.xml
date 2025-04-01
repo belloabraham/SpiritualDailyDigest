@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="need_help">Besoin d'aide?</string>
+    <string name="your_feedback">Vos réactions</string>
+    <string name="tell_a_friend">Dire à un ami</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="update">Mise à jour</string>
+    <string name="rate_app">Application de taux</string>
+    <string name="volunteer">Bénévole</string>
+    <string name="update_app">Mettre à jour l'application</string>
+
+</resources>

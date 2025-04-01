@@ -28,7 +28,7 @@
             tools:node="merge">
 
             <meta-data
-                android:name="org.cccsharonparish.spiritualdailydigest.ContextProvider"
+                android:name="org.cccsharonparish.core.domain.ContextProvider"
                 android:value="androidx.startup" />
         </provider>
 

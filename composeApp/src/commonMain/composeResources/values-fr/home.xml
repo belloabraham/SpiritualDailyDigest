@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="favourite_list">Liste des favoris</string>
+    <string name="more_options">Plus d'options</string>
+    <string name="favourites">Favoris</string>
+
+</resources>

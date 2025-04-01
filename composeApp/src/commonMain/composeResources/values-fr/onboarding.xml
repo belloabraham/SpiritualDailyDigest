@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="onboarding_title_1">Bienvenue sur</string>
+    <string name="onboarding_title_2">Obtenez des doses quotidiennes</string>
+    <string name="onboarding_title_3">Écoutez</string>
+    <string name="onboarding_title_4">Enregistrer</string>
+    <string name="onboarding_title_5">Restez inspiré</string>
+    <string name="onboarding_title_6">Explorez dans votre</string>
+
+    <string name="onboarding_description_1">Commencez votre chemin vers l’illumination avec le Spiritual Daily Digest. Embrassez la spiritualité dans la paume de votre main.</string>
+    <string name="onboarding_description_2">Plongez chaque jour dans un contenu religieux qui suscite la réflexion pour nourrir votre âme.</string>
+    <string name="onboarding_description_3">Profitez des versions audio de nos textes spirituels, parfaites pour un trajet en pleine conscience ou une soirée paisible.</string>
+    <string name="onboarding_description_4">Enregistrez votre contenu préféré pour le lire plus tard. Accédez facilement à vos passages les plus précieux quand vous en avez besoin.</string>
+    <string name="onboarding_description_5">Recevez des rappels quotidiens pour lire du nouveau contenu à l'heure de votre choix. Restez inspiré et motivé chaque jour.</string>
+    <string name="onboarding_description_6">Débloquez des idées spirituelles chrétiennes quotidiennes dans la langue qui parle à votre cœur. Qu'il s'agisse de l'anglais, du français ou du yoruba, nous avons ce qu'il vous faut.</string>
+
+    <string name="onboarding_subtitle_1">d’illumination spirituelle</string>
+    <string name="onboarding_subtitle_2">à tout moment, n'importe où</string>
+    <string name="onboarding_subtitle_3">pour référence ultérieure</string>
+    <string name="onboarding_subtitle_4">grâce aux notifications</string>
+    <string name="onboarding_subtitle_5">langue préférée</string>
+
+
+    <string name="skip">Sautiller</string>
+    <string name="next">Suivante</string>
+    <string name="lets_get_started">Commençons</string>
+    <string name="back_button">Dos</string>
+
+</resources>

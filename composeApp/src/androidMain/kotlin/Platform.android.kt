@@ -11,8 +11,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.cccsharonparish.core.domain.applicationContext
 import org.cccsharonparish.spiritualdailydigest.BuildConfig
-import org.cccsharonparish.spiritualdailydigest.applicationContext
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource

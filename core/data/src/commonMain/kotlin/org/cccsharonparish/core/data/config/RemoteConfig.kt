@@ -3,6 +3,7 @@ package org.cccsharonparish.core.data.config
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.remoteconfig.get
 import dev.gitlive.firebase.remoteconfig.remoteConfig
+import org.cccsharonparish.core.data.getDebugConfigMinimumFetchInterval
 
 
 class RemoteConfig : IRemoteConfig {

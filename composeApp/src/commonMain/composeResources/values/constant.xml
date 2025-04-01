@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name" translatable="false">Spiritual Daily Digest</string>
+    <string name="phone_number" translatable="false">Phone</string>
+    <string name="website_url" translatable="false">https://mydailydigest.me</string>
+    <string name="email_link" translatable="false">contact@mydailydigest.me</string>
+    <string name="privacy_url" translatable="false">https://mydailydigest.me/privacy</string>
+    <string name="instagram_url" translatable="false">https://instagram.com</string>
+    <string name="twitter_url" translatable="false">https://twitter.com</string>
+    <string name="facebook_url" translatable="false">https://facebook.com</string>
+    <string name="volunteer_url" translatable="false">https://facebook.com</string>
+    <string name="app_store_url"  translatable="false">https://mydailydigest.me</string>
+    <string name="play_store_url"  translatable="false">https://mydailydigest.me</string>
+    <string name="feedback_url"  translatable="false">https://wa.me/+2349022989829</string>
+
+    <string name="website">Website</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="instagram">Instagram</string>
+</resources>

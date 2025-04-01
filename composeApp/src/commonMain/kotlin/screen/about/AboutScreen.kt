@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import getAppVersion
 import getNavigationIcon
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.ui.Header
@@ -37,6 +37,7 @@ import spiritualdailydigest.composeapp.generated.resources.about_acknowledgement
 import spiritualdailydigest.composeapp.generated.resources.about_description
 import spiritualdailydigest.composeapp.generated.resources.app_name
 import spiritualdailydigest.composeapp.generated.resources.contact_us
+import spiritualdailydigest.composeapp.generated.resources.copyright
 import spiritualdailydigest.composeapp.generated.resources.follow_us_on
 import spiritualdailydigest.composeapp.generated.resources.ic_launcher
 import spiritualdailydigest.composeapp.generated.resources.version
@@ -50,9 +51,7 @@ class AboutScreen:Screen {
         val windowSizeClass = calculateWindowSizeClass()
         val navigator = LocalNavigator.current
         val sizeMedium = Size.medium(windowSizeClass)
-        val appVersion = getAppVersion()
-        val contacts = getAListOfContacts()
-        val socialContacts = getAListOfSocialContact()
+        val aboutScreenModel = getScreenModel<AboutScreenModel>()
 
         Scaffold(
             topBar = {
@@ -73,7 +72,7 @@ class AboutScreen:Screen {
                         contentDescription = "Logo"
                     )
                 }, supportingContent = {
-                    Text(stringResource(Res.string.version, appVersion))
+                    Text(stringResource(Res.string.version, aboutScreenModel.appVersion))
                 }, headlineContent = {
                     Text(
                         stringResource(Res.string.app_name),
@@ -112,7 +111,7 @@ class AboutScreen:Screen {
                             )
                         })
 
-                        contacts.forEach { item ->
+                        aboutScreenModel.contacts.forEach { item ->
                             Option(item.icon, item.label) {
 
                             }
@@ -126,14 +125,14 @@ class AboutScreen:Screen {
                             )
                         })
 
-                        socialContacts.forEach{  item ->
+                        aboutScreenModel.socialContacts.forEach{  item ->
                             Option(item.icon, item.label) {
 
                             }
                         }
 
                         ListItem(headlineContent = {
-                            Text("Copyright 2024 All Right is Reserved")
+                            Text(stringResource(Res.string.copyright, aboutScreenModel.year))
                         })
 
                     }

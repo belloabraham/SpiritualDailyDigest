@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="set_daily_notification_time">Définir l'heure de notification quotidienne</string>
+
+    <string name="notification_time_title">Définir l'heure de notification quotidienne</string>
+    <string name="notification_time_message">Salut! 👋 Nous sommes ravis de vous compter parmi nous avec notre application. L'heure de notification quotidienne par défaut est 6h00. Vous pouvez fixer une autre heure qui vous convient.</string>
+    <string name="looks_good">Cela semble bon</string>
+
+    <string name="notification_perm_title">Notification</string>
+    <string name="notification_perm_rationale">Pour vous assurer de ne jamais manquer un moment d'inspiration, nous serions ravis de vous envoyer des notifications quotidiennes avec notre contenu de dévotion trié sur le volet.\n Voici pourquoi il est avantageux d'accorder l'accès aux notifications:\n#Recevez une dose quotidienne d'encouragement, de sagesse et de réflexion pour égayer votre journée.\n #Recevez des rappels pour vous engager dans votre dévotion quotidienne, ce qui en fait une partie intégrante de votre routine.\n#Des notifications personnalisées en fonction de vos préférences, garantissant pertinence et résonance.</string>
+
+</resources>
