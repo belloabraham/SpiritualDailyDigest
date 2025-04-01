@@ -1,3 +1,5 @@
 package org.cccsharonparish.core.data
 
-expect fun platform(): String
+import kotlin.time.Duration
+
+expect fun getDebugConfigMinimumFetchInterval(): Duration

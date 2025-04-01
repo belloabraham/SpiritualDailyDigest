@@ -1,9 +1,17 @@
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.cccsharonparish.spiritualdailydigest.BuildConfig
 import org.cccsharonparish.spiritualdailydigest.applicationContext
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -39,4 +47,28 @@ actual fun openUrl(url: String): Boolean {
 @OptIn(ExperimentalResourceApi::class)
 actual fun getAppDownloadUrl(): String {
     return stringResource(Res.string.play_store_url)
+}
+
+actual fun isDebugMode(): Boolean {
+    return BuildConfig.DEBUG
+}
+
+@Composable
+actual fun OrientationChangeListener(
+    onOrientationChange: (Orientation) -> Unit
+) {
+    val configuration = LocalConfiguration.current
+    var orientation by remember { mutableIntStateOf(configuration.orientation) }
+
+    LaunchedEffect(configuration) {
+        val newOrientation = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Orientation.Landscape
+        } else {
+            Orientation.Portrait
+        }
+        if (orientation != configuration.orientation) {
+            orientation = configuration.orientation
+            onOrientationChange(newOrientation)
+        }
+    }
 }

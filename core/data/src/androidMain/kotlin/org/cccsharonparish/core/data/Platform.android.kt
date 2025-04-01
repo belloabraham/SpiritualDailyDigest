@@ -1,3 +1,8 @@
 package org.cccsharonparish.core.data
 
-actual fun platform() = "Android"
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+
+actual fun getDebugConfigMinimumFetchInterval(): Duration {
+    return 1800.seconds
+}

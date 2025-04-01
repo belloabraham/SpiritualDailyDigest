@@ -11,3 +11,14 @@ expect fun getAppVersion():String
 expect fun openUrl(url: String): Boolean
 @Composable
 expect fun getAppDownloadUrl():String
+expect fun isDebugMode():Boolean
+
+@Composable
+expect fun OrientationChangeListener(
+    onOrientationChange: (Orientation) -> Unit
+)
+
+enum class Orientation {
+    Portrait,
+    Landscape
+}

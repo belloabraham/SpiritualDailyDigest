@@ -1,18 +1,31 @@
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import platform.Foundation.NSBundle
+import platform.Foundation.NSNotificationCenter
+import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSURL
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
+import platform.UIKit.UIDevice
+import platform.UIKit.UIDeviceOrientation.UIDeviceOrientationLandscapeLeft
+import platform.UIKit.UIDeviceOrientation.UIDeviceOrientationLandscapeRight
+import platform.UIKit.UIDeviceOrientation.UIDeviceOrientationPortrait
+import platform.UIKit.UIDeviceOrientationDidChangeNotification
 import platform.UIKit.UIViewController
 import platform.UIKit.popoverPresentationController
 import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.app_store_url
 import spiritualdailydigest.composeapp.generated.resources.arrow_back_ios_24px
+import kotlin.experimental.ExperimentalNativeApi
 
 @OptIn(ExperimentalResourceApi::class)
 actual fun getNavigationIcon(): DrawableResource {
@@ -47,4 +60,42 @@ actual fun openUrl(url: String): Boolean {
 @OptIn(ExperimentalResourceApi::class)
 actual fun getAppDownloadUrl(): String {
     return stringResource(Res.string.app_store_url)
+}
+
+@OptIn(ExperimentalNativeApi::class)
+actual fun isDebugMode(): Boolean {
+    return Platform.isDebugBinary
+}
+
+@Composable
+actual fun OrientationChangeListener(
+    onOrientationChange: (Orientation) -> Unit,
+) {
+    var currentOrientation by remember { mutableStateOf(UIDevice.currentDevice.orientation) }
+
+    DisposableEffect(Unit) {
+        val observer = NSNotificationCenter.defaultCenter.addObserverForName(
+            name = UIDeviceOrientationDidChangeNotification,
+            `object` = null,
+            queue = NSOperationQueue.mainQueue
+        ) {
+            val newOrientation = UIDevice.currentDevice.orientation
+            if (newOrientation != currentOrientation) {
+                currentOrientation = newOrientation
+
+                when (newOrientation) {
+                    UIDeviceOrientationPortrait -> onOrientationChange(Orientation.Portrait)
+                    UIDeviceOrientationLandscapeLeft,
+                    UIDeviceOrientationLandscapeRight -> onOrientationChange(Orientation.Landscape)
+
+                    else -> Unit // Handle other orientations if needed
+                }
+            }
+        }
+
+        // Clean up the observer when the Composable is removed from composition
+        onDispose {
+            NSNotificationCenter.defaultCenter.removeObserver(observer)
+        }
+    }
 }

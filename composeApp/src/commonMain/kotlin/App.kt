@@ -9,7 +9,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import screen.home.HomeScreen
-import screen.notification.NotificationTimeScreen
 import screen.onboarding.getOnboardingScreen
 import theme.AppTheme
 
@@ -19,6 +18,18 @@ fun App() {
     KoinApplication(application = {
         modules(appModule + screenModelModule)
     }) {
+
+        val remoteConfig = koinInject<IRemoteConfig>()
+        LaunchedEffect(Unit) {
+            remoteConfig.initialize(isDebugMode())
+            try {
+                remoteConfig.fetchAndActive()
+            } catch (e: Exception) {
+                Log.error(e) {
+                    e.message ?: "Error fetching remote config"
+                }
+            }
+        }
 
         AppTheme(isSystemInDarkTheme()) {
             val userExitedOnboardingScreen =
