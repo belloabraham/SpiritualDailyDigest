@@ -6,9 +6,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.cccsharonparish.core.data.config.ConfigKey
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 import platform.Foundation.NSBundle
 import platform.Foundation.NSNotificationCenter
 import platform.Foundation.NSOperationQueue
@@ -23,7 +23,6 @@ import platform.UIKit.UIDeviceOrientationDidChangeNotification
 import platform.UIKit.UIViewController
 import platform.UIKit.popoverPresentationController
 import spiritualdailydigest.composeapp.generated.resources.Res
-import spiritualdailydigest.composeapp.generated.resources.app_store_url
 import spiritualdailydigest.composeapp.generated.resources.arrow_back_ios_24px
 import kotlin.experimental.ExperimentalNativeApi
 
@@ -54,12 +53,6 @@ actual fun openUrl(url: String): Boolean {
         return true
     }
     return false
-}
-
-@Composable
-@OptIn(ExperimentalResourceApi::class)
-actual fun getAppDownloadUrl(): String {
-    return stringResource(Res.string.app_store_url)
 }
 
 @OptIn(ExperimentalNativeApi::class)
@@ -99,3 +92,5 @@ actual fun OrientationChangeListener(
         }
     }
 }
+
+actual fun appDownloadUrlConfigKey() = ConfigKey.APP_STORE_URL

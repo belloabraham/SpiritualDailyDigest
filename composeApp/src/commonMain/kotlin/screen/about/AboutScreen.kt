@@ -26,6 +26,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import getNavigationIcon
+import openUrl
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.painterResource
@@ -113,7 +114,7 @@ class AboutScreen:Screen {
 
                         aboutScreenModel.contacts.forEach { item ->
                             Option(item.icon, item.label) {
-
+                                openUrl(item.url)
                             }
                         }
 
@@ -127,7 +128,7 @@ class AboutScreen:Screen {
 
                         aboutScreenModel.socialContacts.forEach{  item ->
                             Option(item.icon, item.label) {
-
+                                openUrl(item.url)
                             }
                         }
 

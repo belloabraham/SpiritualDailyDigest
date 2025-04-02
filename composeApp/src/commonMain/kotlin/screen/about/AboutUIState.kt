@@ -1,41 +1,32 @@
 package screen.about
 
-import androidx.compose.runtime.Composable
+import org.cccsharonparish.core.domain.Config
 import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 import spiritualdailydigest.composeapp.generated.resources.Res
-import spiritualdailydigest.composeapp.generated.resources.call_24px
 import spiritualdailydigest.composeapp.generated.resources.email
 import spiritualdailydigest.composeapp.generated.resources.facebook
-import spiritualdailydigest.composeapp.generated.resources.facebook_url
 import spiritualdailydigest.composeapp.generated.resources.instagram
-import spiritualdailydigest.composeapp.generated.resources.instagram_url
 import spiritualdailydigest.composeapp.generated.resources.mail_24px
-import spiritualdailydigest.composeapp.generated.resources.phone
-import spiritualdailydigest.composeapp.generated.resources.phone_number
 import spiritualdailydigest.composeapp.generated.resources.twitter
-import spiritualdailydigest.composeapp.generated.resources.twitter_url
 import spiritualdailydigest.composeapp.generated.resources.web_24px
 import spiritualdailydigest.composeapp.generated.resources.website
-import spiritualdailydigest.composeapp.generated.resources.website_url
 
 interface IContact{
     val label: StringResource
-    val url: StringResource
+    val url: String
     val icon: DrawableResource
 }
 
 data class ContactUIState (
     override val label: StringResource,
-    override val url: StringResource,
+    override val url: String,
     override val icon: DrawableResource
 ):IContact
 
 data class SocialUIState(
     override val label: StringResource,
-    override val url: StringResource,
+    override val url: String,
     override val icon: DrawableResource
 ):IContact
 
@@ -43,17 +34,17 @@ fun getAListOfSocialContact(): List<SocialUIState> {
     return listOf(
         SocialUIState(
             Res.string.facebook,
-            url = Res.string.facebook_url,
+            url = Config.FACEBOOK_URL,
             Res.drawable.facebook
         ),
         SocialUIState(
             Res.string.twitter,
-            url = Res.string.twitter_url,
+            url =  Config.TWITTER_URL,
             Res.drawable.twitter
         ),
         SocialUIState(
             Res.string.instagram,
-            url = Res.string.instagram_url,
+            url =  Config.INSTAGRAM_URL,
             Res.drawable.instagram
         )
     )
@@ -63,18 +54,13 @@ fun getAListOfSocialContact(): List<SocialUIState> {
 fun getAListOfContacts(): List<ContactUIState> {
     return listOf(
         ContactUIState(
-            label =  Res.string.phone,
-            url =  Res.string.phone_number,
-            Res.drawable.call_24px
-        ),
-        ContactUIState(
             label =  Res.string.email,
-            url =  Res.string.email,
+            url =   "mailto:${Config.CONTACT_EMAIL}",
             Res.drawable.mail_24px
         ),
         ContactUIState(
             label = Res.string.website,
-            url =  Res.string.website_url,
+            url =   Config.APP_WEBSITE,
             Res.drawable.web_24px
         ),
     )

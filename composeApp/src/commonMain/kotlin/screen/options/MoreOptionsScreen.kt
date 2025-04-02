@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import getAppDownloadUrl
 import getNavigationIcon
 import openUrl
 import org.cccsharonparish.core.resources.Size
@@ -44,7 +44,6 @@ import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.about_us
 import spiritualdailydigest.composeapp.generated.resources.chat_bubble_24px
 import spiritualdailydigest.composeapp.generated.resources.chevron_right_24px
-import spiritualdailydigest.composeapp.generated.resources.feedback_url
 import spiritualdailydigest.composeapp.generated.resources.info_24px
 import spiritualdailydigest.composeapp.generated.resources.lock_24px
 import spiritualdailydigest.composeapp.generated.resources.notifications_active_24px
@@ -54,13 +53,15 @@ import spiritualdailydigest.composeapp.generated.resources.rate_app
 import spiritualdailydigest.composeapp.generated.resources.set_daily_notification_time
 import spiritualdailydigest.composeapp.generated.resources.star_24px
 import spiritualdailydigest.composeapp.generated.resources.system_update_24px
+import spiritualdailydigest.composeapp.generated.resources.terms_of_use
+import spiritualdailydigest.composeapp.generated.resources.terms_url
 import spiritualdailydigest.composeapp.generated.resources.thumb_up_24px
 import spiritualdailydigest.composeapp.generated.resources.update_app
 import spiritualdailydigest.composeapp.generated.resources.volunteer
 import spiritualdailydigest.composeapp.generated.resources.volunteer_activism_24px
 import spiritualdailydigest.composeapp.generated.resources.your_feedback
 
-class MoreOptionsScreen:Screen {
+class MoreOptionsScreen : Screen {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class)
     @Composable
@@ -68,10 +69,11 @@ class MoreOptionsScreen:Screen {
         val windowSizeClass = calculateWindowSizeClass()
         val sizeMedium = Size.medium(windowSizeClass)
         val navigator = LocalNavigator.current
+        val optionsScreenModel = getScreenModel<MoreOptionsScreenModel>()
 
         Scaffold(
             topBar = {
-                Header(navigationIcon = getNavigationIcon()){
+                Header(navigationIcon = getNavigationIcon()) {
                     navigator?.pop()
                 }
             },
@@ -80,51 +82,48 @@ class MoreOptionsScreen:Screen {
         ) {
             Column(Modifier.padding(it).verticalScroll(rememberScrollState())) {
 
-
-                val downloadUrl = getAppDownloadUrl()
-
                 Option(
                     Res.drawable.system_update_24px,
-                    headline =  Res.string.update_app
+                    headline = Res.string.update_app
                 ) {
-                    openUrl(downloadUrl)
+                    openUrl(optionsScreenModel.downloadUrl)
                 }
 
                 Option(
                     Res.drawable.notifications_active_24px,
-                    headline =  Res.string.set_daily_notification_time
+                    headline = Res.string.set_daily_notification_time
                 ) {
                     navigator?.push(NotificationTimeScreen())
                 }
 
-                TellAFriend()
+                TellAFriend(optionsScreenModel.downloadUrl)
 
-                val feedbackUrl = stringResource(Res.string.feedback_url)
                 Option(
                     Res.drawable.chat_bubble_24px,
-                    headline =  Res.string.your_feedback
+                    headline = Res.string.your_feedback
                 ) {
-                    openUrl(feedbackUrl)
+                    openUrl(optionsScreenModel.feedbackUrl)
                 }
 
                 Option(
                     Res.drawable.volunteer_activism_24px,
-                    headline =  Res.string.volunteer
+                    headline = Res.string.volunteer
                 ) {
-                    openUrl(feedbackUrl)
+                    openUrl(optionsScreenModel.volunteerFormUrl)
                 }
 
+                val rateApp = stringResource(Res.string.rate_app)
                 Option(
                     Res.drawable.thumb_up_24px,
                     headlineContent = {
                         Row {
-                            Text(stringResource(Res.string.rate_app), style = textStyle)
+                            Text(rateApp, style = textStyle)
                             Spacer(Modifier.width(sizeMedium))
                             Row {
                                 for (i in 1 until 6) {
                                     Icon(
                                         painter = painterResource(Res.drawable.star_24px),
-                                        contentDescription = "Rate app",
+                                        contentDescription = rateApp,
                                         tint = ratingColorScheme()
                                     )
                                 }
@@ -132,13 +131,13 @@ class MoreOptionsScreen:Screen {
                         }
                     },
                 ) {
-                    openUrl(downloadUrl)
+                    openUrl(optionsScreenModel.downloadUrl)
                 }
 
                 val privacyUrl = stringResource(Res.string.privacy_url)
                 Option(
                     Res.drawable.lock_24px,
-                    headline =  Res.string.privacy_policy
+                    headline = Res.string.privacy_policy
                 ) {
                     navigator?.push(
                         WebViewScreen(
@@ -147,8 +146,20 @@ class MoreOptionsScreen:Screen {
                     )
                 }
 
+                val termsUrl = stringResource(Res.string.terms_url)
+                Option(
+                    Res.drawable.lock_24px,
+                    headline = Res.string.terms_of_use
+                ) {
+                    navigator?.push(
+                        WebViewScreen(
+                            WebViewUIState(termsUrl)
+                        )
+                    )
+                }
 
-                Option(Res.drawable.info_24px, headline =Res.string.about_us ) {
+
+                Option(Res.drawable.info_24px, headline = Res.string.about_us) {
                     navigator?.push(AboutScreen())
                 }
             }
@@ -166,7 +177,9 @@ val textStyle = TextStyle(
 )
 
 @Composable
-expect fun TellAFriend()
+expect fun TellAFriend(
+    downloadUrl: String
+)
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -190,9 +203,10 @@ fun Option(
     onClick: () -> Unit
 ) {
 
-    ListItem(modifier = Modifier.clickable {
-        onClick()
-    },
+    ListItem(
+        modifier = Modifier.clickable {
+            onClick()
+        },
         leadingContent = {
             Icon(
                 painter = painterResource(leadingIcon),

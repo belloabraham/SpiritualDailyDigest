@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.LocalUIViewController
-import getAppDownloadUrl
 import org.cccsharonparish.core.resources.iconColor
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -23,9 +22,10 @@ import spiritualdailydigest.composeapp.generated.resources.tell_a_friend
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 actual fun TellAFriend(
+    downloadUrl:String
 ) {
     val viewController = LocalUIViewController.current
-    val promotionText = stringResource(Res.string.promotion)+ "\n" +getAppDownloadUrl()
+    val promotionText = stringResource(Res.string.promotion)+ "\n" + downloadUrl
 
     ListItem(modifier = Modifier.clickable {
         shareText(text =  listOf(promotionText), viewController)

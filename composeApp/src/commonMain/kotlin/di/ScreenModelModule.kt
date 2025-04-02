@@ -6,6 +6,7 @@ import org.cccsharonparish.core.data.firestore.Firestore
 import org.koin.dsl.module
 import screen.about.AboutScreenModel
 import screen.home.HomeScreenModel
+import screen.options.MoreOptionsScreenModel
 
 val screenModelModule = module {
     factory {
@@ -13,6 +14,10 @@ val screenModelModule = module {
     }
     factory {
         AboutScreenModel()
+    }
+
+    factory {
+        MoreOptionsScreenModel(get())
     }
 
     factory<IRemoteConfig>{

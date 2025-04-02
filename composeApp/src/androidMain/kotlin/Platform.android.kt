@@ -1,6 +1,5 @@
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,14 +10,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.cccsharonparish.core.data.config.ConfigKey
 import org.cccsharonparish.core.domain.applicationContext
 import org.cccsharonparish.spiritualdailydigest.BuildConfig
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.arrow_back_24px
-import spiritualdailydigest.composeapp.generated.resources.play_store_url
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalResourceApi::class)
 actual fun getNavigationIcon(): DrawableResource {
@@ -39,14 +38,8 @@ actual fun openUrl(url: String): Boolean {
     val intent = CustomTabsIntent.Builder().build().apply {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }
-    intent.launchUrl(applicationContext, Uri.parse(url))
+    intent.launchUrl(applicationContext, url.toUri())
     return true
-}
-
-@Composable
-@OptIn(ExperimentalResourceApi::class)
-actual fun getAppDownloadUrl(): String {
-    return stringResource(Res.string.play_store_url)
 }
 
 actual fun isDebugMode(): Boolean {
@@ -72,3 +65,5 @@ actual fun OrientationChangeListener(
         }
     }
 }
+
+actual fun appDownloadUrlConfigKey() = ConfigKey.PLAY_STORE_URL

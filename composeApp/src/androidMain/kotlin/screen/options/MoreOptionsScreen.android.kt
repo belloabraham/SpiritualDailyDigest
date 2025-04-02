@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import getAppDownloadUrl
 import org.cccsharonparish.core.common.helpers.utils.TextUtil
 import org.cccsharonparish.core.resources.iconColor
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -23,13 +22,15 @@ import spiritualdailydigest.composeapp.generated.resources.tell_a_friend
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 actual fun TellAFriend(
+    downloadUrl: String
 ) {
     val context = LocalContext.current
-    val promotionText = stringResource(Res.string.promotion)+ "\n" +getAppDownloadUrl()
+    val promotionText = stringResource(Res.string.promotion) + "\n" + downloadUrl
 
-    ListItem(modifier = Modifier.clickable {
-        TextUtil.shareText(context, promotionText)
-    },
+    ListItem(
+        modifier = Modifier.clickable {
+            TextUtil.shareText(context, promotionText)
+        },
         leadingContent = {
             Icon(
                 painter = painterResource(Res.drawable.share_24px),
