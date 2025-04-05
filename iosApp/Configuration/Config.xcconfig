@@ -1,3 +1,4 @@
 TEAM_ID=
-BUNDLE_ID=org.cccsharonparish.spiritualdailydigest.SpiritualDailyDigest
-APP_NAME=SpiritualDailyDigest
+BUNDLE_ID=org.cccsharonparish.spiritualdailydigest
+applicationId=org.cccsharonparish.spiritualdailydigest
+APP_NAME=Spiritual Daily Digest
