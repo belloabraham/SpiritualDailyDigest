@@ -16,7 +16,7 @@ import theme.AppTheme
 
 @Composable
 @Preview
-fun App() {
+fun App(contentUrl: String?) {
     KoinApplication(application = {
         modules(appModule + screenModelModule)
     }) {
@@ -38,7 +38,7 @@ fun App() {
                 koinInject<IPreferenceRepo>().getUserExitedOnboardingScreen()
 
             val nextScreen =
-                if (userExitedOnboardingScreen) HomeScreen("") else getOnboardingScreen()
+                if (userExitedOnboardingScreen) HomeScreen(contentUrl) else getOnboardingScreen()
 
             Navigator(nextScreen) { navigator ->
                 SlideTransition(navigator)

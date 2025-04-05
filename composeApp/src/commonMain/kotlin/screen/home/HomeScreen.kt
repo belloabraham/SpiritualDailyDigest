@@ -87,7 +87,7 @@ import org.cccsharonparish.core.ui.AnimatedUIVisibility
 import org.cccsharonparish.core.ui.SwitchIconButton
 import spiritualdailydigest.composeapp.generated.resources.favorite_24px
 
-class HomeScreen(private val id: String) : Screen {
+class HomeScreen(private val contentUrl: String?) : Screen {
     @OptIn(
         ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class,
         ExperimentalResourceApi::class

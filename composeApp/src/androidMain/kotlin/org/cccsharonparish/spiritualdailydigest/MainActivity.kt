@@ -1,6 +1,7 @@
 package org.cccsharonparish.spiritualdailydigest
 
 import App
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -12,18 +13,18 @@ class MainActivity : AppUpdateActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        val appLinkIntent: Intent = intent
+        val appLinkData = if (appLinkIntent.data == null) null else appLinkIntent.data.toString()
+
         setContent {
-            App()
+            App(appLinkData)
         }
-        // ATTENTION: This was auto-generated to handle app links.
-      /*  val appLinkIntent: Intent = intent
-        val appLinkAction: String? = appLinkIntent.action
-        val appLinkData: Uri? = appLinkIntent.data*/
+
     }
 }
 
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    App(null)
 }
