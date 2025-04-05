@@ -5,18 +5,16 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import screen.notification.OnboardingNotificationTimeScreen
 
-actual fun getOnboardingScreen(
-) :Screen{
-    return OnboardingScreen()
+actual fun getOnboardingScreen(contentUrl: String?) :Screen{
+    return OnboardingScreen(contentUrl)
 }
 
-class OnboardingScreen(
-) : Screen {
+class OnboardingScreen(private val contentUrl: String?) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
         OnBoardingPage() {
-            navigator?.replace(OnboardingNotificationTimeScreen())
+            navigator?.replace(OnboardingNotificationTimeScreen(contentUrl))
         }
     }
 

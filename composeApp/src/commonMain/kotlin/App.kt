@@ -38,7 +38,7 @@ fun App(contentUrl: String?) {
                 koinInject<IPreferenceRepo>().getUserExitedOnboardingScreen()
 
             val nextScreen =
-                if (userExitedOnboardingScreen) HomeScreen(contentUrl) else getOnboardingScreen()
+                if (userExitedOnboardingScreen) HomeScreen(contentUrl) else getOnboardingScreen(contentUrl)
 
             Navigator(nextScreen) { navigator ->
                 SlideTransition(navigator)

@@ -1,8 +1,5 @@
 package screen.permission
 
-import android.annotation.SuppressLint
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -15,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import org.cccsharonparish.core.common.helpers.notification.Notification
 
 actual fun getPermissionScreen(permissionUIState: PermissionUIState): IPermissionScreen {
     return PermissionScreen(permissionUIState)
@@ -22,35 +20,31 @@ actual fun getPermissionScreen(permissionUIState: PermissionUIState): IPermissio
 
 class PermissionScreen(
     private val permissionUIState: PermissionUIState,
-) : IPermissionScreen{
-
+) : IPermissionScreen {
     override var nextScreen: Screen? = null
 
     @OptIn(ExperimentalMaterial3Api::class)
-    @SuppressLint("NewApi")
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        val permissionDialog = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.RequestPermission(),
-            onResult = {
-                navigator?.replace(nextScreen!!)
-            }
-        )
-
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(permissionUIState.title, style = MaterialTheme.typography.headlineMedium)
+                        Text(
+                            permissionUIState.title,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
                     },
                 )
             },
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 .navigationBarsPadding().statusBarsPadding()
         ) {
-            PermissionPage(permissionUIState, it){
-                permissionDialog.launch(permissionUIState.permission!!)
+            PermissionPage(permissionUIState, it) {
+                Notification.requestNotificationPermission {
+                    navigator?.replace(nextScreen!!)
+                }
             }
         }
     }

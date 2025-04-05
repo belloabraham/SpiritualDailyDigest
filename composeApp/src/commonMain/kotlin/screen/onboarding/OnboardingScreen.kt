@@ -32,7 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-expect fun getOnboardingScreen(): Screen
+expect fun getOnboardingScreen(contentUrl: String?): Screen
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalFoundationApi::class)
 @Composable

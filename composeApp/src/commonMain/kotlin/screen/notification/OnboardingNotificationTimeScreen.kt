@@ -21,7 +21,6 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.capitalize
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import org.cccsharonparish.core.resources.Size
@@ -33,7 +32,7 @@ import spiritualdailydigest.composeapp.generated.resources.looks_good
 import spiritualdailydigest.composeapp.generated.resources.notification_time_message
 import spiritualdailydigest.composeapp.generated.resources.notification_time_title
 
-class OnboardingNotificationTimeScreen: Screen {
+class OnboardingNotificationTimeScreen(private val contentUrl: String?): Screen {
 
     @OptIn(
         ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class,
@@ -71,7 +70,7 @@ class OnboardingNotificationTimeScreen: Screen {
                 }
 
                 Button( modifier =  Modifier.fillMaxWidth(), onClick = {
-                    navigator?.replace(HomeScreen(""))
+                    navigator?.replace(HomeScreen(contentUrl))
                 }) {
                     Text(stringResource(Res.string.looks_good))
                 }
