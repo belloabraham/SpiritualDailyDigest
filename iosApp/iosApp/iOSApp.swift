@@ -1,5 +1,7 @@
 import SwiftUI
 import Firebase
+import ComposeApp
+
 
 @main
 struct iOSApp: App {
@@ -51,7 +53,7 @@ class AppDelegate:NSObject, MessagingDelegate, UIApplicationDelegate {
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
            let url = userActivity.webpageURL {
-            UserDefaults.standard.set(url.absoluteString, forKey: "contentUrl")
+            UserDefaults.standard.set(url.absoluteString, forKey: MainViewControllerKt.PreferenceKey().CONTENT_ID)
         }
         return true
     }

@@ -7,8 +7,4 @@ interface IPreferenceRepo {
     suspend fun setFontSize(value: Float)
     fun getLanguageIndex(): Int
     suspend fun setLanguageIndex(value:Int)
-    fun getReferrerContentId(): String?
-    suspend fun setReferrerContentId(value:String)
-
-
 }

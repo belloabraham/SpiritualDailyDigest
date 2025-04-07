@@ -9,5 +9,4 @@ class Preference: RealmObject{
     var languageIndex = 0
     var fontSize = 20f
     var userExitedOnboarding: Boolean = false
-    var referrerContentId: String? = null
 }
