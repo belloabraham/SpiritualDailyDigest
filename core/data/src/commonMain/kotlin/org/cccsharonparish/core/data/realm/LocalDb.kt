@@ -1,8 +1,8 @@
 package org.cccsharonparish.core.data.realm
 
-import org.cccsharonparish.core.data.entities.Preference
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
+import org.cccsharonparish.core.model.entities.local.Preference
 
 class LocalDb {
     val instance: Realm

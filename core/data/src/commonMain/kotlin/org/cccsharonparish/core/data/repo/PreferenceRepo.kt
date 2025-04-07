@@ -1,6 +1,5 @@
 package org.cccsharonparish.core.data.repo
 
-import org.cccsharonparish.core.data.entities.Preference
 import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
@@ -9,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import org.cccsharonparish.core.model.entities.local.Preference
 
 class PreferenceRepo(private val localDb: Realm,  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IPreferenceRepo {

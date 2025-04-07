@@ -1,4 +1,4 @@
-package org.cccsharonparish.core.data.entities
+package org.cccsharonparish.core.model.entities.local
 
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
