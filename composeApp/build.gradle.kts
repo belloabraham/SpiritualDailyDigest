@@ -48,6 +48,8 @@ kotlin {
 
             implementation(libs.kotlinx.coroutines.android)
 
+            implementation(libs.installreferrer)
+
 
             implementation(dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.analytics)

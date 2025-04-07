@@ -7,20 +7,28 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import kotlinx.coroutines.launch
 import org.cccsharonparish.core.common.google.AppUpdateActivity
+import org.cccsharonparish.core.data.repo.IPreferenceRepo
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppUpdateActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         val appLinkIntent: Intent = intent
-        val appLinkData = if (appLinkIntent.data == null) null else appLinkIntent.data.toString()
+        val contentId = if (appLinkIntent.data == null) null else appLinkIntent.data!!.lastPathSegment
 
         setContent {
-            App(appLinkData)
+            App(contentId)
         }
 
     }
+
 }
 
 @Preview

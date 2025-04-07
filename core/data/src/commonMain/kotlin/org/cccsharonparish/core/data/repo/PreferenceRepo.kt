@@ -79,4 +79,23 @@ class PreferenceRepo(private val localDb: Realm,  private val dispatcher: Corout
         }
     }
 
+    override fun getReferrerContentId(): String? {
+        return try {
+            localDb.query<Preference>().find().first().referrerContentId
+        } catch (e: Exception) {
+            Preference().referrerContentId
+        }
+    }
+
+    override suspend fun setReferrerContentId(value: String) {
+        withContext(dispatcher) {
+            localDb.write {
+                val preference = getPreference(this) ?: Preference()
+                copyToRealm(preference.apply {
+                    referrerContentId = value
+                }, UpdatePolicy.ALL)
+            }
+        }
+    }
+
 }

@@ -5,8 +5,10 @@ interface IPreferenceRepo {
     suspend fun setUserExitedOnboardingScreen(value: Boolean)
     fun getFontSize(): Float
     suspend fun setFontSize(value: Float)
-
     fun getLanguageIndex(): Int
-
     suspend fun setLanguageIndex(value:Int)
+    fun getReferrerContentId(): String?
+    suspend fun setReferrerContentId(value:String)
+
+
 }
