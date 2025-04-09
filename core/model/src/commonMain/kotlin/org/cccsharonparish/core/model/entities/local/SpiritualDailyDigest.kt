@@ -4,15 +4,14 @@ import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
-import org.cccsharonparish.core.model.entities.ISpiritualDailyDigest
 
-class SpiritualDailyDigest: RealmObject, ISpiritualDailyDigest {
+class SpiritualDailyDigest: RealmObject {
     @PrimaryKey
-    override var id: String = ""
-    override var year: Int = 0
-    override var month: Int = 0
-    override var day: Int = 0
-    override var imagePath: String? = null
-    override var tags: RealmList<String> = realmListOf()
-    override var contents: RealmList<Content> = realmListOf()
+    var id: String? = null
+    var year: Int = 0
+    var month: Int = 0
+    var day: Int = 0
+    var imagePath: String? = null
+    var tags: RealmList<String> = realmListOf()
+    var contents: RealmList<Content> = realmListOf()
 }

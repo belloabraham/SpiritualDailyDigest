@@ -1,10 +1,9 @@
 package org.cccsharonparish.core.model.entities.local
 
 import io.realm.kotlin.types.RealmObject
-import org.cccsharonparish.core.model.entities.IBibleVerseContent
 
-class BibleVerseContent : RealmObject, IBibleVerseContent {
-    override var reference: String = ""
-    override var verses: String = ""
-    override var keyVerse: String = ""
+class BibleVerseContent : RealmObject {
+    var reference: String? = null
+    var verses: String? = null
+    var keyVerse: String? = null
 }
