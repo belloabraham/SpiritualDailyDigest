@@ -4,7 +4,7 @@ import org.cccsharonparish.core.model.entities.remote.RemoteLanguage
 import org.cccsharonparish.core.model.entities.remote.RemoteTextContent
 
 interface IContent {
-    val language: RemoteLanguage
-    val text: RemoteTextContent
+    val language: ILanguage
+    val text: ITextContent
     val audioUrl: String?
 }

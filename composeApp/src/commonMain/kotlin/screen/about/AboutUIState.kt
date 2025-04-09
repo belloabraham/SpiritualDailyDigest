@@ -14,7 +14,6 @@ import spiritualdailydigest.composeapp.generated.resources.twitter
 import spiritualdailydigest.composeapp.generated.resources.web_24px
 import spiritualdailydigest.composeapp.generated.resources.website
 import spiritualdailydigest.composeapp.generated.resources.whatsapp
-import spiritualdailydigest.composeapp.generated.resources.your_feedback
 
 interface IContact{
     val label: StringResource

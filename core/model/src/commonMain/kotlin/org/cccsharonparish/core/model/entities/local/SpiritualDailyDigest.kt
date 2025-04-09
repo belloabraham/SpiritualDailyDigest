@@ -5,7 +5,6 @@ import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 import org.cccsharonparish.core.model.entities.ISpiritualDailyDigest
-import org.cccsharonparish.core.model.entities.remote.RemoteContent
 
 class SpiritualDailyDigest: RealmObject, ISpiritualDailyDigest {
     @PrimaryKey
@@ -15,5 +14,5 @@ class SpiritualDailyDigest: RealmObject, ISpiritualDailyDigest {
     override var day: Int = 0
     override var imagePath: String? = null
     override var tags: RealmList<String> = realmListOf()
-    override var contents: RealmList<RemoteContent> = realmListOf()
+    override var contents: RealmList<Content> = realmListOf()
 }

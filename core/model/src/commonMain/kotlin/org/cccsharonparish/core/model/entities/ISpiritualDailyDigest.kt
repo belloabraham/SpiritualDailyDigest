@@ -9,5 +9,5 @@ interface ISpiritualDailyDigest {
     val day: Int
     val imagePath: String?
     val tags: List<String>
-    val contents: List<RemoteContent>
+    val contents: List<IContent>
 }

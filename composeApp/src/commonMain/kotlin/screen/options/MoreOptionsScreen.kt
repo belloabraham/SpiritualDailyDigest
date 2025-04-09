@@ -44,6 +44,7 @@ import spiritualdailydigest.composeapp.generated.resources.Res
 import spiritualdailydigest.composeapp.generated.resources.about_us
 import spiritualdailydigest.composeapp.generated.resources.chat_bubble_24px
 import spiritualdailydigest.composeapp.generated.resources.chevron_right_24px
+import spiritualdailydigest.composeapp.generated.resources.give_feedback
 import spiritualdailydigest.composeapp.generated.resources.info_24px
 import spiritualdailydigest.composeapp.generated.resources.lock_24px
 import spiritualdailydigest.composeapp.generated.resources.notifications_active_24px
@@ -59,7 +60,6 @@ import spiritualdailydigest.composeapp.generated.resources.thumb_up_24px
 import spiritualdailydigest.composeapp.generated.resources.update_app
 import spiritualdailydigest.composeapp.generated.resources.volunteer
 import spiritualdailydigest.composeapp.generated.resources.volunteer_activism_24px
-import spiritualdailydigest.composeapp.generated.resources.your_feedback
 
 class MoreOptionsScreen : Screen {
 
@@ -100,7 +100,7 @@ class MoreOptionsScreen : Screen {
 
                 Option(
                     Res.drawable.chat_bubble_24px,
-                    headline = Res.string.your_feedback
+                    headline = Res.string.give_feedback
                 ) {
                     openUrl(optionsScreenModel.feedbackUrl)
                 }

@@ -5,7 +5,7 @@ import org.cccsharonparish.core.model.entities.remote.RemoteBibleVerseContent
 interface ITextContent {
     val topic: String
     val message: String
-    val bibleVerse: RemoteBibleVerseContent
+    val bibleVerse: IBibleVerseContent
     val supplication: String
     val reflection: String
 }
