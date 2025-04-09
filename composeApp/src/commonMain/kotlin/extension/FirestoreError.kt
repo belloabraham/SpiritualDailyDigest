@@ -15,16 +15,16 @@ import spiritualdailydigest.composeapp.generated.resources.firestore_error_not_f
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_ok
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_out_of_range
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_permission_denied
+import spiritualdailydigest.composeapp.generated.resources.firestore_error_resource_exhausted
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_unauthenticated
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_unavailable
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_unimplemented
 import spiritualdailydigest.composeapp.generated.resources.firestore_error_unknown
-import spiritualdailydigest.composeapp.generated.resources.update
 
 fun FirestoreError.asString(): UIText {
     return when (this) {
         FirestoreError.RESOURCE_EXHAUSTED -> UIText.ResourceString(
-            Res.string.update
+            Res.string.firestore_error_resource_exhausted
         )
         FirestoreError.INTERNAL -> UIText.ResourceString(
             Res.string.firestore_error_internal
