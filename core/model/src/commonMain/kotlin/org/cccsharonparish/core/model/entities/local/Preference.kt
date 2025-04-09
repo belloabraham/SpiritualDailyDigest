@@ -1,5 +1,7 @@
 package org.cccsharonparish.core.model.entities.local
 
+import io.realm.kotlin.ext.realmListOf
+import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 
@@ -9,4 +11,5 @@ class Preference: RealmObject{
     var languageIndex = 0
     var fontSize = 20f
     var userExitedOnboarding: Boolean = false
+    var supportedLanguages: RealmList<Language> = realmListOf()
 }

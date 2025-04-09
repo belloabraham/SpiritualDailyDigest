@@ -4,10 +4,12 @@ import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.types.RealmList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import org.cccsharonparish.core.model.entities.local.Language
 import org.cccsharonparish.core.model.entities.local.Preference
 
 class PreferenceRepo(private val localDb: Realm,  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -74,6 +76,25 @@ class PreferenceRepo(private val localDb: Realm,  private val dispatcher: Corout
                 val preference = getPreference(this) ?: Preference()
                 copyToRealm(preference.apply {
                     languageIndex = value
+                }, UpdatePolicy.ALL)
+            }
+        }
+    }
+
+   override fun getSupportedLanguages(): RealmList<Language> {
+        return try {
+            localDb.query<Preference>().find().first().supportedLanguages
+        } catch (e: Exception) {
+            Preference().supportedLanguages
+        }
+    }
+
+    override suspend fun setSupportedLanguages(value: RealmList<Language>) {
+        withContext(dispatcher) {
+            localDb.write {
+                val preference = getPreference(this) ?: Preference()
+                copyToRealm(preference.apply {
+                    supportedLanguages = value
                 }, UpdatePolicy.ALL)
             }
         }
