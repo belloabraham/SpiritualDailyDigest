@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="firestore_error_ok">Opération terminée avec succès.</string>
+    <string name="firestore_error_cancelled">L'opération a été annulée. Veuillez réessayer.</string>
+    <string name="firestore_error_unknown">Une erreur inconnue s'est produite. Veuillez réessayer ultérieurement. Si le problème persiste, vérifiez votre connexion Internet.</string>
+    <string name="firestore_error_invalid_argument">Entrée non valide. Veuillez vérifier vos données et réessayer.</string>
+    <string name="firestore_error_deadline_exceeded">L'opération a pris trop de temps. Veuillez vérifier votre connexion Internet et réessayer.</string>
+    <string name="firestore_error_not_found">Les données demandées n'ont pas été trouvées. Veuillez vérifier que l'élément existe et réessayer.</string>
+    <string name="firestore_error_already_exists">Ces données existent déjà. Veuillez éviter les doublons ou essayer de mettre à jour l'élément existant.</string>
+    <string name="firestore_error_permission_denied">Vous n'êtes pas autorisé à effectuer cette action. Veuillez contacter l'assistance si vous pensez qu'il s'agit d'une erreur.</string>
+    <string name="firestore_error_resource_exhausted">Trop de demandes ou ressources insuffisantes. Veuillez vérifier votre connexion Internet et réessayer ultérieurement.</string>
+    <string name="firestore_error_failed_precondition">L'opération n'a pas pu être effectuée en raison d'un échec. Veuillez vérifier vos données ou l'état de votre application et réessayer.</string>
+    <string name="firestore_error_aborted">L'opération a été interrompue. Veuillez vérifier votre connexion Internet et réessayer.</string>
+    <string name="firestore_error_out_of_range">Les données demandées sont hors limites. Veuillez corriger votre saisie et réessayer.</string>
+    <string name="firestore_error_unimplemented">Cette fonctionnalité n'est pas encore prise en charge. Restez à l'écoute pour les prochaines mises à jour.</string>
+    <string name="firestore_error_internal">Une erreur interne s'est produite. Veuillez réessayer ultérieurement. Si le problème persiste, vérifiez votre connexion Internet ou contactez l'assistance.</string>
+    <string name="firestore_error_unavailable">Le service est actuellement indisponible. Veuillez vérifier votre connexion Internet et réessayer ultérieurement.</string>
+    <string name="firestore_error_data_loss">Une perte de données inattendue s'est produite. Veuillez réessayer et contacter l'assistance si le problème persiste.</string>
+    <string name="firestore_error_unauthenticated">Vous devez être connecté pour effectuer cette action. Veuillez vous connecter et réessayer.</string>
+</resources>

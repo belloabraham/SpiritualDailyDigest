@@ -2,7 +2,7 @@
 
 <resources>
     <string name="need_help">Besoin d'aide?</string>
-    <string name="your_feedback">Vos réactions</string>
+    <string name="give_feedback">Vos réactions</string>
     <string name="tell_a_friend">Dire à un ami</string>
     <string name="about_us">À propos de nous</string>
     <string name="update">Mise à jour</string>

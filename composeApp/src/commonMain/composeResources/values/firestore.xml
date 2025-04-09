@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="firestore_error_ok">Operation completed successfully.</string>
+    <string name="firestore_error_cancelled">The operation was cancelled. Please try again.</string>
+    <string name="firestore_error_unknown">An unknown error occurred. Please try again later. If the problem persists, check your internet connection.</string>
+    <string name="firestore_error_invalid_argument">Invalid input provided. Please check your data and try again.</string>
+    <string name="firestore_error_deadline_exceeded">The operation took too long. Please check your internet connection and try again.</string>
+    <string name="firestore_error_not_found">The requested data was not found. Please ensure the item exists and try again.</string>
+    <string name="firestore_error_already_exists">This data already exists. Please avoid duplicates or try updating the existing item.</string>
+    <string name="firestore_error_permission_denied">You do not have permission to perform this action. Please contact support if you believe this is an error.</string>
+    <string name="firestore_error_resource_exhausted">Too many requests or insufficient resources. Please check your internet connection and try again later.</string>
+    <string name="firestore_error_failed_precondition">The operation could not be completed due to a failed condition. Please verify your data or app state and try again.</string>
+    <string name="firestore_error_aborted">The operation was aborted. Please check your internet connection and retry.</string>
+    <string name="firestore_error_out_of_range">The requested data is out of acceptable range. Please correct your input and try again.</string>
+    <string name="firestore_error_unimplemented">This feature is not yet supported. Stay tuned for future updates.</string>
+    <string name="firestore_error_internal">An internal error occurred. Please try again later. If the problem continues, check your internet connection or contact support.</string>
+    <string name="firestore_error_unavailable">The service is currently unavailable. Please check your internet connection and try again later.</string>
+    <string name="firestore_error_data_loss">Unexpected data loss occurred. Please try again and contact support if the issue persist.</string>
+    <string name="firestore_error_unauthenticated">You must be logged in to perform this action. Please sign in and try again.</string>
+</resources>
