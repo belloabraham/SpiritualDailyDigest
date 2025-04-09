@@ -37,6 +37,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.realm.kotlin.library)
             implementation(libs.kotlinx.serialization.json)
+
+            implementation(libs.gitlive.firebase.firestore)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
