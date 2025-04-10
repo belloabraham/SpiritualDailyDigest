@@ -36,6 +36,7 @@ kotlin {
             implementation(libs.co.touchlab.kermit)
 
             implementation(libs.gitlive.firebase.crashlytics)
+            implementation(projects.core.common)
 
         }
         commonTest.dependencies {

@@ -10,6 +10,4 @@ interface IPreferenceRepo {
     suspend fun setFontSize(value: Float)
     fun getLanguageIndex(): Int
     suspend fun setLanguageIndex(value:Int)
-    fun getSupportedLanguages(): RealmList<Language>
-    suspend fun setSupportedLanguages(value: RealmList<Language>)
 }

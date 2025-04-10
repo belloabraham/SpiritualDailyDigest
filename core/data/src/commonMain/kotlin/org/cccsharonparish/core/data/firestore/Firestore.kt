@@ -77,12 +77,12 @@ class Firestore {
     suspend inline fun <reified T : Any> getListOfDataWhere(
         collection: String,
         noinline whereFilter: FilterBuilder.() -> Filter?,
-        limit: Int?,
         orderBy: String?,
-        startAt: String?,
+        startAt: Any?,
         startAfter: String?,
-        direction: Direction
-    ): Result<List<T>, FirestoreError> {
+        direction: Direction,
+        limit: Int?,
+        ): Result<List<T>, FirestoreError> {
         var query = db.collection(collection).where(whereFilter)
         orderBy?.let {
             query = query.orderBy(it, direction)

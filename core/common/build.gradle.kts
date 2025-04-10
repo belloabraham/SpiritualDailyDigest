@@ -54,7 +54,6 @@ kotlin {
 
 
             implementation (projects.core.resources)
-            implementation(projects.core.data)
             implementation(projects.core.domain)
         }
         commonTest.dependencies {

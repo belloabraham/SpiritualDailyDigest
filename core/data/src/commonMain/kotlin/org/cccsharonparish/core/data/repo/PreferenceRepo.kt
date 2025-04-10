@@ -81,23 +81,4 @@ class PreferenceRepo(private val localDb: Realm,  private val dispatcher: Corout
         }
     }
 
-   override fun getSupportedLanguages(): RealmList<Language> {
-        return try {
-            localDb.query<Preference>().find().first().supportedLanguages
-        } catch (e: Exception) {
-            Preference().supportedLanguages
-        }
-    }
-
-    override suspend fun setSupportedLanguages(value: RealmList<Language>) {
-        withContext(dispatcher) {
-            localDb.write {
-                val preference = getPreference(this) ?: Preference()
-                copyToRealm(preference.apply {
-                    supportedLanguages = value
-                }, UpdatePolicy.ALL)
-            }
-        }
-    }
-
 }
