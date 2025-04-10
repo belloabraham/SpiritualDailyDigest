@@ -104,6 +104,24 @@ class Firestore {
         }
     }
 
+
+    suspend inline fun <reified T : Any> getListOfDataWhere(
+        collection: String,
+        noinline whereFilter: FilterBuilder.() -> Filter?,
+        limit: Int?,
+    ): Result<List<T>, FirestoreError> {
+        var query = db.collection(collection).where(whereFilter)
+        limit?.let {
+            query = query.limit(it)
+        }
+        return try {
+            val documents = query.get().documents
+            documentsToTypes<T>(documents)
+        } catch (e: FirebaseFirestoreException) {
+            Result.Error(errorType(e))
+        }
+    }
+
     suspend fun addListOfData(
         collection: String,
         document: String,
