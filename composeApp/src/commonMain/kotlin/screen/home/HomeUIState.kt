@@ -15,23 +15,12 @@ import spiritualdailydigest.composeapp.generated.resources.list_24px
 import spiritualdailydigest.composeapp.generated.resources.more_options
 import spiritualdailydigest.composeapp.generated.resources.yoruba
 
-data class NavigationItem @OptIn(ExperimentalResourceApi::class) constructor(
+data class NavigationItem constructor(
     val leadingIconRes: DrawableResource,
     val trailingIconRes: DrawableResource,
     val headline: String
 )
 
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-fun getLanguages(): List<String> {
-    return listOf(
-        stringResource(Res.string.yoruba),
-        stringResource(Res.string.english),
-        stringResource(Res.string.french),
-    )
-}
-
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun getNavigationItems(): List<NavigationItem> {
     return listOf(

@@ -42,7 +42,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -91,7 +90,6 @@ import spiritualdailydigest.composeapp.generated.resources.favorite_24px
 class HomeScreen(private val contentId: String?) : Screen {
     @OptIn(
         ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class,
-        ExperimentalResourceApi::class
     )
     @Composable
     override fun Content() {
@@ -103,9 +101,8 @@ class HomeScreen(private val contentId: String?) : Screen {
         val largeSize = Size.large(windowSizeClass)
         var openModalBottomSheet by rememberSaveable { mutableStateOf(false) }
         val bottomSheetState = rememberModalBottomSheetState()
-        val languages = getLanguages()
         val navigationItems = getNavigationItems()
-        var languageIndex by remember { mutableIntStateOf(homeScreenModel.getLanguageIndex()) }
+        val selectedLanguageCode by homeScreenModel.selectedLanguageCode.collectAsState()
         val scope = rememberCoroutineScope()
         val scrollBehavior =
             TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
@@ -114,12 +111,20 @@ class HomeScreen(private val contentId: String?) : Screen {
         val density = LocalDensity.current
         var isFavourite by remember { mutableStateOf(false) }
         var contentToShare by remember { mutableStateOf("") }
-        val contentForToday = homeScreenModel.contentForToday.collectAsState()
+        val showNextButton by homeScreenModel.showNextButton.collectAsState()
+        val showPrevButton by homeScreenModel.showPrevButton.collectAsState()
+        val contentByLanguage by homeScreenModel.contentByLanguage.collectAsState()
+        val contentUIState by homeScreenModel.contentUIState.collectAsState()
+        val contentSupportedLanguages by homeScreenModel.contentSupportedLanguages.collectAsState()
+
 
         LaunchedEffect(Unit) {
             homeScreenModel.setUserExitedOnboardingScreen(true)
             delay(500)
             showUIControls = true
+            if (contentId != null) {
+                homeScreenModel.setSelectedContent(contentId)
+            }
         }
 
         Scaffold(
@@ -127,7 +132,7 @@ class HomeScreen(private val contentId: String?) : Screen {
 
                 TopAppBar(
                     title = {
-                        Text("Faith")
+                        Text(contentByLanguage?.text?.topic ?: "")
                     },
                     actions = {
                         AnimatedUIVisibility(
@@ -153,7 +158,7 @@ class HomeScreen(private val contentId: String?) : Screen {
                     CoilImage(
                         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(4.dp)),
                         imageModel = {
-                            "https://firebasestorage.googleapis.com/v0/b/spiritualdailydigest-dev.appspot.com/o/banner-small.png?alt=media&token=66fb525c-2b26-473e-964c-6d409f7dd4ea"
+                            contentUIState?.imagePath
                         },
                         imageOptions = ImageOptions(
                             contentScale = ContentScale.FillWidth,
@@ -188,7 +193,7 @@ class HomeScreen(private val contentId: String?) : Screen {
 
                     Column(Modifier.padding(horizontal = mediumSize)) {
 
-                        val contentFontSize =   sliderPosition
+                        val contentFontSize = sliderPosition
                         val contentLineHeight = contentFontSize * 1.2f
 
                         Text(
@@ -199,12 +204,12 @@ class HomeScreen(private val contentId: String?) : Screen {
                         Spacer(Modifier.height(smallSize))
 
                         Text(
-                            "Psalm 118:1-8",
+                            contentByLanguage?.text?.bibleVerse?.reference ?: "",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold,
-                            fontSize =  (14f + sliderPosition * .2f).sp
+                            fontSize = (14f + sliderPosition * .2f).sp
                         )
                         Spacer(Modifier.height(mediumSize))
                         Text(
@@ -224,15 +229,18 @@ class HomeScreen(private val contentId: String?) : Screen {
                         Modifier.fillMaxWidth().padding(horizontal = mediumSize),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        IconButton(onClick = {
-
-                        }) {
-                            Icon(
-                                painter = painterResource(Res.drawable.chevron_left_24px),
-                                contentDescription = "Previous",
-                                tint = iconColor()
-                            )
+                        if (showPrevButton) {
+                            IconButton(onClick = {
+                                homeScreenModel.onPrev()
+                            }) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.chevron_left_24px),
+                                    contentDescription = "Previous",
+                                    tint = iconColor()
+                                )
+                            }
                         }
+
                         SwitchIconButton(
                             isChecked = isFavourite,
                             unCheckedIcon = Res.drawable.favorite_24px,
@@ -242,6 +250,7 @@ class HomeScreen(private val contentId: String?) : Screen {
                         ) {
                             isFavourite = !isFavourite
                         }
+
                         IconButton(onClick = {
                             openModalBottomSheet = true
                         }) {
@@ -251,27 +260,33 @@ class HomeScreen(private val contentId: String?) : Screen {
                                 tint = iconColor()
                             )
                         }
-                        IconButton(onClick = {
 
-                        }) {
-                            Icon(
-                                painter = painterResource(Res.drawable.play_circle_24px),
-                                contentDescription = "Play",
-                                tint = iconColor()
-                            )
-                        }
-                        IconButton(onClick = {
+                        if (contentByLanguage?.audioUrl != null) {
+                            IconButton(onClick = {
 
-                        }) {
-                            Icon(
-                                painter = painterResource(Res.drawable.chevron_right_24px),
-                                contentDescription = "Next",
-                                tint = iconColor()
-                            )
+                            }) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.play_circle_24px),
+                                    contentDescription = "Play",
+                                    tint = iconColor()
+                                )
+                            }
                         }
+
+                        if (showNextButton) {
+                            IconButton(onClick = {
+                                homeScreenModel.onNext()
+                            }) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.chevron_right_24px),
+                                    contentDescription = "Next",
+                                    tint = iconColor()
+                                )
+                            }
+                        }
+
                     }
                 }
-
 
             }
 
@@ -285,18 +300,17 @@ class HomeScreen(private val contentId: String?) : Screen {
                                 .padding(horizontal = mediumSize)
                         ) {
                             SingleChoiceSegmentedButtonRow {
-                                languages.forEachIndexed { index, label ->
+                                contentSupportedLanguages.forEachIndexed { index, language ->
                                     SegmentedButton(
                                         shape = SegmentedButtonDefaults.baseShape,
                                         onClick = {
-                                            languageIndex = index
-                                            homeScreenModel.setLanguageIndex(languageIndex)
+                                            homeScreenModel.onLanguageSelected(language)
                                         },
-                                        selected = index == languageIndex
+                                        selected = language.code == selectedLanguageCode
                                     ) {
-                                        Text(label)
+                                        Text(language.label ?: "")
                                     }
-                                    if (index < languages.lastIndex) {
+                                    if (index < contentSupportedLanguages.lastIndex) {
                                         Spacer(modifier = Modifier.width(smallSize))
                                     }
                                 }
@@ -332,24 +346,25 @@ class HomeScreen(private val contentId: String?) : Screen {
 
 
                         navigationItems.forEachIndexed { index, navigation ->
-                            ListItem(modifier = Modifier.clickable {
-                                val nextScreen = when (index) {
-                                    0 -> FavouritesScreen()
-                                    1 -> MoreOptionsScreen()
-                                    else -> null
-                                }
-                                scope.launch {
-                                    bottomSheetState.hide()
-                                    openModalBottomSheet = false
-                                }
-                                navigator?.push(nextScreen!!)
-                            }, leadingContent = {
-                                Icon(
-                                    painter = painterResource(navigation.leadingIconRes),
-                                    contentDescription = navigation.headline,
-                                    tint = iconColor()
-                                )
-                            },
+                            ListItem(
+                                modifier = Modifier.clickable {
+                                    val nextScreen = when (index) {
+                                        0 -> FavouritesScreen()
+                                        1 -> MoreOptionsScreen()
+                                        else -> null
+                                    }
+                                    scope.launch {
+                                        bottomSheetState.hide()
+                                        openModalBottomSheet = false
+                                    }
+                                    navigator?.push(nextScreen!!)
+                                }, leadingContent = {
+                                    Icon(
+                                        painter = painterResource(navigation.leadingIconRes),
+                                        contentDescription = navigation.headline,
+                                        tint = iconColor()
+                                    )
+                                },
                                 headlineContent = {
                                     Text(navigation.headline)
                                 },
