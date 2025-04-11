@@ -43,7 +43,7 @@ kotlin {
             implementation(libs.androidx.browser)
 
             implementation(dependencies.platform(libs.koin.bom))
-            implementation(libs.koin.core)
+//            implementation(libs.koin.core)
             implementation(libs.koin.android)
 
             implementation(libs.kotlinx.coroutines.android)

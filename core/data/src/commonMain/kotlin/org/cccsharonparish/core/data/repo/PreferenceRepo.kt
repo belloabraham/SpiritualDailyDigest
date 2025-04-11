@@ -4,20 +4,19 @@ import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
-import io.realm.kotlin.types.RealmList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
-import org.cccsharonparish.core.model.entities.local.Language
 import org.cccsharonparish.core.model.entities.local.Preference
 
-class PreferenceRepo(private val localDb: Realm,  private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+class PreferenceRepo(
+    private val localDb: Realm, private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IPreferenceRepo {
 
-    private fun getPreference(mutableRealm: MutableRealm):  Preference? {
+    private fun getPreference(mutableRealm: MutableRealm): Preference? {
         return try {
-           mutableRealm.findLatest(localDb.query<Preference>().find().first())
+            mutableRealm.findLatest(localDb.query<Preference>().find().first())
         } catch (e: Exception) {
             null
         }
@@ -25,7 +24,7 @@ class PreferenceRepo(private val localDb: Realm,  private val dispatcher: Corout
 
     override fun getUserExitedOnboardingScreen(): Boolean {
         return try {
-             localDb.query<Preference>().find().first().userExitedOnboarding
+            localDb.query<Preference>().find().first().userExitedOnboarding
         } catch (e: Exception) {
             Preference().userExitedOnboarding
         }
@@ -76,6 +75,25 @@ class PreferenceRepo(private val localDb: Realm,  private val dispatcher: Corout
                 val preference = getPreference(this) ?: Preference()
                 copyToRealm(preference.apply {
                     languageIndex = value
+                }, UpdatePolicy.ALL)
+            }
+        }
+    }
+
+    override fun getSelectedContentLanguageCode(): String? {
+        return try {
+            localDb.query<Preference>().find().first().selectedContentLanguageCode
+        } catch (e: Exception) {
+            Preference().selectedContentLanguageCode
+        }
+    }
+
+    override suspend fun setSelectedContentLanguageCode(value: String) {
+        withContext(dispatcher) {
+            localDb.write {
+                val preference = getPreference(this) ?: Preference()
+                copyToRealm(preference.apply {
+                    selectedContentLanguageCode = value
                 }, UpdatePolicy.ALL)
             }
         }
