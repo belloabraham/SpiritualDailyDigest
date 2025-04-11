@@ -22,4 +22,5 @@ interface IContentRepo {
     fun getLivePublishedContentForToday(): Flow<SpiritualDailyDigest?>
     fun getPublishedContentForToday(): SpiritualDailyDigest?
     fun getAllPublishedContents(): List<SpiritualDailyDigest>
+    fun getContentIdForToday(): String
 }

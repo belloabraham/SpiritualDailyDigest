@@ -10,7 +10,7 @@ import screen.options.MoreOptionsScreenModel
 
 val screenModelModule = module {
     factory {
-        HomeScreenModel(get())
+        HomeScreenModel(get(), get())
     }
     factory {
         AboutScreenModel()

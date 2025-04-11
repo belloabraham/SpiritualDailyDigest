@@ -117,7 +117,7 @@ class ContentRepo(
         }
     }
 
-    private fun getContentIdForToday(): String {
+    override fun getContentIdForToday(): String {
         val localDate = DateTimeUtil.date()
         return "${localDate.dayOfMonth}-${localDate.monthNumber}-${localDate.year}"
     }

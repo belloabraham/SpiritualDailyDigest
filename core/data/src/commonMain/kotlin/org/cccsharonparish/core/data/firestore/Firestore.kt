@@ -214,7 +214,7 @@ class Firestore {
                 result.plus(it.data<T>())
             }
         }
-        return if (result.isEmpty()) Result.Empty() else Result.Success(result)
+        return Result.Success(result)
     }
 
 }

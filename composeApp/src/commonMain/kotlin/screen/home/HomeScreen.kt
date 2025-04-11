@@ -39,6 +39,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -113,6 +114,7 @@ class HomeScreen(private val contentId: String?) : Screen {
         val density = LocalDensity.current
         var isFavourite by remember { mutableStateOf(false) }
         var contentToShare by remember { mutableStateOf("") }
+        val contentForToday = homeScreenModel.contentForToday.collectAsState()
 
         LaunchedEffect(Unit) {
             homeScreenModel.setUserExitedOnboardingScreen(true)

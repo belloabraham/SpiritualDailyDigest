@@ -6,9 +6,9 @@ import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 import org.cccsharonparish.core.model.entities.remote.ISpiritualDailyDigest
 
-class SpiritualDailyDigest: RealmObject, ISpiritualDailyDigest {
+class SpiritualDailyDigest : RealmObject, ISpiritualDailyDigest {
     @PrimaryKey
-    override var id: String =""
+    override var id: String = ""
     override var year: Int = 0
     override var month: Int = 0
     override var day: Int = 0
