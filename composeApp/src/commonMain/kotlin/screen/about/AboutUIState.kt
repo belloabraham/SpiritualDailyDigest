@@ -1,6 +1,6 @@
 package screen.about
 
-import org.cccsharonparish.core.domain.Config
+import org.cccsharonparish.core.data.Constant
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import spiritualdailydigest.composeapp.generated.resources.Res
@@ -37,17 +37,17 @@ fun getAListOfSocialContact(): List<SocialUIState> {
     return listOf(
         SocialUIState(
             Res.string.facebook,
-            url = Config.FACEBOOK_URL,
+            url = Constant.FACEBOOK_URL,
             Res.drawable.facebook
         ),
         SocialUIState(
             Res.string.twitter,
-            url =  Config.TWITTER_URL,
+            url =  Constant.TWITTER_URL,
             Res.drawable.twitter
         ),
         SocialUIState(
             Res.string.instagram,
-            url =  Config.INSTAGRAM_URL,
+            url =  Constant.INSTAGRAM_URL,
             Res.drawable.instagram
         )
     )
@@ -58,22 +58,22 @@ fun getAListOfContacts(): List<ContactUIState> {
     return listOf(
         ContactUIState(
             label =  Res.string.email,
-            url =   "mailto:${Config.CONTACT_EMAIL}",
+            url =   "mailto:${Constant.CONTACT_EMAIL}",
             Res.drawable.mail_24px
         ),
         ContactUIState(
             label = Res.string.website,
-            url =   Config.APP_WEBSITE,
+            url =   Constant.APP_WEBSITE,
             Res.drawable.web_24px
         ),
         ContactUIState(
             label = Res.string.give_feedback,
-            url =   Config.WHATS_APP_FEEDBACK_URL,
+            url =   Constant.WHATS_APP_FEEDBACK_URL,
             Res.drawable.whatsapp
         ),
         ContactUIState(
             label = Res.string.contact_support,
-            url =   Config.WHATS_APP_SUPPORT_URL,
+            url =   Constant.WHATS_APP_SUPPORT_URL,
             Res.drawable.whatsapp
         ),
     )

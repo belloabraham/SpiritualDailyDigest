@@ -55,6 +55,7 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,12 @@ import spiritualdailydigest.composeapp.generated.resources.text_decrease_24px
 import spiritualdailydigest.composeapp.generated.resources.text_increase_24px
 import org.cccsharonparish.core.ui.AnimatedUIVisibility
 import org.cccsharonparish.core.ui.SwitchIconButton
+import org.jetbrains.compose.resources.stringResource
 import spiritualdailydigest.composeapp.generated.resources.favorite_24px
+import spiritualdailydigest.composeapp.generated.resources.key_verse
+import spiritualdailydigest.composeapp.generated.resources.message
+import spiritualdailydigest.composeapp.generated.resources.reflection
+import spiritualdailydigest.composeapp.generated.resources.supplication
 
 class HomeScreen(private val contentId: String?) : Screen {
     @OptIn(
@@ -110,13 +116,12 @@ class HomeScreen(private val contentId: String?) : Screen {
         var showUIControls by remember { mutableStateOf(false) }
         val density = LocalDensity.current
         var isFavourite by remember { mutableStateOf(false) }
-        var contentToShare by remember { mutableStateOf("") }
+        val contentToShare by homeScreenModel.contentToShare.collectAsState()
         val showNextButton by homeScreenModel.showNextButton.collectAsState()
         val showPrevButton by homeScreenModel.showPrevButton.collectAsState()
         val contentByLanguage by homeScreenModel.contentByLanguage.collectAsState()
         val contentUIState by homeScreenModel.contentUIState.collectAsState()
         val contentSupportedLanguages by homeScreenModel.contentSupportedLanguages.collectAsState()
-
 
         LaunchedEffect(Unit) {
             homeScreenModel.setUserExitedOnboardingScreen(true)
@@ -129,7 +134,6 @@ class HomeScreen(private val contentId: String?) : Screen {
 
         Scaffold(
             topBar = {
-
                 TopAppBar(
                     title = {
                         Text(contentByLanguage?.text?.topic ?: "")
@@ -140,7 +144,6 @@ class HomeScreen(private val contentId: String?) : Screen {
                         ) {
                             ShareButton(contentToShare)
                         }
-
                     },
                     scrollBehavior = scrollBehavior,
                 )
@@ -195,25 +198,76 @@ class HomeScreen(private val contentId: String?) : Screen {
 
                         val contentFontSize = sliderPosition
                         val contentLineHeight = contentFontSize * 1.2f
+                        val textContent = contentByLanguage?.text
+                        val bibleVerse = textContent?.bibleVerse
 
                         Text(
-                            text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?",
+                            text = bibleVerse?.verses ?: "",
                             fontSize = contentFontSize.sp,
+                            fontStyle = FontStyle.Italic,
                             lineHeight = contentLineHeight.sp
                         )
                         Spacer(Modifier.height(smallSize))
-
                         Text(
-                            contentByLanguage?.text?.bibleVerse?.reference ?: "",
+                            bibleVerse?.reference ?: "",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
+                            fontStyle = FontStyle.Italic,
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold,
                             fontSize = (14f + sliderPosition * .2f).sp
                         )
+                        Spacer(Modifier.height(smallSize))
+                        Text(
+                            stringResource(Res.string.key_verse),
+                            modifier = Modifier.fillMaxWidth(),
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = (14f + sliderPosition * .2f).sp
+                        )
+                        Text(
+                            text = bibleVerse?.keyVerse ?: "",
+                            fontSize = contentFontSize.sp,
+                            lineHeight = contentLineHeight.sp
+                        )
+
+                        Spacer(Modifier.height(mediumSize))
+
+                        Text(
+                            stringResource(Res.string.message),
+                            modifier = Modifier.fillMaxWidth(),
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = (14f + sliderPosition * .2f).sp
+                        )
+                        Text(
+                            textContent?.message ?: "",
+                            fontSize = contentFontSize.sp,
+                            lineHeight = contentLineHeight.sp
+                        )
                         Spacer(Modifier.height(mediumSize))
                         Text(
-                            " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit repellendus eligendi libero tempore dolorum! Atque molestiae quo ex fuga labore. Reprehenderit nihil molestias id pariatur dolore ab iste ex optio?\n",
+                            stringResource(Res.string.supplication),
+                            modifier = Modifier.fillMaxWidth(),
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = (14f + sliderPosition * .2f).sp
+                        )
+                        Text(
+                            textContent?.supplication ?: "",
+                            fontSize = contentFontSize.sp,
+                            lineHeight = contentLineHeight.sp
+                        )
+                        Spacer(Modifier.height(mediumSize))
+                        Text(
+                            stringResource(Res.string.reflection),
+                            modifier = Modifier.fillMaxWidth(),
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = (14f + sliderPosition * .2f).sp
+                        )
+                        Text(
+                            textContent?.reflection ?: "",
                             fontSize = contentFontSize.sp,
                             lineHeight = contentLineHeight.sp
                         )
@@ -287,7 +341,6 @@ class HomeScreen(private val contentId: String?) : Screen {
 
                     }
                 }
-
             }
 
             if (openModalBottomSheet) {
@@ -343,7 +396,6 @@ class HomeScreen(private val contentId: String?) : Screen {
                                 contentDescription = "Text increase"
                             )
                         }
-
 
                         navigationItems.forEachIndexed { index, navigation ->
                             ListItem(

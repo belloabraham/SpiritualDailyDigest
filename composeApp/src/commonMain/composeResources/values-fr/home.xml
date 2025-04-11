@@ -6,4 +6,9 @@
     <string name="more_options">Plus d'options</string>
     <string name="favourites">Favoris</string>
 
+    <string name="reflection">Réflexion</string>
+    <string name="supplication">Supplication</string>
+    <string name="message">Message</string>
+    <string name="key_verse">Verset clé</string>
+
 </resources>

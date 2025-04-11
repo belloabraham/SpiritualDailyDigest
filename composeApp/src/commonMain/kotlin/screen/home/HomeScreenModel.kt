@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.common.utils.DateTimeUtil
+import org.cccsharonparish.core.data.Constant
 import org.cccsharonparish.core.data.firestore.Field
 import org.cccsharonparish.core.data.repo.IContentRepo
 import org.cccsharonparish.core.data.repo.IPreferenceRepo
@@ -29,8 +30,7 @@ class HomeScreenModel(
     private val contentRepo: IContentRepo
 ) : ScreenModel {
 
-    private val allPublishedContents: Flow<List<SpiritualDailyDigest>> =
-        contentRepo.getALiveListOfAllPublishedContent()
+    private val allPublishedContents =  contentRepo.getALiveListOfAllPublishedContent()
 
     private var _resultForRemoteContentFetching =
         MutableStateFlow<Result<List<RemoteSpiritualDailyDigest>, FirestoreError>>(Result.Empty(null))
@@ -40,6 +40,9 @@ class HomeScreenModel(
 
     private var _selectedLanguageCode = MutableStateFlow("en")
     var selectedLanguageCode = _selectedLanguageCode.asStateFlow()
+
+    private var _contentToShare = MutableStateFlow("")
+    var contentToShare = _contentToShare.asStateFlow()
 
     private var _showNextButton = MutableStateFlow(true)
     var showNextButton = _showNextButton.asStateFlow()
@@ -76,8 +79,7 @@ class HomeScreenModel(
         selectedContentIndex -= 1
         try {
             val prevContent = listOfContentUIStates.value[selectedContentIndex]
-            _contentUIState.value = prevContent
-            _contentSupportedLanguages.value = prevContent.toSupportedLanguages()
+            updateUIState(prevContent)
         } catch (e: Exception) {
             selectedContentIndex += 1
         }
@@ -88,12 +90,19 @@ class HomeScreenModel(
         selectedContentIndex += 1
         try {
             val nextContent = listOfContentUIStates.value[selectedContentIndex]
-            _contentUIState.value = nextContent
-            _contentSupportedLanguages.value = nextContent.toSupportedLanguages()
+            updateUIState(nextContent)
         } catch (e: Exception) {
             selectedContentIndex -= 1
         }
         _showNextButton.value = selectedContentIndex < listOfContentUIStates.value.size - 1
+    }
+
+    private fun updateUIState(contentUIState: ContentUIState) {
+        _contentUIState.value = contentUIState
+        _contentSupportedLanguages.value = contentUIState.toSupportedLanguages()
+        _contentByLanguage.value =
+            _contentUIState.value!!.toLanguageContent(selectedLanguageCode.value)
+        setContentToShare(_contentByLanguage.value!!, contentUIState.id)
     }
 
     suspend fun fetNewPublishedContent() {
@@ -112,7 +121,7 @@ class HomeScreenModel(
         }
     }
 
-    fun setSelectedContent(selectedContentId:String){
+    fun setSelectedContent(selectedContentId: String) {
         for ((index, content) in listOfContentUIStates.value.withIndex()) {
             if (content.id == selectedContentId) {
                 selectedContentIndex = index
@@ -124,6 +133,7 @@ class HomeScreenModel(
                 _showNextButton.value =
                     selectedContentIndex < listOfContentUIStates.value.size - 1
                 _showPrevButton.value = selectedContentIndex > 0
+                setContentToShare(_contentByLanguage.value!!, selectedContentId)
                 break
             }
         }
@@ -150,8 +160,11 @@ class HomeScreenModel(
         _selectedLanguageCode.value = language.code!!
         _contentByLanguage.value =
             _contentUIState.value!!.toLanguageContent(selectedLanguageCode.value)
-
     }
 
+    fun setContentToShare(languageContent: LanguageContent, contentId: String) {
+        val message = languageContent.text!!.message
+        _contentToShare.value = "$message \n ${Constant.APP_LINK}/$contentId"
+    }
 
 }

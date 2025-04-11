@@ -4,4 +4,10 @@
     <string name="favourite_list">Favourite list</string>
     <string name="more_options">More options</string>
     <string name="favourites">Favourites</string>
+
+    <string name="reflection">Reflection</string>
+    <string name="supplication">Supplication</string>
+    <string name="message">Message</string>
+    <string name="key_verse">Key Verse</string>
+
 </resources>
