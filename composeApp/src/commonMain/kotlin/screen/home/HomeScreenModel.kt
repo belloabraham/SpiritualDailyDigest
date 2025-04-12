@@ -9,10 +9,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.cccsharonparish.core.common.utils.DateTimeUtil
+import org.cccsharonparish.core.common.utils.Locale
 import org.cccsharonparish.core.data.Constant
 import org.cccsharonparish.core.data.firestore.Field
 import org.cccsharonparish.core.data.repo.IContentRepo
 import org.cccsharonparish.core.data.repo.IPreferenceRepo
+import org.cccsharonparish.core.domain.Config
 import org.cccsharonparish.core.domain.error.FirestoreError
 import org.cccsharonparish.core.domain.error.Result
 import org.cccsharonparish.core.model.entities.local.Language
@@ -28,7 +30,7 @@ class HomeScreenModel(
     private val contentRepo: IContentRepo
 ) : ScreenModel {
 
-    private val allPublishedContents =  contentRepo.getALiveListOfAllPublishedContent()
+    private val allPublishedContents = contentRepo.getALiveListOfAllPublishedContent()
 
     private var _resultForRemoteContentFetching =
         MutableStateFlow<Result<List<RemoteSpiritualDailyDigest>, FirestoreError>>(Result.Empty(null))
@@ -36,7 +38,7 @@ class HomeScreenModel(
 
     private var selectedContentIndex = 0
 
-    private var _selectedLanguageCode = MutableStateFlow("en")
+    private var _selectedLanguageCode = MutableStateFlow(Config.DEFAULT_CONTENT_LANGUAGE_CODE)
     var selectedLanguageCode = _selectedLanguageCode.asStateFlow()
 
     private var _contentToShare = MutableStateFlow("")
@@ -98,8 +100,7 @@ class HomeScreenModel(
     private fun updateUIState(contentUIState: ContentUIState) {
         _contentUIState.value = contentUIState
         _contentSupportedLanguages.value = contentUIState.toSupportedLanguages()
-        _contentByLanguage.value =
-            _contentUIState.value!!.toLanguageContent(selectedLanguageCode.value)
+        setContentByLanguage(_contentUIState.value!!)
         setContentToShare(_contentByLanguage.value!!, contentUIState.id)
     }
 
@@ -124,8 +125,7 @@ class HomeScreenModel(
             if (content.id == selectedContentId) {
                 selectedContentIndex = index
                 _contentUIState.value = content
-                _contentByLanguage.value =
-                    _contentUIState.value!!.toLanguageContent(selectedLanguageCode.value)
+                setContentByLanguage(_contentUIState.value!!)
                 _contentSupportedLanguages.value =
                     _contentUIState.value!!.toSupportedLanguages()
                 _showNextButton.value =
@@ -135,6 +135,19 @@ class HomeScreenModel(
                 break
             }
         }
+    }
+
+    private fun setContentByLanguage(contentUIState: ContentUIState) {
+        val languageCode =
+            preferenceRepo.getSelectedContentLanguageCode() ?: Locale.getAppLanguageCode()
+        var languageContent = contentUIState.toLanguageContent(languageCode)
+        _selectedLanguageCode.value = if (languageContent == null) {
+            languageContent = contentUIState.toLanguageContent(Config.DEFAULT_CONTENT_LANGUAGE_CODE)
+            Config.DEFAULT_CONTENT_LANGUAGE_CODE
+        } else {
+            languageCode
+        }
+        _contentByLanguage.value = languageContent
     }
 
     fun setUserExitedOnboardingScreen(value: Boolean) {
@@ -153,14 +166,16 @@ class HomeScreenModel(
         return preferenceRepo.getFontSize()
     }
 
-
     fun onLanguageSelected(language: Language) {
         _selectedLanguageCode.value = language.code!!
         _contentByLanguage.value =
             _contentUIState.value!!.toLanguageContent(selectedLanguageCode.value)
+        screenModelScope.launch {
+            preferenceRepo.setSelectedContentLanguageCode(language.code!!)
+        }
     }
 
-    fun setContentToShare(languageContent: LanguageContent, contentId: String) {
+    private fun setContentToShare(languageContent: LanguageContent, contentId: String) {
         val message = languageContent.text!!.message
         _contentToShare.value = "$message \n ${Constant.APP_LINK}/$contentId"
     }
