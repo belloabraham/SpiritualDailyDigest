@@ -4,7 +4,6 @@ package org.cccsharonparish.core.data.repo
 import dev.gitlive.firebase.firestore.Direction
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
-import io.realm.kotlin.delete
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,6 @@ import org.cccsharonparish.core.data.firestore.Firestore
 import org.cccsharonparish.core.domain.error.FirestoreError
 import org.cccsharonparish.core.domain.error.Result
 import org.cccsharonparish.core.model.entities.local.Favourite
-import org.cccsharonparish.core.model.entities.local.Preference
 import org.cccsharonparish.core.model.entities.local.SpiritualDailyDigest
 import org.cccsharonparish.core.model.entities.remote.RemoteSpiritualDailyDigest
 import org.cccsharonparish.core.model.entities.remote.toSpiritualDailyDigest
@@ -92,6 +90,15 @@ class ContentRepo(
             }
     }
 
+    override fun getALiveListOfFavouriteContent(): Flow<List<Favourite>> {
+        return localDb
+            .query<Favourite>()
+            .asFlow()
+            .map { results ->
+                results.list
+            }
+    }
+
     override fun getLivePublishedContentForId(id: String): Flow<SpiritualDailyDigest?> {
         return localDb
             .query<SpiritualDailyDigest>("id == $0", id)
@@ -150,5 +157,13 @@ class ContentRepo(
                 copyToRealm(value, UpdatePolicy.ALL)
             }
         }
+    }
+
+    override suspend fun deleteAllFavouriteContent(){
+        localDb.write {
+            val favourites = query<Favourite>().find()
+            delete(favourites)
+        }
+
     }
 }

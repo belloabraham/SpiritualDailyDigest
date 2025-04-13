@@ -27,4 +27,6 @@ interface IContentRepo {
     suspend fun removeFromFavouriteById(id: String)
     suspend fun addToFavourite(value: Favourite)
     fun getFavouriteById(id: String): Favourite?
+    fun getALiveListOfFavouriteContent(): Flow<List<Favourite>>
+    suspend fun deleteAllFavouriteContent()
 }

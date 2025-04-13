@@ -2,5 +2,5 @@
 
 <resources>
     <string name="delete_all">Supprimer tout</string>
-    <string name="delete_all_favourite_message">Voulez-vous supprimer tous les hymnes favoris?</string>
+    <string name="delete_all_favourite_message">Voulez-vous supprimer tout le contenu favori ?</string>
 </resources>
