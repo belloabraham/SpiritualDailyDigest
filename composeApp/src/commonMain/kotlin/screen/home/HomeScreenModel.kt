@@ -2,6 +2,7 @@ package screen.home
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import isDebugMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -11,6 +12,8 @@ import kotlinx.coroutines.launch
 import org.cccsharonparish.core.common.utils.DateTimeUtil
 import org.cccsharonparish.core.common.utils.Locale
 import org.cccsharonparish.core.data.Constant
+import org.cccsharonparish.core.data.config.ConfigKey
+import org.cccsharonparish.core.data.config.IRemoteConfig
 import org.cccsharonparish.core.data.firestore.Field
 import org.cccsharonparish.core.data.repo.IContentRepo
 import org.cccsharonparish.core.data.repo.IPreferenceRepo
@@ -28,7 +31,8 @@ import org.cccsharonparish.core.model.entities.uistate.toSupportedLanguages
 
 class HomeScreenModel(
     private val preferenceRepo: IPreferenceRepo,
-    private val contentRepo: IContentRepo
+    private val contentRepo: IContentRepo,
+    private val remoteConfig: IRemoteConfig
 ) : ScreenModel {
 
     private val allPublishedContents = contentRepo.getALiveListOfAllPublishedContent()
@@ -65,6 +69,10 @@ class HomeScreenModel(
 
     private var _isFavourite = MutableStateFlow(true)
     var isFavourite = _isFavourite.asStateFlow()
+
+
+    private var _bannerUrl = MutableStateFlow<String?>(null)
+    var bannerUrl = _bannerUrl.asStateFlow()
 
 
     init {
@@ -107,6 +115,7 @@ class HomeScreenModel(
         setContentByLanguage(_contentUIState.value!!)
         setContentToShare(_contentByLanguage.value!!, contentUIState.id)
         _isFavourite.value = contentRepo.getFavouriteById(contentUIState.id) != null
+        _bannerUrl.value = getBannerUrl(contentUIState.imagePath)
     }
 
     suspend fun fetNewPublishedContent() {
@@ -207,6 +216,18 @@ class HomeScreenModel(
                 })
             }
         }
+    }
+
+    private fun getBannerUrl(imagePath:String?): String {
+        if (imagePath != null){
+            val cdnBaseURL = if(isDebugMode()){
+                Config.DEV_BASE_CDN_URL
+            }else{
+                Config.PROD_BASE_CDN_URL
+            }
+            return "$cdnBaseURL/$imagePath"
+        }
+        return  remoteConfig.getString(ConfigKey.BANNER_FALLBACK_URL)
     }
 
 }

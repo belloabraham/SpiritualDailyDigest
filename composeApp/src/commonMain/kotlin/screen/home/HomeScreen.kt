@@ -118,9 +118,11 @@ class HomeScreen(private val contentId: String?) : Screen {
         val showNextButton by homeScreenModel.showNextButton.collectAsState()
         val showPrevButton by homeScreenModel.showPrevButton.collectAsState()
         val contentByLanguage by homeScreenModel.contentByLanguage.collectAsState()
-        val contentUIState by homeScreenModel.contentUIState.collectAsState()
         val contentSupportedLanguages by homeScreenModel.contentSupportedLanguages.collectAsState()
         val isFavourite by homeScreenModel.isFavourite.collectAsState()
+        val bannerUrl by homeScreenModel.bannerUrl.collectAsState()
+        val contentUIState by homeScreenModel.contentUIState.collectAsState()
+
 
 
         LaunchedEffect(Unit) {
@@ -161,7 +163,7 @@ class HomeScreen(private val contentId: String?) : Screen {
                     CoilImage(
                         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(4.dp)),
                         imageModel = {
-                            contentUIState?.imagePath
+                            bannerUrl
                         },
                         imageOptions = ImageOptions(
                             contentScale = ContentScale.FillWidth,
@@ -182,8 +184,9 @@ class HomeScreen(private val contentId: String?) : Screen {
                     Spacer(Modifier.height(mediumSize))
 
                     Column(Modifier.padding(horizontal = mediumSize)) {
+                        val month = getMonth(contentUIState?.month)
                         Text(
-                            "May-8-2024",
+                            "$month-${contentUIState?.day}-${contentUIState?.year}",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
                             style = MaterialTheme.typography.labelSmall,

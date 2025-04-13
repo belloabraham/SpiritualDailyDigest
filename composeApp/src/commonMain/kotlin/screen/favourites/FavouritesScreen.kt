@@ -33,7 +33,6 @@ import getNavigationIcon
 import org.cccsharonparish.core.resources.iconColor
 import org.cccsharonparish.core.ui.Header
 import org.cccsharonparish.core.ui.SwipeToDeleteItem
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import spiritualdailydigest.composeapp.generated.resources.Res
@@ -58,7 +57,8 @@ class FavouritesScreen:Screen {
         Scaffold(
             topBar = {
                 Header(Res.string.favourites, getNavigationIcon(), actions = {
-                    if (favouriteContents.isNotEmpty()) {
+                    val thereIsMoreThanOneFavouriteContent = favouriteContents.size > 1
+                    if (thereIsMoreThanOneFavouriteContent) {
                         IconButton(onClick = {
                             showDeleteAllFavouriteConsentDialog = true
                         }) {
