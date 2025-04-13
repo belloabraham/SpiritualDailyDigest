@@ -115,13 +115,14 @@ class HomeScreen(private val contentId: String?) : Screen {
         var sliderPosition by remember { mutableFloatStateOf(homeScreenModel.getFontSize()) }
         var showUIControls by remember { mutableStateOf(false) }
         val density = LocalDensity.current
-        var isFavourite by remember { mutableStateOf(false) }
         val contentToShare by homeScreenModel.contentToShare.collectAsState()
         val showNextButton by homeScreenModel.showNextButton.collectAsState()
         val showPrevButton by homeScreenModel.showPrevButton.collectAsState()
         val contentByLanguage by homeScreenModel.contentByLanguage.collectAsState()
         val contentUIState by homeScreenModel.contentUIState.collectAsState()
         val contentSupportedLanguages by homeScreenModel.contentSupportedLanguages.collectAsState()
+        val isFavourite by homeScreenModel.isFavourite.collectAsState()
+
 
         LaunchedEffect(Unit) {
             homeScreenModel.setUserExitedOnboardingScreen(true)
@@ -302,7 +303,7 @@ class HomeScreen(private val contentId: String?) : Screen {
                             unCheckedColor = iconColor(),
                             checkedColor = errorColor()
                         ) {
-                            isFavourite = !isFavourite
+                          homeScreenModel.toggleFavouriteState(isFavourite)
                         }
 
                         IconButton(onClick = {

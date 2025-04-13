@@ -3,6 +3,7 @@ package org.cccsharonparish.core.data.repo
 import kotlinx.coroutines.flow.Flow
 import org.cccsharonparish.core.domain.error.FirestoreError
 import org.cccsharonparish.core.domain.error.Result
+import org.cccsharonparish.core.model.entities.local.Favourite
 import org.cccsharonparish.core.model.entities.local.SpiritualDailyDigest
 import org.cccsharonparish.core.model.entities.remote.RemoteSpiritualDailyDigest
 
@@ -23,4 +24,7 @@ interface IContentRepo {
     fun getPublishedContentForToday(): SpiritualDailyDigest?
     fun getAllPublishedContents(): List<SpiritualDailyDigest>
     fun getContentIdForToday(): String
+    suspend fun removeFromFavouriteById(id: String)
+    suspend fun addToFavourite(value: Favourite)
+    fun getFavouriteById(id: String): Favourite?
 }

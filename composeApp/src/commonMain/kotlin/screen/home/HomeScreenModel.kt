@@ -17,6 +17,7 @@ import org.cccsharonparish.core.data.repo.IPreferenceRepo
 import org.cccsharonparish.core.domain.Config
 import org.cccsharonparish.core.domain.error.FirestoreError
 import org.cccsharonparish.core.domain.error.Result
+import org.cccsharonparish.core.model.entities.local.Favourite
 import org.cccsharonparish.core.model.entities.local.Language
 import org.cccsharonparish.core.model.entities.local.toContentUIState
 import org.cccsharonparish.core.model.entities.remote.RemoteSpiritualDailyDigest
@@ -62,6 +63,9 @@ class HomeScreenModel(
     private var _contentSupportedLanguages = MutableStateFlow<List<Language>>(emptyList())
     val contentSupportedLanguages = _contentSupportedLanguages.asStateFlow()
 
+    private var _isFavourite = MutableStateFlow(true)
+    var isFavourite = _isFavourite.asStateFlow()
+
 
     init {
         allPublishedContents.distinctUntilChanged()
@@ -102,6 +106,7 @@ class HomeScreenModel(
         _contentSupportedLanguages.value = contentUIState.toSupportedLanguages()
         setContentByLanguage(_contentUIState.value!!)
         setContentToShare(_contentByLanguage.value!!, contentUIState.id)
+        _isFavourite.value = contentRepo.getFavouriteById(contentUIState.id) != null
     }
 
     suspend fun fetNewPublishedContent() {
@@ -125,13 +130,10 @@ class HomeScreenModel(
             if (content.id == selectedContentId) {
                 selectedContentIndex = index
                 _contentUIState.value = content
-                setContentByLanguage(_contentUIState.value!!)
-                _contentSupportedLanguages.value =
-                    _contentUIState.value!!.toSupportedLanguages()
+                updateUIState(_contentUIState.value!!)
                 _showNextButton.value =
                     selectedContentIndex < listOfContentUIStates.value.size - 1
                 _showPrevButton.value = selectedContentIndex > 0
-                setContentToShare(_contentByLanguage.value!!, selectedContentId)
                 break
             }
         }
@@ -178,6 +180,33 @@ class HomeScreenModel(
     private fun setContentToShare(languageContent: LanguageContent, contentId: String) {
         val message = languageContent.text!!.message
         _contentToShare.value = "$message \n ${Constant.APP_LINK}/$contentId"
+    }
+
+    fun toggleFavouriteState(isFavourite: Boolean) {
+        if (isFavourite) {
+            removeFromFavourite()
+        }
+        if (!isFavourite) {
+            addToFavourite()
+        }
+        _isFavourite.value = !isFavourite
+    }
+
+    private fun removeFromFavourite() {
+        screenModelScope.launch {
+            contentUIState.value?.let { contentRepo.removeFromFavouriteById(it.id) }
+        }
+    }
+
+    private fun addToFavourite() {
+        screenModelScope.launch {
+            contentUIState.value?.let {
+                contentRepo.addToFavourite(Favourite().apply {
+                    id = it.id
+                    topic = contentByLanguage.value?.text?.topic
+                })
+            }
+        }
     }
 
 }

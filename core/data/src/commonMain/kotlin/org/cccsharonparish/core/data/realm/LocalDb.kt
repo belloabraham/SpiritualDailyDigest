@@ -4,6 +4,7 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import org.cccsharonparish.core.model.entities.local.BibleVerseContent
 import org.cccsharonparish.core.model.entities.local.Content
+import org.cccsharonparish.core.model.entities.local.Favourite
 import org.cccsharonparish.core.model.entities.local.Language
 import org.cccsharonparish.core.model.entities.local.Preference
 import org.cccsharonparish.core.model.entities.local.SpiritualDailyDigest
@@ -20,7 +21,8 @@ class LocalDb {
                 Language::class,
                 Content::class,
                 BibleVerseContent::class,
-                TextContent::class
+                TextContent::class,
+                Favourite::class
             )
         ).schemaVersion(1).build()
         instance = Realm.open(config)
