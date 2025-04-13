@@ -71,7 +71,6 @@ import kotlinx.coroutines.launch
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.errorColor
 import org.cccsharonparish.core.resources.iconColor
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import screen.favourites.FavouritesScreen
 import screen.options.MoreOptionsScreen
@@ -440,7 +439,6 @@ class HomeScreen(private val contentId: String?) : Screen {
 @Composable
 expect fun ShareButton(text: String)
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ShareIcon() {
     Icon(

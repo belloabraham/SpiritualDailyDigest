@@ -18,8 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,12 +45,10 @@ import spiritualdailydigest.composeapp.generated.resources.yes
 
 class FavouritesScreen:Screen {
 
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalResourceApi::class,
-        ExperimentalMaterial3Api::class
+    @OptIn(ExperimentalMaterial3Api::class
     )
     @Composable
     override fun Content() {
-        val windowSizeClass = calculateWindowSizeClass()
         val navigator = LocalNavigator.current
         val favouriteScreenModel = getScreenModel<FavouriteScreenModel>()
         var showDeleteAllFavouriteConsentDialog by rememberSaveable { mutableStateOf(false) }
