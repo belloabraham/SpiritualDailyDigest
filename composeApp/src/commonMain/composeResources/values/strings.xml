@@ -9,4 +9,7 @@
     <string name="english">English</string>
     <string name="french">French</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="delete_all">Supprimer tout</string>
+    <string name="delete_all_favourite_message">Voulez-vous supprimer tous les hymnes favoris?</string>
+</resources>

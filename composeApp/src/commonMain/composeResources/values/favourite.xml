@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="delete_all">Delete all</string>
+    <string name="delete_all_favourite_message">Do you want to delete all favourite content?</string>
+</resources>
