@@ -37,9 +37,9 @@ class HomeScreenModel(
 
     private val allPublishedContents = contentRepo.getALiveListOfAllPublishedContent()
 
-    private var _resultForRemoteContentFetching =
+    private var _resultForEnforcedExplicitUpdate =
         MutableStateFlow<Result<List<RemoteSpiritualDailyDigest>, FirestoreError>>(Result.Empty(null))
-    var resultForRemoteContentFetching = _resultForRemoteContentFetching.asStateFlow()
+    var resultForEnforcedExplicitUpdate = _resultForEnforcedExplicitUpdate.asStateFlow()
 
     private var selectedContentIndex = 0
 
@@ -92,7 +92,6 @@ class HomeScreenModel(
                 if (_contentIsDueForExplicitUpdate.value) {
                     _enforcerExplicitUpdate.value = setLastContentInDatabase() == null
                 }
-
                 if (!_contentIsDueForExplicitUpdate.value) {
                     updateDatabaseImplicitly()
                 }
@@ -131,11 +130,14 @@ class HomeScreenModel(
         _bannerUrl.value = getBannerUrl(contentUIState.imagePath)
     }
 
-    fun updateDatabaseContent() {
-        _resultForRemoteContentFetching.value = Result.Loading()
+    fun updateDatabaseContentExplicitly() {
+        _resultForEnforcedExplicitUpdate.value = Result.Loading()
         screenModelScope.launch {
             val result = downloadNewContent()
-            _resultForRemoteContentFetching.value = result
+            _resultForEnforcedExplicitUpdate.value = result
+            if(result is Result.Success){
+                _contentIsDueForExplicitUpdate.value = false
+            }
         }
     }
 

@@ -52,7 +52,7 @@ fun getAListOfOnboardingPageUIStates(
     )
 
     val descriptions = listOf(
-        stringResource(Res.string.onboarding_description_1),
+        stringResource(Res.string.onboarding_description_1, stringResource(Res.string.app_name)),
         stringResource(Res.string.onboarding_description_2),
         stringResource(Res.string.onboarding_description_3),
         stringResource(Res.string.onboarding_description_4),

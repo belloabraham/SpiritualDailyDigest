@@ -24,6 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -71,7 +72,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.cccsharonparish.core.domain.Config
+import org.cccsharonparish.core.domain.error.Result
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.errorColor
 import org.cccsharonparish.core.resources.iconColor
@@ -91,7 +92,6 @@ import org.cccsharonparish.core.ui.AnimatedUIVisibility
 import org.cccsharonparish.core.ui.SwitchIconButton
 import org.jetbrains.compose.resources.stringResource
 import spiritualdailydigest.composeapp.generated.resources.app_name
-import spiritualdailydigest.composeapp.generated.resources.close
 import spiritualdailydigest.composeapp.generated.resources.correct_date_time_msg
 import spiritualdailydigest.composeapp.generated.resources.download
 import spiritualdailydigest.composeapp.generated.resources.download_new_content
@@ -99,9 +99,7 @@ import spiritualdailydigest.composeapp.generated.resources.favorite_24px
 import spiritualdailydigest.composeapp.generated.resources.key_verse
 import spiritualdailydigest.composeapp.generated.resources.later
 import spiritualdailydigest.composeapp.generated.resources.message
-import spiritualdailydigest.composeapp.generated.resources.next
 import spiritualdailydigest.composeapp.generated.resources.reflection
-import spiritualdailydigest.composeapp.generated.resources.skip
 import spiritualdailydigest.composeapp.generated.resources.supplication
 import spiritualdailydigest.composeapp.generated.resources.update
 import spiritualdailydigest.composeapp.generated.resources.update_content
@@ -139,7 +137,7 @@ class HomeScreen(private val contentId: String?) : Screen {
         val contentUIState by homeScreenModel.contentUIState.collectAsState()
         val contentIsDueForExplicitUpdate by homeScreenModel.contentIsDueForExplicitUpdate.collectAsState()
         val enforceExplicitUpdate by homeScreenModel.enforceExplicitUpdate.collectAsState()
-
+        val resultForEnforcedExplicitUpdate by homeScreenModel.resultForEnforcedExplicitUpdate.collectAsState()
 
 
         LaunchedEffect(Unit) {
@@ -454,6 +452,9 @@ class HomeScreen(private val contentId: String?) : Screen {
 
             if (contentIsDueForExplicitUpdate) {
                 ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
+                    if(!enforceExplicitUpdate){
+                        homeScreenModel.setContentIsDueForExplicitUpdate(false)
+                    }
                 }) {
                     Column(Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())) {
                         val title =
@@ -502,7 +503,7 @@ class HomeScreen(private val contentId: String?) : Screen {
                                     containerColor = MaterialTheme.colorScheme.secondary,
                                 ),
                                 onClick = {
-                                    homeScreenModel.updateDatabaseContent()
+                                    homeScreenModel.updateDatabaseContentExplicitly()
                                 }
                             ) {
                                 Text(
@@ -511,6 +512,12 @@ class HomeScreen(private val contentId: String?) : Screen {
                                 )
                             }
                         }
+                        if(resultForEnforcedExplicitUpdate is Result.Loading){
+                            LinearProgressIndicator(
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
                     }
                 }
             }
