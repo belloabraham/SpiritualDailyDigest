@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -31,6 +33,7 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -68,6 +71,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.cccsharonparish.core.domain.Config
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.errorColor
 import org.cccsharonparish.core.resources.iconColor
@@ -86,11 +90,22 @@ import spiritualdailydigest.composeapp.generated.resources.text_increase_24px
 import org.cccsharonparish.core.ui.AnimatedUIVisibility
 import org.cccsharonparish.core.ui.SwitchIconButton
 import org.jetbrains.compose.resources.stringResource
+import spiritualdailydigest.composeapp.generated.resources.app_name
+import spiritualdailydigest.composeapp.generated.resources.close
+import spiritualdailydigest.composeapp.generated.resources.correct_date_time_msg
+import spiritualdailydigest.composeapp.generated.resources.download
+import spiritualdailydigest.composeapp.generated.resources.download_new_content
 import spiritualdailydigest.composeapp.generated.resources.favorite_24px
 import spiritualdailydigest.composeapp.generated.resources.key_verse
+import spiritualdailydigest.composeapp.generated.resources.later
 import spiritualdailydigest.composeapp.generated.resources.message
+import spiritualdailydigest.composeapp.generated.resources.next
 import spiritualdailydigest.composeapp.generated.resources.reflection
+import spiritualdailydigest.composeapp.generated.resources.skip
 import spiritualdailydigest.composeapp.generated.resources.supplication
+import spiritualdailydigest.composeapp.generated.resources.update
+import spiritualdailydigest.composeapp.generated.resources.update_content
+import spiritualdailydigest.composeapp.generated.resources.update_content_msg
 
 class HomeScreen(private val contentId: String?) : Screen {
     @OptIn(
@@ -122,6 +137,8 @@ class HomeScreen(private val contentId: String?) : Screen {
         val isFavourite by homeScreenModel.isFavourite.collectAsState()
         val bannerUrl by homeScreenModel.bannerUrl.collectAsState()
         val contentUIState by homeScreenModel.contentUIState.collectAsState()
+        val contentIsDueForExplicitUpdate by homeScreenModel.contentIsDueForExplicitUpdate.collectAsState()
+        val enforceExplicitUpdate by homeScreenModel.enforceExplicitUpdate.collectAsState()
 
 
 
@@ -305,7 +322,7 @@ class HomeScreen(private val contentId: String?) : Screen {
                             unCheckedColor = iconColor(),
                             checkedColor = errorColor()
                         ) {
-                          homeScreenModel.toggleFavouriteState(isFavourite)
+                            homeScreenModel.toggleFavouriteState(isFavourite)
                         }
 
                         IconButton(onClick = {
@@ -430,6 +447,69 @@ class HomeScreen(private val contentId: String?) : Screen {
                                         tint = iconColor()
                                     )
                                 })
+                        }
+                    }
+                }
+            }
+
+            if (contentIsDueForExplicitUpdate) {
+                ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
+                }) {
+                    Column(Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())) {
+                        val title =
+                            if (enforceExplicitUpdate) Res.string.download_new_content else Res.string.update_content
+                        val description =
+                            if (enforceExplicitUpdate) Res.string.download_new_content else Res.string.update_content_msg
+                        val correctDateTimeMsg = stringResource(Res.string.correct_date_time_msg)
+                        val appName = stringResource(Res.string.app_name)
+                        val positiveText =
+                            if (enforceExplicitUpdate) Res.string.download else Res.string.update
+
+                        Text(
+                            text = stringResource(title),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontSize = 18.sp
+                        )
+                        Spacer(Modifier.height(mediumSize))
+                        Text(
+                            stringResource(description, appName)
+                        )
+                        Spacer(Modifier.height(smallSize))
+                        Text(
+                            correctDateTimeMsg,
+                        )
+                        Spacer(Modifier.height(mediumSize))
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = if (!enforceExplicitUpdate) Arrangement.SpaceBetween else Arrangement.End
+                        ) {
+                            if (!enforceExplicitUpdate) {
+                                TextButton(
+                                    onClick = {
+                                     homeScreenModel.setContentIsDueForExplicitUpdate(false)
+                                    }
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.later),
+                                        style = MaterialTheme.typography.labelLarge,
+                                        color = MaterialTheme.colorScheme.secondary
+                                    )
+                                }
+                            }
+
+                            Button(
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.secondary,
+                                ),
+                                onClick = {
+                                    homeScreenModel.updateDatabaseContent()
+                                }
+                            ) {
+                                Text(
+                                    text = stringResource(positiveText),
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                            }
                         }
                     }
                 }

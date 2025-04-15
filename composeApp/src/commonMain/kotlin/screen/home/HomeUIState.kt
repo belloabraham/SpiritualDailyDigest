@@ -19,7 +19,6 @@ import spiritualdailydigest.composeapp.generated.resources.list_24px
 import spiritualdailydigest.composeapp.generated.resources.march
 import spiritualdailydigest.composeapp.generated.resources.may
 import spiritualdailydigest.composeapp.generated.resources.more_options
-import spiritualdailydigest.composeapp.generated.resources.no
 import spiritualdailydigest.composeapp.generated.resources.november
 import spiritualdailydigest.composeapp.generated.resources.october
 import spiritualdailydigest.composeapp.generated.resources.september

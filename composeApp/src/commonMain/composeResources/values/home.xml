@@ -23,4 +23,17 @@
     <string name="november">November</string>
     <string name="december">December</string>
 
+    <string name="download_new_content">Download new content</string>
+    <string name="update_content">Update content</string>
+    <string name="update_content_msg">You have no content for today, update to get the latest content of the %1$s</string>
+    <string name="download_content_msg">Download new content to begin your path to enlightenment with the %1$s</string>
+
+    <string name="correct_date_time_msg">Make sure your device date and time is correct</string>
+    <string name="later">Later</string>
+
+    <string name="download">Download</string>
+    <string name="close">Close</string>
+
+
+
 </resources>

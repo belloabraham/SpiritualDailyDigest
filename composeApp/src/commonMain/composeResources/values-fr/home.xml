@@ -25,4 +25,18 @@
     <string name="november">Novembre</string>
     <string name="december">Décembre</string>
 
+
+    <string name="download_new_content">Télécharger du nouveau contenu</string>
+    <string name="update_content">Mettre à jour le contenu</string>
+    <string name="update_content_msg">Vous n'avez aucun contenu pour aujourd'hui, mettez à jour pour obtenir le dernier contenu de l'%1$s</string>
+    <string name="download_content_msg">Téléchargez du nouveau contenu pour commencer votre chemin vers l'illumination avec l'%1$s</string>
+
+    <string name="correct_date_time_msg">Assurez-vous que la date et l'heure de votre appareil sont correctes</string>
+    <string name="later">Plus tard</string>
+
+    <string name="download">Télécharger</string>
+    <string name="close">Fermer</string>
+
+
+
 </resources>

@@ -70,9 +70,14 @@ class HomeScreenModel(
     private var _isFavourite = MutableStateFlow(true)
     var isFavourite = _isFavourite.asStateFlow()
 
-
     private var _bannerUrl = MutableStateFlow<String?>(null)
     var bannerUrl = _bannerUrl.asStateFlow()
+
+    private var _contentIsDueForExplicitUpdate = MutableStateFlow(true)
+    var contentIsDueForExplicitUpdate = _contentIsDueForExplicitUpdate.asStateFlow()
+
+    private var _enforcerExplicitUpdate = MutableStateFlow(true)
+    var enforceExplicitUpdate = _enforcerExplicitUpdate.asStateFlow()
 
 
     init {
@@ -82,7 +87,15 @@ class HomeScreenModel(
                 _listOfContentUIStates.value = publishedContents.map {
                     it.toContentUIState()
                 }
-                setSelectedContent(contentIdForToday)
+                val contentForToday = setSelectedContent(contentIdForToday)
+                _contentIsDueForExplicitUpdate.value = contentForToday == null
+                if (_contentIsDueForExplicitUpdate.value) {
+                    _enforcerExplicitUpdate.value = setLastContentInDatabase() == null
+                }
+
+                if (!_contentIsDueForExplicitUpdate.value) {
+                    updateDatabaseImplicitly()
+                }
             }.launchIn(screenModelScope)
     }
 
@@ -118,8 +131,33 @@ class HomeScreenModel(
         _bannerUrl.value = getBannerUrl(contentUIState.imagePath)
     }
 
-    suspend fun fetNewPublishedContent() {
+    fun updateDatabaseContent() {
         _resultForRemoteContentFetching.value = Result.Loading()
+        screenModelScope.launch {
+            val result = downloadNewContent()
+            _resultForRemoteContentFetching.value = result
+        }
+    }
+
+    private fun updateDatabaseImplicitly() {
+        val date = DateTimeUtil.date()
+        val year = date.year
+        val month = date.monthNumber
+        val remainingContent = _listOfContentUIStates.value.filter {
+            it.year == year && it.month == month
+        }
+        if (remainingContent.size < 15) {
+            screenModelScope.launch {
+                downloadNewContent()
+            }
+        }
+    }
+
+    fun setContentIsDueForExplicitUpdate(value: Boolean) {
+        _contentIsDueForExplicitUpdate.value = value
+    }
+
+    private suspend fun downloadNewContent(): Result<List<RemoteSpiritualDailyDigest>, FirestoreError> {
         val date = DateTimeUtil.date()
         val year = date.year
         val month = date.monthNumber
@@ -128,13 +166,13 @@ class HomeScreenModel(
             startMonth = month,
             orderBy = Field.MONTH
         )
-        _resultForRemoteContentFetching.value = result
         if (result is Result.Success) {
             contentRepo.saveRemotePublishedContents(result.data)
         }
+        return result
     }
 
-    fun setSelectedContent(selectedContentId: String) {
+    fun setSelectedContent(selectedContentId: String?): ContentUIState? {
         for ((index, content) in listOfContentUIStates.value.withIndex()) {
             if (content.id == selectedContentId) {
                 selectedContentIndex = index
@@ -143,8 +181,23 @@ class HomeScreenModel(
                 _showNextButton.value =
                     selectedContentIndex < listOfContentUIStates.value.size - 1
                 _showPrevButton.value = selectedContentIndex > 0
-                break
+                return contentUIState.value
             }
+        }
+        return null
+    }
+
+    private fun setLastContentInDatabase(): ContentUIState? {
+        return try {
+            val lastContent = listOfContentUIStates.value.last()
+            selectedContentIndex = listOfContentUIStates.value.size - 1
+            _contentUIState.value = lastContent
+            updateUIState(_contentUIState.value!!)
+            _showNextButton.value = false
+            _showPrevButton.value = true
+            lastContent
+        } catch (e: Exception) {
+            null
         }
     }
 
@@ -218,16 +271,16 @@ class HomeScreenModel(
         }
     }
 
-    private fun getBannerUrl(imagePath:String?): String {
-        if (imagePath != null){
-            val cdnBaseURL = if(isDebugMode()){
+    private fun getBannerUrl(imagePath: String?): String {
+        if (imagePath != null) {
+            val cdnBaseURL = if (isDebugMode()) {
                 Config.DEV_BASE_CDN_URL
-            }else{
+            } else {
                 Config.PROD_BASE_CDN_URL
             }
             return "$cdnBaseURL/$imagePath"
         }
-        return  remoteConfig.getString(ConfigKey.BANNER_FALLBACK_URL)
+        return remoteConfig.getString(ConfigKey.BANNER_FALLBACK_URL)
     }
 
 }
