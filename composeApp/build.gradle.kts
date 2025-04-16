@@ -32,7 +32,7 @@ kotlin {
         }
     }
 
-     sourceSets {
+    sourceSets {
 
         androidMain.dependencies {
 
@@ -57,12 +57,10 @@ kotlin {
             implementation(libs.firebase.appcheck.playintegrity)
             implementation(libs.firebase.messaging)
 
-
-            //implementation(libs.play.services.auth)
         }
-         iosMain.dependencies {}
+        iosMain.dependencies {}
 
-         commonMain.dependencies {
+        commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -90,6 +88,9 @@ kotlin {
             implementation(libs.voyager.transitions)
             implementation(libs.voyager.koin)
 
+
+            implementation(libs.app.rating)
+
             implementation(libs.gitlive.firebase.storage)
 
             implementation(libs.landscapist.coil3)
@@ -103,13 +104,13 @@ kotlin {
 
             implementation(libs.gitlive.firebase.storage)
 
-            implementation (projects.core.resources)
-            implementation (projects.core.common)
-             implementation (projects.core.model)
-             implementation (projects.core.data)
-            implementation (projects.core.ui)
-            implementation (projects.core.domain)
-         }
+            implementation(projects.core.resources)
+            implementation(projects.core.common)
+            implementation(projects.core.model)
+            implementation(projects.core.data)
+            implementation(projects.core.ui)
+            implementation(projects.core.domain)
+        }
     }
 }
 

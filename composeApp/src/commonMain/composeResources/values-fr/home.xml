@@ -40,5 +40,8 @@
     <string name="content_updated_success_msg">%1$s a été mise à jour avec succès</string>
     <string name="content_update_failed_msg">Impossible de mettre à jour pour le moment, vérifiez votre connexion réseau et réessayez.</string>
 
+    <string name="rate_app_message">Nous sommes reconnaissants de vous accompagner dans ce cheminement spirituel. Si nos messages, prières et méditations audio vous ont apporté du réconfort, pourriez-vous prendre un instant pour évaluer l'application? Votre soutien nous aide à toucher davantage de cœurs avec la Parole de Dieu..</string>
+    <string name="rate_app_title">Votre voix compte</string>
+
 
 </resources>

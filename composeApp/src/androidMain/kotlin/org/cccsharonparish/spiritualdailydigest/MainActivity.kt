@@ -13,6 +13,8 @@ import com.android.installreferrer.api.InstallReferrerStateListener
 import org.cccsharonparish.core.common.google.AppUpdateActivity
 import org.cccsharonparish.core.data.config.PreferenceKey
 import org.cccsharonparish.core.domain.Config
+import org.cccsharonparish.core.common.google.AppReview
+
 
 class MainActivity : AppUpdateActivity() {
     private lateinit var referrerClient: InstallReferrerClient

@@ -37,5 +37,8 @@
     <string name="content_updated_success_msg">%1$s was updated successfully</string>
     <string name="content_update_failed_msg">Unable to update at the moment, check your network connection and try again.</string>
 
+    <string name="rate_app_message">We’re grateful to walk this spiritual journey with you. If our messages, prayers, and audio devotionals have uplifted you, would you mind taking a moment to rate the app? Your support helps us reach more hearts with God’s word.</string>
+    <string name="rate_app_title">Your voice matters</string>
+
 
 </resources>

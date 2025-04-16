@@ -10,6 +10,7 @@ androidx-espresso-core = "3.6.1"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 #compose = "1.6.7"
+appRating = "1.0.0"
 compose-plugin = "1.6.11"
 composeMultiplatformMediaPlayer = "1.0.16"
 composeWebviewMultiplatform = "1.9.20"
@@ -45,6 +46,7 @@ messagebarkmp = "1.0.1"
 
 
 [libraries]
+app-rating = { module = "com.stevdza-san:app-rating", version.ref = "appRating" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }

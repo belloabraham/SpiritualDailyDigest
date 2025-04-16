@@ -74,6 +74,8 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
+import com.stevdza_san.demo.domain.Interval
+import com.stevdza_san.demo.presentation.component.AppRatingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -110,6 +112,9 @@ import spiritualdailydigest.composeapp.generated.resources.favorite_24px
 import spiritualdailydigest.composeapp.generated.resources.key_verse
 import spiritualdailydigest.composeapp.generated.resources.later
 import spiritualdailydigest.composeapp.generated.resources.message
+import spiritualdailydigest.composeapp.generated.resources.rate_app
+import spiritualdailydigest.composeapp.generated.resources.rate_app_message
+import spiritualdailydigest.composeapp.generated.resources.rate_app_title
 import spiritualdailydigest.composeapp.generated.resources.reflection
 import spiritualdailydigest.composeapp.generated.resources.supplication
 import spiritualdailydigest.composeapp.generated.resources.update
@@ -128,6 +133,7 @@ class HomeScreen(private val contentId: String?) : Screen {
         val smallSize = Size.small(windowSizeClass)
         val largeSize = Size.large(windowSizeClass)
         val openModalBottomSheet = rememberSaveable { mutableStateOf(false) }
+        var showRateAppDialog by rememberSaveable { mutableStateOf(false) }
         val navigationItems = getNavigationItems()
         val selectedLanguageCode by homeScreenModel.selectedLanguageCode.collectAsState()
         val scope = rememberCoroutineScope()
@@ -150,6 +156,10 @@ class HomeScreen(private val contentId: String?) : Screen {
         val messageBarState = rememberMessageBarState()
         val contentUpdateMessage = stringResource(Res.string.content_updated_success_msg, stringResource(Res.string.app_name))
         val contentUpdateFailedMessage = stringResource(Res.string.content_update_failed_msg)
+        val appStoreUrl by homeScreenModel.appStoreUrl.collectAsState()
+        val playStoreUrl by homeScreenModel.playStoreUrl.collectAsState()
+
+
 
         LaunchedEffect(Unit) {
             val halfASecond = 500L
@@ -387,6 +397,22 @@ class HomeScreen(private val contentId: String?) : Screen {
 
                         }
                     }
+                }
+
+                if (showRateAppDialog){
+                    AppRatingDialog(
+                        playStoreLink = playStoreUrl,
+                        appStoreLink = appStoreUrl,
+                        initialDelayInDays = 15,
+                        interval = Interval.SemiAnnually,
+                        title = { Text(text = stringResource(Res.string.rate_app_title)) },
+                        content = { Text(text = stringResource(Res.string.rate_app_message)) },
+                        dismissText = stringResource(Res.string.later),
+                        confirmText = stringResource(Res.string.rate_app),
+                        onDismiss = {
+                            showRateAppDialog = false
+                        }
+                    )
                 }
 
                 if (openModalBottomSheet.value) {

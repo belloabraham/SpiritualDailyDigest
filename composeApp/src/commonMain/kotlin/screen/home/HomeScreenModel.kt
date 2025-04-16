@@ -78,6 +78,12 @@ class HomeScreenModel(
     private var _enforcerExplicitUpdate = MutableStateFlow(true)
     var enforceExplicitUpdate = _enforcerExplicitUpdate.asStateFlow()
 
+    private var _appStoreUrl = MutableStateFlow("")
+    var appStoreUrl = _appStoreUrl.asStateFlow()
+
+    private var _playStoreUrl = MutableStateFlow("")
+    var playStoreUrl = _playStoreUrl.asStateFlow()
+
 
     init {
         allPublishedContents.distinctUntilChanged()
@@ -96,6 +102,7 @@ class HomeScreenModel(
                     updateDatabaseImplicitly()
                 }
             }.launchIn(screenModelScope)
+        getAppDownloadUrls()
     }
 
 
@@ -271,6 +278,12 @@ class HomeScreenModel(
                 })
             }
         }
+    }
+
+
+    private fun getAppDownloadUrls(){
+        _appStoreUrl.value = remoteConfig.getString(ConfigKey.APP_STORE_URL)
+        _playStoreUrl.value = remoteConfig.getString(ConfigKey.PLAY_STORE_URL)
     }
 
     private fun getBannerUrl(imagePath: String?): String {
