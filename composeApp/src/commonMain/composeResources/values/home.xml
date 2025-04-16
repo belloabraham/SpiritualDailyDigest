@@ -34,6 +34,8 @@
     <string name="download">Download</string>
     <string name="close">Close</string>
 
+    <string name="content_updated_success_msg">%1$s was updated successfully</string>
+    <string name="content_update_failed_msg">Unable to update at the moment, check your network connection and try again.</string>
 
 
 </resources>

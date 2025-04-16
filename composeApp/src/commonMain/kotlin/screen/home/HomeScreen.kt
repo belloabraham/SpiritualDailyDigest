@@ -1,5 +1,6 @@
 package screen.home
 
+import ContentWithMessageBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,6 +46,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -70,9 +74,13 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.cccsharonparish.core.domain.error.FirestoreError
 import org.cccsharonparish.core.domain.error.Result
+import org.cccsharonparish.core.model.entities.local.Language
+import org.cccsharonparish.core.model.entities.remote.RemoteSpiritualDailyDigest
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.resources.errorColor
 import org.cccsharonparish.core.resources.iconColor
@@ -91,7 +99,10 @@ import spiritualdailydigest.composeapp.generated.resources.text_increase_24px
 import org.cccsharonparish.core.ui.AnimatedUIVisibility
 import org.cccsharonparish.core.ui.SwitchIconButton
 import org.jetbrains.compose.resources.stringResource
+import rememberMessageBarState
 import spiritualdailydigest.composeapp.generated.resources.app_name
+import spiritualdailydigest.composeapp.generated.resources.content_update_failed_msg
+import spiritualdailydigest.composeapp.generated.resources.content_updated_success_msg
 import spiritualdailydigest.composeapp.generated.resources.correct_date_time_msg
 import spiritualdailydigest.composeapp.generated.resources.download
 import spiritualdailydigest.composeapp.generated.resources.download_new_content
@@ -113,18 +124,16 @@ class HomeScreen(private val contentId: String?) : Screen {
     override fun Content() {
         val homeScreenModel = getScreenModel<HomeScreenModel>()
         val windowSizeClass = calculateWindowSizeClass()
-        val navigator = LocalNavigator.current
         val mediumSize = Size.medium(windowSizeClass)
         val smallSize = Size.small(windowSizeClass)
         val largeSize = Size.large(windowSizeClass)
-        var openModalBottomSheet by rememberSaveable { mutableStateOf(false) }
-        val bottomSheetState = rememberModalBottomSheetState()
+        val openModalBottomSheet = rememberSaveable { mutableStateOf(false) }
         val navigationItems = getNavigationItems()
         val selectedLanguageCode by homeScreenModel.selectedLanguageCode.collectAsState()
         val scope = rememberCoroutineScope()
         val scrollBehavior =
             TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-        var sliderPosition by remember { mutableFloatStateOf(homeScreenModel.getFontSize()) }
+        val sliderPosition = remember { mutableFloatStateOf(homeScreenModel.getFontSize()) }
         var showUIControls by remember { mutableStateOf(false) }
         val density = LocalDensity.current
         val contentToShare by homeScreenModel.contentToShare.collectAsState()
@@ -138,393 +147,463 @@ class HomeScreen(private val contentId: String?) : Screen {
         val contentIsDueForExplicitUpdate by homeScreenModel.contentIsDueForExplicitUpdate.collectAsState()
         val enforceExplicitUpdate by homeScreenModel.enforceExplicitUpdate.collectAsState()
         val resultForEnforcedExplicitUpdate by homeScreenModel.resultForEnforcedExplicitUpdate.collectAsState()
-
+        val messageBarState = rememberMessageBarState()
+        val contentUpdateMessage = stringResource(Res.string.content_updated_success_msg, stringResource(Res.string.app_name))
+        val contentUpdateFailedMessage = stringResource(Res.string.content_update_failed_msg)
 
         LaunchedEffect(Unit) {
+            val halfASecond = 500L
             homeScreenModel.setUserExitedOnboardingScreen(true)
-            delay(500)
+            delay(halfASecond)
             showUIControls = true
             if (contentId != null) {
                 homeScreenModel.setSelectedContent(contentId)
             }
         }
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(contentByLanguage?.text?.topic ?: "")
-                    },
-                    actions = {
-                        AnimatedUIVisibility(
-                            showUIControls, density
-                        ) {
-                            ShareButton(contentToShare)
-                        }
-                    },
-                    scrollBehavior = scrollBehavior,
-                )
-            },
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-        ) {
-            Column(Modifier.padding(it).padding(bottom = mediumSize)) {
-                Column(
-                    Modifier.weight(1f).verticalScroll(rememberScrollState())
-                        .padding(bottom = mediumSize)
-                ) {
-
-                    CoilImage(
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(4.dp)),
-                        imageModel = {
-                            bannerUrl
-                        },
-                        imageOptions = ImageOptions(
-                            contentScale = ContentScale.FillWidth,
-                            contentDescription = null,
-                            colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply {
-                                setToSaturation(
-                                    0.1f
-                                )
-                            })
-                        ),
-                        loading = {
-                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(Modifier.size(largeSize))
-                            }
-                        }
-                    )
-
-                    Spacer(Modifier.height(mediumSize))
-
-                    Column(Modifier.padding(horizontal = mediumSize)) {
-                        val month = getMonth(contentUIState?.month)
-                        Text(
-                            "$month-${contentUIState?.day}-${contentUIState?.year}",
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.End,
-                            style = MaterialTheme.typography.labelSmall,
-                            fontSize = (14f + sliderPosition * .1f).sp
-                        )
-
-                    }
-
-                    Spacer(Modifier.height(mediumSize))
-
-                    Column(Modifier.padding(horizontal = mediumSize)) {
-
-                        val contentFontSize = sliderPosition
-                        val contentLineHeight = contentFontSize * 1.2f
-                        val textContent = contentByLanguage?.text
-                        val bibleVerse = textContent?.bibleVerse
-
-                        Text(
-                            text = bibleVerse?.verses ?: "",
-                            fontSize = contentFontSize.sp,
-                            fontStyle = FontStyle.Italic,
-                            lineHeight = contentLineHeight.sp
-                        )
-                        Spacer(Modifier.height(smallSize))
-                        Text(
-                            bibleVerse?.reference ?: "",
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.End,
-                            fontStyle = FontStyle.Italic,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = (14f + sliderPosition * .2f).sp
-                        )
-                        Spacer(Modifier.height(smallSize))
-                        Text(
-                            stringResource(Res.string.key_verse),
-                            modifier = Modifier.fillMaxWidth(),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = (14f + sliderPosition * .2f).sp
-                        )
-                        Text(
-                            text = bibleVerse?.keyVerse ?: "",
-                            fontSize = contentFontSize.sp,
-                            lineHeight = contentLineHeight.sp
-                        )
-
-                        Spacer(Modifier.height(mediumSize))
-
-                        Text(
-                            stringResource(Res.string.message),
-                            modifier = Modifier.fillMaxWidth(),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = (14f + sliderPosition * .2f).sp
-                        )
-                        Text(
-                            textContent?.message ?: "",
-                            fontSize = contentFontSize.sp,
-                            lineHeight = contentLineHeight.sp
-                        )
-                        Spacer(Modifier.height(mediumSize))
-                        Text(
-                            stringResource(Res.string.supplication),
-                            modifier = Modifier.fillMaxWidth(),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = (14f + sliderPosition * .2f).sp
-                        )
-                        Text(
-                            textContent?.supplication ?: "",
-                            fontSize = contentFontSize.sp,
-                            lineHeight = contentLineHeight.sp
-                        )
-                        Spacer(Modifier.height(mediumSize))
-                        Text(
-                            stringResource(Res.string.reflection),
-                            modifier = Modifier.fillMaxWidth(),
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = (14f + sliderPosition * .2f).sp
-                        )
-                        Text(
-                            textContent?.reflection ?: "",
-                            fontSize = contentFontSize.sp,
-                            lineHeight = contentLineHeight.sp
-                        )
-                    }
-
-                }
-
-                AnimatedUIVisibility(
-                    showUIControls, density
-                ) {
-                    HorizontalDivider()
-                    Row(
-                        Modifier.fillMaxWidth().padding(horizontal = mediumSize),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        if (showPrevButton) {
-                            IconButton(onClick = {
-                                homeScreenModel.onPrev()
-                            }) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.chevron_left_24px),
-                                    contentDescription = "Previous",
-                                    tint = iconColor()
-                                )
-                            }
-                        }
-
-                        SwitchIconButton(
-                            isChecked = isFavourite,
-                            unCheckedIcon = Res.drawable.favorite_24px,
-                            checkedIcon = Res.drawable.favorite_fill_24px,
-                            unCheckedColor = iconColor(),
-                            checkedColor = errorColor()
-                        ) {
-                            homeScreenModel.toggleFavouriteState(isFavourite)
-                        }
-
-                        IconButton(onClick = {
-                            openModalBottomSheet = true
-                        }) {
-                            Icon(
-                                painter = painterResource(Res.drawable.expand_all_24px),
-                                contentDescription = "More options",
-                                tint = iconColor()
-                            )
-                        }
-
-                        if (contentByLanguage?.audioUrl != null) {
-                            IconButton(onClick = {
-
-                            }) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.play_circle_24px),
-                                    contentDescription = "Play",
-                                    tint = iconColor()
-                                )
-                            }
-                        }
-
-                        if (showNextButton) {
-                            IconButton(onClick = {
-                                homeScreenModel.onNext()
-                            }) {
-                                Icon(
-                                    painter = painterResource(Res.drawable.chevron_right_24px),
-                                    contentDescription = "Next",
-                                    tint = iconColor()
-                                )
-                            }
-                        }
-
-                    }
-                }
+        LaunchedEffect(resultForEnforcedExplicitUpdate) {
+            if(resultForEnforcedExplicitUpdate is Result.Success){
+                messageBarState.addSuccess(contentUpdateMessage)
             }
+            if(resultForEnforcedExplicitUpdate is Result.Error){
+                messageBarState.addError(Exception(contentUpdateFailedMessage))
+            }
+        }
 
-            if (openModalBottomSheet) {
-                ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
-                    openModalBottomSheet = false
-                }) {
-                    Column(Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())) {
-                        Row(
-                            modifier = Modifier.horizontalScroll(rememberScrollState())
-                                .padding(horizontal = mediumSize)
-                        ) {
-                            SingleChoiceSegmentedButtonRow {
-                                contentSupportedLanguages.forEachIndexed { index, language ->
-                                    SegmentedButton(
-                                        shape = SegmentedButtonDefaults.baseShape,
-                                        onClick = {
-                                            homeScreenModel.onLanguageSelected(language)
-                                        },
-                                        selected = language.code == selectedLanguageCode
-                                    ) {
-                                        Text(language.label ?: "")
-                                    }
-                                    if (index < contentSupportedLanguages.lastIndex) {
-                                        Spacer(modifier = Modifier.width(smallSize))
-                                    }
-                                }
+        ContentWithMessageBar(
+            messageBarState = messageBarState,
+            showCopyButton = false,
+            errorMaxLines = 2,
+            modifier = Modifier
+                .navigationBarsPadding().statusBarsPadding()
+        ) {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(contentByLanguage?.text?.topic ?: "")
+                        },
+                        actions = {
+                            AnimatedUIVisibility(
+                                showUIControls, density
+                            ) {
+                                ShareButton(contentToShare)
                             }
-                        }
+                        },
+                        scrollBehavior = scrollBehavior,
+                    )
+                },
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+            ) {
+                Column(Modifier.padding(it).padding(bottom = mediumSize)) {
+                    Column(
+                        Modifier.weight(1f).verticalScroll(rememberScrollState())
+                            .padding(bottom = mediumSize)
+                    ) {
 
-                        Spacer(Modifier.height(mediumSize))
-
-                        Row(
-                            Modifier.padding(horizontal = mediumSize),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                painter = painterResource(Res.drawable.text_decrease_24px),
-                                contentDescription = "Text decrease"
-                            )
-                            Spacer(Modifier.width(smallSize))
-                            Slider(
-                                modifier = Modifier.weight(1f),
-                                value = sliderPosition,
-                                valueRange = 20f..100f,
-                                onValueChangeFinished = {
-                                    homeScreenModel.setFontSize(sliderPosition)
-                                },
-                                onValueChange = { progress -> sliderPosition = progress }
-                            )
-                            Spacer(Modifier.width(smallSize))
-                            Icon(
-                                painter = painterResource(Res.drawable.text_increase_24px),
-                                contentDescription = "Text increase"
-                            )
-                        }
-
-                        navigationItems.forEachIndexed { index, navigation ->
-                            ListItem(
-                                modifier = Modifier.clickable {
-                                    val nextScreen = when (index) {
-                                        0 -> FavouritesScreen()
-                                        1 -> MoreOptionsScreen()
-                                        else -> null
-                                    }
-                                    scope.launch {
-                                        bottomSheetState.hide()
-                                        openModalBottomSheet = false
-                                    }
-                                    navigator?.push(nextScreen!!)
-                                }, leadingContent = {
-                                    Icon(
-                                        painter = painterResource(navigation.leadingIconRes),
-                                        contentDescription = navigation.headline,
-                                        tint = iconColor()
-                                    )
-                                },
-                                headlineContent = {
-                                    Text(navigation.headline)
-                                },
-                                trailingContent = {
-                                    Icon(
-                                        painter = painterResource(navigation.trailingIconRes),
-                                        contentDescription = navigation.headline,
-                                        tint = iconColor()
+                        CoilImage(
+                            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(4.dp)),
+                            imageModel = {
+                                bannerUrl
+                            },
+                            imageOptions = ImageOptions(
+                                contentScale = ContentScale.FillWidth,
+                                contentDescription = null,
+                                colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply {
+                                    setToSaturation(
+                                        0.1f
                                     )
                                 })
-                        }
-                    }
-                }
-            }
-
-            if (contentIsDueForExplicitUpdate) {
-                ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
-                    if(!enforceExplicitUpdate){
-                        homeScreenModel.setContentIsDueForExplicitUpdate(false)
-                    }
-                }) {
-                    Column(Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())) {
-                        val title =
-                            if (enforceExplicitUpdate) Res.string.download_new_content else Res.string.update_content
-                        val description =
-                            if (enforceExplicitUpdate) Res.string.download_new_content else Res.string.update_content_msg
-                        val correctDateTimeMsg = stringResource(Res.string.correct_date_time_msg)
-                        val appName = stringResource(Res.string.app_name)
-                        val positiveText =
-                            if (enforceExplicitUpdate) Res.string.download else Res.string.update
-
-                        Text(
-                            text = stringResource(title),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontSize = 18.sp
-                        )
-                        Spacer(Modifier.height(mediumSize))
-                        Text(
-                            stringResource(description, appName)
-                        )
-                        Spacer(Modifier.height(smallSize))
-                        Text(
-                            correctDateTimeMsg,
-                        )
-                        Spacer(Modifier.height(mediumSize))
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = if (!enforceExplicitUpdate) Arrangement.SpaceBetween else Arrangement.End
-                        ) {
-                            if (!enforceExplicitUpdate) {
-                                TextButton(
-                                    onClick = {
-                                     homeScreenModel.setContentIsDueForExplicitUpdate(false)
-                                    }
-                                ) {
-                                    Text(
-                                        text = stringResource(Res.string.later),
-                                        style = MaterialTheme.typography.labelLarge,
-                                        color = MaterialTheme.colorScheme.secondary
-                                    )
+                            ),
+                            loading = {
+                                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    CircularProgressIndicator(Modifier.size(largeSize))
                                 }
                             }
+                        )
 
-                            Button(
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.secondary,
-                                ),
-                                onClick = {
-                                    homeScreenModel.updateDatabaseContentExplicitly()
-                                }
-                            ) {
-                                Text(
-                                    text = stringResource(positiveText),
-                                    style = MaterialTheme.typography.labelLarge
-                                )
-                            }
+                        Spacer(Modifier.height(mediumSize))
+
+                        Column(Modifier.padding(horizontal = mediumSize)) {
+                            val month = getMonth(contentUIState?.month)
+                            Text(
+                                "$month-${contentUIState?.day}-${contentUIState?.year}",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.End,
+                                style = MaterialTheme.typography.labelSmall,
+                                fontSize = (14f + sliderPosition.value * .1f).sp
+                            )
+
                         }
-                        if(resultForEnforcedExplicitUpdate is Result.Loading){
-                            LinearProgressIndicator(
-                                modifier = Modifier.fillMaxWidth()
+
+                        Spacer(Modifier.height(mediumSize))
+
+                        Column(Modifier.padding(horizontal = mediumSize)) {
+
+                            val contentFontSize = sliderPosition.value
+                            val contentLineHeight = contentFontSize * 1.2f
+                            val textContent = contentByLanguage?.text
+                            val bibleVerse = textContent?.bibleVerse
+
+                            Text(
+                                text = bibleVerse?.verses ?: "",
+                                fontSize = contentFontSize.sp,
+                                fontStyle = FontStyle.Italic,
+                                lineHeight = contentLineHeight.sp
+                            )
+                            Spacer(Modifier.height(smallSize))
+                            Text(
+                                bibleVerse?.reference ?: "",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.End,
+                                fontStyle = FontStyle.Italic,
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = (14f + contentFontSize * .2f).sp
+                            )
+                            Spacer(Modifier.height(smallSize))
+                            Text(
+                                stringResource(Res.string.key_verse),
+                                modifier = Modifier.fillMaxWidth(),
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = (14f + contentFontSize * .2f).sp
+                            )
+                            Text(
+                                text = bibleVerse?.keyVerse ?: "",
+                                fontSize = contentFontSize.sp,
+                                lineHeight = contentLineHeight.sp
+                            )
+
+                            Spacer(Modifier.height(mediumSize))
+
+                            Text(
+                                stringResource(Res.string.message),
+                                modifier = Modifier.fillMaxWidth(),
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = (14f + contentFontSize * .2f).sp
+                            )
+                            Text(
+                                textContent?.message ?: "",
+                                fontSize = contentFontSize.sp,
+                                lineHeight = contentLineHeight.sp
+                            )
+                            Spacer(Modifier.height(mediumSize))
+                            Text(
+                                stringResource(Res.string.supplication),
+                                modifier = Modifier.fillMaxWidth(),
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = (14f + contentFontSize * .2f).sp
+                            )
+                            Text(
+                                textContent?.supplication ?: "",
+                                fontSize = contentFontSize.sp,
+                                lineHeight = contentLineHeight.sp
+                            )
+                            Spacer(Modifier.height(mediumSize))
+                            Text(
+                                stringResource(Res.string.reflection),
+                                modifier = Modifier.fillMaxWidth(),
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = (14f + contentFontSize * .2f).sp
+                            )
+                            Text(
+                                textContent?.reflection ?: "",
+                                fontSize = contentFontSize.sp,
+                                lineHeight = contentLineHeight.sp
                             )
                         }
 
                     }
+
+                    AnimatedUIVisibility(
+                        showUIControls, density
+                    ) {
+                        HorizontalDivider()
+                        Row(
+                            Modifier.fillMaxWidth().padding(horizontal = mediumSize),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            if (showPrevButton) {
+                                IconButton(onClick = {
+                                    homeScreenModel.onPrev()
+                                }) {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.chevron_left_24px),
+                                        contentDescription = "Previous",
+                                        tint = iconColor()
+                                    )
+                                }
+                            }
+
+                            SwitchIconButton(
+                                isChecked = isFavourite,
+                                unCheckedIcon = Res.drawable.favorite_24px,
+                                checkedIcon = Res.drawable.favorite_fill_24px,
+                                unCheckedColor = iconColor(),
+                                checkedColor = errorColor()
+                            ) {
+                                homeScreenModel.toggleFavouriteState(isFavourite)
+                            }
+
+                            IconButton(onClick = {
+                                openModalBottomSheet.value = true
+                            }) {
+                                Icon(
+                                    painter = painterResource(Res.drawable.expand_all_24px),
+                                    contentDescription = "More options",
+                                    tint = iconColor()
+                                )
+                            }
+
+                            if (contentByLanguage?.audioUrl != null) {
+                                IconButton(onClick = {
+
+                                }) {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.play_circle_24px),
+                                        contentDescription = "Play",
+                                        tint = iconColor()
+                                    )
+                                }
+                            }
+
+                            if (showNextButton) {
+                                IconButton(onClick = {
+                                    homeScreenModel.onNext()
+                                }) {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.chevron_right_24px),
+                                        contentDescription = "Next",
+                                        tint = iconColor()
+                                    )
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                if (openModalBottomSheet.value) {
+                    MenuBottomModalSheet(
+                        contentSupportedLanguages,
+                        navigationItems,
+                        selectedLanguageCode,
+                        scope,
+                        openModalBottomSheet,
+                        homeScreenModel,
+                        sliderPosition
+                    )
+                }
+
+                if (contentIsDueForExplicitUpdate) {
+                    ContentUpdateModalSheet(
+                        enforceExplicitUpdate,
+                        resultForEnforcedExplicitUpdate,
+                        homeScreenModel
+                    )
                 }
             }
         }
     }
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class)
+@Composable
+fun MenuBottomModalSheet(
+    contentSupportedLanguages: List<Language>,
+    navigationItems: List<NavigationItem>,
+    selectedLanguageCode: String,
+    scope: CoroutineScope,
+    openModalBottomSheet: MutableState<Boolean>,
+    homeScreenModel: HomeScreenModel,
+    sliderPosition: MutableState<Float>,
+) {
+    val bottomSheetState = rememberModalBottomSheetState()
+    val windowSizeClass = calculateWindowSizeClass()
+    val mediumSize = Size.medium(windowSizeClass)
+    val smallSize = Size.small(windowSizeClass)
+    val navigator = LocalNavigator.current
+
+    ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
+        openModalBottomSheet.value = false
+    }) {
+        Column(
+            Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())
+        ) {
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState())
+                    .padding(horizontal = mediumSize)
+            ) {
+                SingleChoiceSegmentedButtonRow {
+                    contentSupportedLanguages.forEachIndexed { index, language ->
+                        SegmentedButton(
+                            shape = SegmentedButtonDefaults.baseShape,
+                            onClick = {
+                                homeScreenModel.onLanguageSelected(language)
+                            },
+                            selected = language.code == selectedLanguageCode
+                        ) {
+                            Text(language.label ?: "")
+                        }
+                        if (index < contentSupportedLanguages.lastIndex) {
+                            Spacer(modifier = Modifier.width(smallSize))
+                        }
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(mediumSize))
+
+            Row(
+                Modifier.padding(horizontal = mediumSize),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.text_decrease_24px),
+                    contentDescription = "Text decrease"
+                )
+                Spacer(Modifier.width(smallSize))
+                Slider(
+                    modifier = Modifier.weight(1f),
+                    value = sliderPosition.value,
+                    valueRange = 20f..100f,
+                    onValueChangeFinished = {
+                        homeScreenModel.setFontSize(sliderPosition.value)
+                    },
+                    onValueChange = { progress -> sliderPosition.value = progress }
+                )
+                Spacer(Modifier.width(smallSize))
+                Icon(
+                    painter = painterResource(Res.drawable.text_increase_24px),
+                    contentDescription = "Text increase"
+                )
+            }
+
+            navigationItems.forEachIndexed { index, navigation ->
+                ListItem(
+                    modifier = Modifier.clickable {
+                        val nextScreen = when (index) {
+                            0 -> FavouritesScreen()
+                            1 -> MoreOptionsScreen()
+                            else -> null
+                        }
+                        scope.launch {
+                            bottomSheetState.hide()
+                            openModalBottomSheet.value = false
+                        }
+                        navigator?.push(nextScreen!!)
+                    }, leadingContent = {
+                        Icon(
+                            painter = painterResource(navigation.leadingIconRes),
+                            contentDescription = navigation.headline,
+                            tint = iconColor()
+                        )
+                    },
+                    headlineContent = {
+                        Text(navigation.headline)
+                    },
+                    trailingContent = {
+                        Icon(
+                            painter = painterResource(navigation.trailingIconRes),
+                            contentDescription = navigation.headline,
+                            tint = iconColor()
+                        )
+                    })
+            }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class)
+@Composable
+fun ContentUpdateModalSheet(
+    enforceExplicitUpdate: Boolean,
+    resultForEnforcedExplicitUpdate: Result<List<RemoteSpiritualDailyDigest>, FirestoreError>,
+    homeScreenModel: HomeScreenModel
+) {
+    val bottomSheetState = rememberModalBottomSheetState()
+    val windowSizeClass = calculateWindowSizeClass()
+    val mediumSize = Size.medium(windowSizeClass)
+    val smallSize = Size.small(windowSizeClass)
+
+    ModalBottomSheet(sheetState = bottomSheetState, onDismissRequest = {
+        if (!enforceExplicitUpdate) {
+            homeScreenModel.setContentIsDueForExplicitUpdate(false)
+        }
+    }) {
+        Column(Modifier.fillMaxWidth().padding(bottom = bottomSheetPaddingBottom())) {
+            val title =
+                if (enforceExplicitUpdate) Res.string.download_new_content else Res.string.update_content
+            val description =
+                if (enforceExplicitUpdate) Res.string.download_new_content else Res.string.update_content_msg
+            val correctDateTimeMsg = stringResource(Res.string.correct_date_time_msg)
+            val appName = stringResource(Res.string.app_name)
+            val positiveText =
+                if (enforceExplicitUpdate) Res.string.download else Res.string.update
+
+            Text(
+                text = stringResource(title),
+                style = MaterialTheme.typography.titleMedium,
+                fontSize = 18.sp
+            )
+            Spacer(Modifier.height(mediumSize))
+            Text(
+                stringResource(description, appName)
+            )
+            Spacer(Modifier.height(smallSize))
+            Text(
+                correctDateTimeMsg,
+            )
+            Spacer(Modifier.height(mediumSize))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = if (!enforceExplicitUpdate) Arrangement.SpaceBetween else Arrangement.End
+            ) {
+                if (!enforceExplicitUpdate) {
+                    TextButton(
+                        onClick = {
+                            homeScreenModel.setContentIsDueForExplicitUpdate(false)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.later),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                }
+
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                    ),
+                    onClick = {
+                        homeScreenModel.updateDatabaseContentExplicitly()
+                    }
+                ) {
+                    Text(
+                        text = stringResource(positiveText),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            }
+            if (resultForEnforcedExplicitUpdate is Result.Loading) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+        }
+    }
+}
 
 @Composable
 expect fun ShareButton(text: String)

@@ -37,6 +37,8 @@
     <string name="download">Télécharger</string>
     <string name="close">Fermer</string>
 
+    <string name="content_updated_success_msg">%1$s a été mise à jour avec succès</string>
+    <string name="content_update_failed_msg">Impossible de mettre à jour pour le moment, vérifiez votre connexion réseau et réessayez.</string>
 
 
 </resources>

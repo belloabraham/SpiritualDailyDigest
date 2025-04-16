@@ -37,8 +37,7 @@ class HomeScreenModel(
 
     private val allPublishedContents = contentRepo.getALiveListOfAllPublishedContent()
 
-    private var _resultForEnforcedExplicitUpdate =
-        MutableStateFlow<Result<List<RemoteSpiritualDailyDigest>, FirestoreError>>(Result.Empty(null))
+    private var _resultForEnforcedExplicitUpdate = MutableStateFlow<Result<List<RemoteSpiritualDailyDigest>, FirestoreError>>(Result.Empty(null))
     var resultForEnforcedExplicitUpdate = _resultForEnforcedExplicitUpdate.asStateFlow()
 
     private var selectedContentIndex = 0
