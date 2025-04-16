@@ -91,7 +91,8 @@ class HomeScreenModel(
                 if (_contentIsDueForExplicitUpdate.value) {
                     _enforcerExplicitUpdate.value = setLastContentInDatabase() == null
                 }
-                if (!_contentIsDueForExplicitUpdate.value) {
+                val contentIsNotDueForExplicitUpdate = !_contentIsDueForExplicitUpdate.value
+                if (contentIsNotDueForExplicitUpdate) {
                     updateDatabaseImplicitly()
                 }
             }.launchIn(screenModelScope)
