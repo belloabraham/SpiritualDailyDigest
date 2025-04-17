@@ -24,5 +24,3 @@ enum class Orientation {
     Portrait,
     Landscape
 }
-
-expect fun setNotificationTime(hour:Int, minute:Int, isNoon:Boolean)

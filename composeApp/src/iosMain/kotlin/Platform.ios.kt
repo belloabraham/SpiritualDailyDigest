@@ -94,7 +94,3 @@ actual fun OrientationChangeListener(
 }
 
 actual fun appDownloadUrlConfigKey() = ConfigKey.APP_STORE_URL
-
-actual fun setNotificationTime(hour:Int, minute:Int, isNoon:Boolean){
-
-}
