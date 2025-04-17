@@ -103,12 +103,12 @@ class NotificationBuilder(
         return this
     }
 
-    fun setContentText(@StringRes value: Int): NotificationBuilder {
-        setContentText(getString(value))
+    fun setMessage(@StringRes value: Int): NotificationBuilder {
+        setMessage(getString(value))
         return this
     }
 
-    fun setContentText(value: String): NotificationBuilder {
+    fun setMessage(value: String): NotificationBuilder {
         message = value
         return this
     }

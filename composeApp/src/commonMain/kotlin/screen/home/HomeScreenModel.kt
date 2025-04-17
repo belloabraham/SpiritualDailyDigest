@@ -2,6 +2,7 @@ package screen.home
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import domain.getContentIdForToday
 import isDebugMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -88,7 +89,7 @@ class HomeScreenModel(
     init {
         allPublishedContents.distinctUntilChanged()
             .onEach { publishedContents ->
-                val contentIdForToday = contentRepo.getContentIdForToday()
+                val contentIdForToday = getContentIdForToday()
                 _listOfContentUIStates.value = publishedContents.map {
                     it.toContentUIState()
                 }

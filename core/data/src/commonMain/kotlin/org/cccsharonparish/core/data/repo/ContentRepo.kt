@@ -23,7 +23,7 @@ import org.cccsharonparish.core.model.entities.remote.toSpiritualDailyDigest
 
 class ContentRepo(
     private val localDb: Realm,
-    private val firestore: Firestore,
+    private val firestore: Firestore = Firestore(),
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IContentRepo {
 
@@ -108,14 +108,12 @@ class ContentRepo(
             }
     }
 
-    override fun getLivePublishedContentForToday(): Flow<SpiritualDailyDigest?> {
-        val id = getContentIdForToday()
-        return getLivePublishedContentForId(id)
+    override fun getLivePublishedContentForToday(ontentIdForToday:String): Flow<SpiritualDailyDigest?> {
+        return getLivePublishedContentForId(ontentIdForToday)
     }
 
-    override fun getPublishedContentForToday(): SpiritualDailyDigest? {
-        val id = getContentIdForToday()
-        return getPublishedContentForId(id)
+    override fun getPublishedContentForToday(contentIdForToday:String): SpiritualDailyDigest? {
+        return getPublishedContentForId(contentIdForToday)
     }
 
     override fun getAllPublishedContents(): List<SpiritualDailyDigest> {
@@ -124,11 +122,6 @@ class ContentRepo(
         } catch (e: Exception) {
             emptyList()
         }
-    }
-
-    override fun getContentIdForToday(): String {
-        val localDate = DateTimeUtil.date()
-        return "${localDate.dayOfMonth}-${localDate.monthNumber}-${localDate.year}"
     }
 
     override fun getFavouriteById(id: String): Favourite? {

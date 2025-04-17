@@ -13,7 +13,7 @@ class BootReceiver : BroadcastReceiver() {
             val notificationTime = PreferenceRepo(LocalDb.instance).getNotificationTime()
 
             notificationTime?.let {
-                //setNotificationTime(context, it.hour, it.minute)
+//                setNotificationTime(context, it.hour, it.minute)
             }
         }
     }

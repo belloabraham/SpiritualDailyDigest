@@ -20,10 +20,9 @@ interface IContentRepo {
     fun getPublishedContentForId(id: String): SpiritualDailyDigest?
     fun getALiveListOfAllPublishedContent(): Flow<List<SpiritualDailyDigest>>
     fun getLivePublishedContentForId(id: String): Flow<SpiritualDailyDigest?>
-    fun getLivePublishedContentForToday(): Flow<SpiritualDailyDigest?>
-    fun getPublishedContentForToday(): SpiritualDailyDigest?
+    fun getLivePublishedContentForToday(contentIdForToday:String): Flow<SpiritualDailyDigest?>
+    fun getPublishedContentForToday(contentIdForToday:String): SpiritualDailyDigest?
     fun getAllPublishedContents(): List<SpiritualDailyDigest>
-    fun getContentIdForToday(): String
     suspend fun removeFromFavouriteById(id: String)
     suspend fun addToFavourite(value: Favourite)
     fun getFavouriteById(id: String): Favourite?
