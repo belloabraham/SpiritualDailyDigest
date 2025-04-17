@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     single(createdAtStart = true) {
-        LocalDb().instance
+        LocalDb.instance
     }
     single<IPreferenceRepo>{
         PreferenceRepo(get())

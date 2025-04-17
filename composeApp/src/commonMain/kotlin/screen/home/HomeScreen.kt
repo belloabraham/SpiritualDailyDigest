@@ -76,6 +76,7 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import com.stevdza_san.demo.domain.Interval
 import com.stevdza_san.demo.presentation.component.AppRatingDialog
+import domain.getMonth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

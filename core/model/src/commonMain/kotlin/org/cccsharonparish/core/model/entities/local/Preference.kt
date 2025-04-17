@@ -5,9 +5,9 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 
 class Preference : RealmObject {
     @PrimaryKey
-    var _id = 123
-    var languageIndex = 0
+    var id = 123
     var fontSize = 20f
     var userExitedOnboarding: Boolean = false
     var selectedContentLanguageCode: String? = null
+    var notificationTime: NotificationTime? = null
 }

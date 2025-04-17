@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import org.cccsharonparish.core.model.entities.local.NotificationTime
 import org.cccsharonparish.core.model.entities.local.Preference
 
 class PreferenceRepo(
@@ -61,20 +62,20 @@ class PreferenceRepo(
         }
     }
 
-    override fun getLanguageIndex(): Int {
+    override fun getNotificationTime(): NotificationTime? {
         return try {
-            localDb.query<Preference>().find().first().languageIndex
+            localDb.query<Preference>().find().first().notificationTime
         } catch (e: Exception) {
-            Preference().languageIndex
+            Preference().notificationTime
         }
     }
 
-    override suspend fun setLanguageIndex(value: Int) {
+    override suspend fun setNotificationTime(value: NotificationTime) {
         withContext(dispatcher) {
             localDb.write {
                 val preference = getPreference(this) ?: Preference()
                 copyToRealm(preference.apply {
-                    languageIndex = value
+                    notificationTime = value
                 }, UpdatePolicy.ALL)
             }
         }

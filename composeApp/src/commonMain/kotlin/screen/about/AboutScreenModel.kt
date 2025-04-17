@@ -11,5 +11,4 @@ class AboutScreenModel : ScreenModel {
     val contacts by derivedStateOf { getAListOfContacts() }
     val socialContacts by derivedStateOf { getAListOfSocialContact() }
     val year by derivedStateOf { DateTimeUtil.date().year }
-
 }
