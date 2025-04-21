@@ -1,4 +1,9 @@
 package screen.notification
 
-actual fun setNotificationTime(hour:Int, minute:Int, isNoon:Boolean) {
+import androidx.compose.runtime.Composable
+import org.cccsharonparish.core.model.entities.local.NotificationTime
+
+@Composable
+actual fun SetNotificationButton(notificationTime: NotificationTime, lookGoodClick: () -> Unit){
+
 }

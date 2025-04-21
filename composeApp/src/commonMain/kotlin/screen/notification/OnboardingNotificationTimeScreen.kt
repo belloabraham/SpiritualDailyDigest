@@ -19,10 +19,14 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
+import kotlinx.coroutines.launch
+import org.cccsharonparish.core.model.entities.local.NotificationTime
 import org.cccsharonparish.core.resources.Size
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
@@ -32,7 +36,7 @@ import spiritualdailydigest.composeapp.generated.resources.looks_good
 import spiritualdailydigest.composeapp.generated.resources.notification_time_message
 import spiritualdailydigest.composeapp.generated.resources.notification_time_title
 
-class OnboardingNotificationTimeScreen(private val contentUrl: String?): Screen {
+class OnboardingNotificationTimeScreen(private val contentUrl: String?) : Screen {
 
     @OptIn(
         ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class,
@@ -46,6 +50,9 @@ class OnboardingNotificationTimeScreen(private val contentUrl: String?): Screen 
         val largeSize = Size.large(windowSizeClass)
         val mediumSize = Size.medium(windowSizeClass)
         val timePickerState = rememberTimePickerState()
+        val scope = rememberCoroutineScope()
+        val notificationTimeScreenModel = getScreenModel<NotificationTimeScreenModel>()
+
 
         Scaffold(
             topBar = {
@@ -69,10 +76,18 @@ class OnboardingNotificationTimeScreen(private val contentUrl: String?): Screen 
                     TimePicker(timePickerState)
                 }
 
-                Button( modifier =  Modifier.fillMaxWidth(), onClick = {
-                    navigator?.replace(HomeScreen(contentUrl))
-                }) {
-                    Text(stringResource(Res.string.looks_good))
+                val notificationTime = NotificationTime().apply {
+                    hour = timePickerState.hour
+                    minute = timePickerState.minute
+                    isNoon = timePickerState.isAfternoon
+                }
+                SetNotificationButton(notificationTime) {
+                    scope.launch {
+                        notificationTimeScreenModel.saveNotificationTime(
+                            notificationTime
+                        )
+                        navigator?.replace(HomeScreen(contentUrl))
+                    }
                 }
             }
         }

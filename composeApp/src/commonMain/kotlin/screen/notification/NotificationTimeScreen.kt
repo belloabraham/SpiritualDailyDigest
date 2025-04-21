@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -24,12 +22,11 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import getNavigationIcon
 import kotlinx.coroutines.launch
+import org.cccsharonparish.core.model.entities.local.NotificationTime
 import org.cccsharonparish.core.resources.Size
 import org.cccsharonparish.core.ui.Header
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 import spiritualdailydigest.composeapp.generated.resources.Res
-import spiritualdailydigest.composeapp.generated.resources.looks_good
 import spiritualdailydigest.composeapp.generated.resources.notification_time_title
 
 open class NotificationTimeScreen : Screen {
@@ -65,21 +62,24 @@ open class NotificationTimeScreen : Screen {
             ) {
                 TimePicker(modifier = Modifier.padding(top = mediumSize), state = timePickerState)
 
-                Button(modifier = Modifier.fillMaxWidth(), onClick = {
+                val notificationTime = NotificationTime().apply {
+                    hour = timePickerState.hour
+                    minute = timePickerState.minute
+                    isNoon = timePickerState.isAfternoon
+                }
+                SetNotificationButton(notificationTime) {
                     scope.launch {
-                        notificationTimeScreenModel.setNotificationTime(
-                            timePickerState.hour,
-                            timePickerState.minute,
-                            timePickerState.isAfternoon
+                        notificationTimeScreenModel.saveNotificationTime(
+                            notificationTime
                         )
                         navigator?.pop()
                     }
-                }) {
-                    Text(stringResource(Res.string.looks_good))
                 }
             }
         }
     }
 }
 
-expect fun setNotificationTime(hour: Int, minute: Int, isNoon: Boolean)
+
+@Composable
+expect fun SetNotificationButton(notificationTime: NotificationTime, lookGoodClick: () -> Unit)

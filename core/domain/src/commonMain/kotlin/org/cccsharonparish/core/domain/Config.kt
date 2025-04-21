@@ -6,6 +6,8 @@ object Config {
     const val APPLE_STORE_ID = ""
     const val DEFAULT_CONTENT_LANGUAGE_CODE = "en"
     const val DAILY_NOTIFICATION_ID = 300
+    const val ALARM_REQUEST_CODE = 100
+
 
     const val PROD_BASE_CDN_URL = "https://sdd-prod.imgix.net"
     const val DEV_BASE_CDN_URL = "https://sdd-dev.imgix.net"

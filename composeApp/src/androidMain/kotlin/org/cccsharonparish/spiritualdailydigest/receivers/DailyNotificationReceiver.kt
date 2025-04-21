@@ -11,6 +11,7 @@ import org.cccsharonparish.core.data.realm.LocalDb
 import org.cccsharonparish.core.data.repo.ContentRepo
 import org.cccsharonparish.core.data.repo.PreferenceRepo
 import org.cccsharonparish.core.domain.Config
+import org.cccsharonparish.core.domain.logging.Log
 import org.cccsharonparish.core.model.entities.local.Content
 import org.cccsharonparish.spiritualdailydigest.MainActivity
 
@@ -34,22 +35,26 @@ class DailyNotificationReceiver : BroadcastReceiver() {
             }
 
             if (languageContent != null) {
-                val activityIntent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
+                try {
+                    val activityIntent = Intent(context, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
 
-                val pendingIntent = PendingIntent.getActivity(
-                    context,
-                    0,
-                    activityIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-                val notificationBuilder = NotificationBuilder(context)
-                val textContent = languageContent.text!!
-                notificationBuilder.setTitle(textContent.topic!!)
-                notificationBuilder.setMessage(textContent.message!!)
-                notificationBuilder.setContentIntent(pendingIntent)
-                notificationBuilder.Builder(context).showNotification(Config.DAILY_NOTIFICATION_ID)
+                    val pendingIntent = PendingIntent.getActivity(
+                        context,
+                        0,
+                        activityIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    val notificationBuilder = NotificationBuilder(context)
+                    val textContent = languageContent.text!!
+                    notificationBuilder.setTitle(textContent.topic!!)
+                    notificationBuilder.setMessage(textContent.message!!)
+                    notificationBuilder.setContentIntent(pendingIntent)
+                    notificationBuilder.Builder(context).showNotification(Config.DAILY_NOTIFICATION_ID)
+                }catch (e:Exception){
+                    Log.error(e.message ?: "Unable to show notification", e)
+                }
             }
 
         }

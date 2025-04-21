@@ -8,7 +8,7 @@ interface IPreferenceRepo {
     fun getFontSize(): Float
     suspend fun setFontSize(value: Float)
     fun getNotificationTime(): NotificationTime?
-    suspend fun setNotificationTime(value: NotificationTime)
+    suspend fun saveNotificationTime(value: NotificationTime)
     fun getSelectedContentLanguageCode(): String?
     suspend fun setSelectedContentLanguageCode(value: String)
 }

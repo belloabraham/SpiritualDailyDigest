@@ -70,7 +70,7 @@ class PreferenceRepo(
         }
     }
 
-    override suspend fun setNotificationTime(value: NotificationTime) {
+    override suspend fun saveNotificationTime(value: NotificationTime) {
         withContext(dispatcher) {
             localDb.write {
                 val preference = getPreference(this) ?: Preference()
