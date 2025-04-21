@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.launch
 import org.cccsharonparish.core.domain.Config
 import org.cccsharonparish.core.model.entities.local.NotificationTime
 import org.cccsharonparish.spiritualdailydigest.receivers.DailyNotificationReceiver

@@ -14,10 +14,11 @@ struct iOSApp: App {
 	}
 }
 
-class AppDelegate:NSObject, MessagingDelegate, UIApplicationDelegate {
+class AppDelegate: NSObject, MessagingDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     //Firebase and cloud messaging
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
@@ -26,26 +27,25 @@ class AppDelegate:NSObject, MessagingDelegate, UIApplicationDelegate {
 
     //Cloud messaging
     func application(_ application: UIApplication,
-                       didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async
-        -> UIBackgroundFetchResult {
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
         return UIBackgroundFetchResult.newData
     }
 
     //Cloud messaging
     func application(_ application: UIApplication,
-                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
         Crashlytics.crashlytics().record(error: error)
         Crashlytics.crashlytics().log("Remote notification registration failed with error: \(error.localizedDescription)")
     }
 
     //Cloud messaging
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-      let dataDict: [String: String] = ["token": fcmToken ?? ""]
-      NotificationCenter.default.post(
-        name: Notification.Name("FCMToken"),
-        object: nil,
-        userInfo: dataDict
-      )
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+        )
     }
 
     func application(_ application: UIApplication,
@@ -58,17 +58,15 @@ class AppDelegate:NSObject, MessagingDelegate, UIApplicationDelegate {
         return true
     }
 
-}
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              willPresent notification: UNNotification) async
-    -> UNNotificationPresentationOptions {
-    let userInfo = notification.request.content.userInfo
+    // MARK: - UNUserNotificationCenterDelegate Methods
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        let userInfo = notification.request.content.userInfo
         return [[.alert, .sound, .badge]]
-  }
+    }
 
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              didReceive response: UNNotificationResponse) async {
-  }
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        // Handle tap on notification
+    }
 }
